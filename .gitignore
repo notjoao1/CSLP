@@ -26,6 +26,8 @@
 *.a
 *.lib
 
+resources/
+
 .idea/
 
 # Executables

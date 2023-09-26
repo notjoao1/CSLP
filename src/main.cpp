@@ -4,7 +4,11 @@
 
 #include <iostream>
 #include "opencv2/opencv.hpp"
+#include "ImageManipulator.h"
+
 int main() {
-    std::cout << "Hello world\n";
+    ImageManipulator i;
+    i.ReadImage("C:\\Users\\leona\\CLionProjects\\GTD-VC\\resources\\Giga_Chad.jpg");
+    i.WriteImage("resources/New_Giga_Chad.jpg");
     return 0;
 }
