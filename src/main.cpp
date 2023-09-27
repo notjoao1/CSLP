@@ -9,7 +9,7 @@
 
 int main() {
     VideoManipulator vm;
-    vm.fromFile("resources/");
+    vm.fromFile("resources/subset1-y4m/Citroen_C4F.y4m");
     vm.play();
     return 0;
 }

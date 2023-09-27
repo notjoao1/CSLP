@@ -5,8 +5,15 @@
 #include "VideoManipulator.h"
 
 bool VideoManipulator::fromFile(string filename){
+
+    VideoCapture cap;
+    int apiID = cv::CAP_ANY;
+    cap.open(filename, apiID);
+    if (!cap.isOpened()) {
+        cerr << "ERROR! Unable to open file\n";
+    }
+
     this->source = filename;
-    // todo check if valid file
 }
 
 void VideoManipulator::play(){
@@ -15,12 +22,11 @@ void VideoManipulator::play(){
 
     int apiID = cv::CAP_ANY;
 
-    cap.open(this->source, apiID);
-    if (!cap.isOpened()) {
-        cerr << "ERROR! Unable to open camera\n";
+    if(!this->source.empty()){
+        cerr << "Please open a file\n";
         return;
     }
-
+    cap.open(this->source, apiID);
     //--- GRAB AND WRITE LOOP
     cout << "Start grabbing" << endl
          << "Press any key to terminate" << endl;
