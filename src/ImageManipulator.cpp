@@ -4,7 +4,6 @@
 
 #include "ImageManipulator.h"
 
-
 bool ImageManipulator::ReadImage(const string file_name) {
     this->pixel_matrix = imread(file_name, IMREAD_COLOR);
     if(this->pixel_matrix.empty())
