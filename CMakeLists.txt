@@ -8,6 +8,8 @@ find_package(OpenCV REQUIRED)
 add_executable(GTD-VC src/main.cpp
         src/ImageManipulator.cpp
         src/WatermarkImage.cpp
-        src/VideoManipulator.cpp)
+        src/VideoManipulator.cpp
+        src/Grayscale.cpp
+        src/Grayscale.h)
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})
