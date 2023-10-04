@@ -22,11 +22,15 @@ void VideoManipulator::play(){
 
     int apiID = cv::CAP_ANY;
 
-    if(!this->source.empty()){
+    if(this->source.empty()){
         cerr << "Please open a file\n";
         return;
     }
     cap.open(this->source, apiID);
+
+    // get frame rate of video
+    double fps = cap.get(CAP_PROP_FPS);
+
     //--- GRAB AND WRITE LOOP
     cout << "Start grabbing" << endl
          << "Press any key to terminate" << endl;
@@ -41,7 +45,7 @@ void VideoManipulator::play(){
         }
         // show live and wait for a key with timeout long enough to show images
         imshow("Live", frame);
-        if (waitKey(5) >= 0)
+        if (waitKey((int) 1000/fps) >= 0)
             break;
     }
 }
