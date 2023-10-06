@@ -11,6 +11,9 @@ add_executable(GTD-VC src/main.cpp
         src/WatermarkImage.cpp
         src/WatermarkText.cpp
         src/Grayscale.cpp
-        src/Filter.cpp)
+        src/Filter.cpp
+        src/BitStreamWrite.cpp
+        src/BitStreamRead.cpp
+        src/BitStream.cpp)
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})
