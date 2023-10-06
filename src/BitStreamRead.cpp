@@ -54,7 +54,6 @@ unsigned long long BitStreamRead::read(int n) {
             n-=this->small_buffer_pointer;
             res<<=n;
         }
-
         refresh_small_buffer();
         signed long long mask2 = 0x8000000000000000;
         mask2>>=(n-1);
@@ -63,7 +62,6 @@ unsigned long long BitStreamRead::read(int n) {
         this->small_buffer<<=n;
         return res;
     }
-
     signed long long mask = 0x8000000000000000;
     mask>>=n;
     unsigned long long res = (this->small_buffer & mask) >> (64-n);
