@@ -12,9 +12,12 @@ private:
     unsigned long long small_buffer = 0;
     int small_buffer_pointer = -1;
     std::vector<unsigned long long> big_buffer;
-    const long big_buffer_max_size = 65536;
-    long big_buffer_pointer = big_buffer_max_size;
+    const long big_buffer_max_size = 4096;
+    long big_buffer_pointer = big_buffer_max_size-1;
     std::fstream file;
+
+    unsigned long long last_sb = 0;
+
 
     void refresh_small_buffer();
     bool should_refresh_small_buffer(int n) const ;
@@ -29,6 +32,9 @@ public:
     void close();
     bool read_bit();
     unsigned long long read(int n);
+    void push_front(int n,unsigned long long bits);
+
+    void back_front(int n);
 };
 
 

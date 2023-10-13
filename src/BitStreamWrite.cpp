@@ -33,17 +33,20 @@ void BitStreamWrite::write_bit(bool b) {
         this->small_buffer_pointer++;
         return;
     };
-
     this->small_buffer<<=1;
     this->small_buffer_pointer++;
     this->small_buffer = b | this->small_buffer;
 }
 
 void BitStreamWrite::write(int n,unsigned long long bits) {
+    bits<<=64-n;
+    bits>>=64-n;
     if(should_refresh_small_buffer(n)) {
         int available = 63-this->small_buffer_pointer;
-        this->small_buffer<<=available;
-        this->small_buffer= this->small_buffer | ( bits >> ( n-available ) );
+        if(available>0){
+            this->small_buffer<<=available;
+            this->small_buffer= this->small_buffer | ( bits >> ( n-available ) );
+        }
         refresh_small_buffer();
         bits<<= 64 - n + available;
         bits>>= 64 - n + available;
