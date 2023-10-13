@@ -8,7 +8,7 @@
 
 #include "Effect.h"
 
-class Filter : Effect {
+class Filter :public  Effect {
 private:
     Mat kernel;
     Mat convolute(Mat input_frame);

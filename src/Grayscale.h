@@ -11,7 +11,7 @@
 
 using namespace cv;
 
-class Grayscale : Effect {
+class Grayscale : public Effect {
 public:
     Mat apply(Mat frame) override;
 };

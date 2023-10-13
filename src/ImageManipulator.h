@@ -14,10 +14,9 @@ using namespace cv;
 
 class ImageManipulator {
 private:
-    Mat pixel_matrix;
 public:
-    bool ReadImage(string file_name);
-    bool WriteImage(string file_name);
+    Mat ReadImage(string file_name);
+    bool WriteImage(string file_name, Mat image);
 };
 
 

@@ -13,6 +13,7 @@ using namespace cv;
 class Effect {
 public:
     virtual Mat apply(Mat frame) = 0;
+
 };
 
 

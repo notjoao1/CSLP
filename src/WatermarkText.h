@@ -11,7 +11,7 @@
 
 using namespace std;
 
-class WatermarkText : Effect {
+class WatermarkText : public Effect {
 private:
     string text;
 public:

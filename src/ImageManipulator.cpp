@@ -4,16 +4,16 @@
 
 #include "ImageManipulator.h"
 
-bool ImageManipulator::ReadImage(const string file_name) {
-    this->pixel_matrix = imread(file_name, IMREAD_COLOR);
-    if(this->pixel_matrix.empty())
+Mat ImageManipulator::ReadImage(const string file_name) {
+    Mat image=imread(file_name, IMREAD_COLOR);
+    if(image.empty())
     {
         std::cout << "Could not read the image: " << file_name << std::endl;
-        return false;
+        return Mat();
     }
-    return true;
+    return image;
 }
 
-bool ImageManipulator::WriteImage(string file_name) {
-    return imwrite(file_name, this->pixel_matrix);
+bool ImageManipulator::WriteImage(string file_name, Mat image) {
+    return imwrite(file_name, image);
 }

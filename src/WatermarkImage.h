@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class WatermarkImage : Effect {
+class WatermarkImage : public Effect {
 private:
     Mat watermark;
 public:

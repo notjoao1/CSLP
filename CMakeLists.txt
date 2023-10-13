@@ -14,6 +14,10 @@ add_executable(GTD-VC src/main.cpp
         src/Filter.cpp
         src/BitStreamWrite.cpp
         src/BitStreamRead.cpp
-        src/BitStream.cpp)
+        src/BitStream.cpp
+        src/ColorSpace.cpp
+        src/Frame.cpp
+        src/Frame.h
+        src/Channels.h)
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})
