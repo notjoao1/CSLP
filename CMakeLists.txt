@@ -17,8 +17,8 @@ add_executable(GTD-VC src/main.cpp
         src/BitStream.cpp
         src/ColorSpace.cpp
         src/Frame.cpp
-        src/Frame.h
-        src/Channels.h
-        src/golombtest.cpp)
+        src/golombtest.cpp
+        tests/BitStream_Tests.cpp
+        tests/mainTest.cpp)
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})
