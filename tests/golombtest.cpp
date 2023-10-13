@@ -2,9 +2,11 @@
 // Created by Kikom on 13/10/2023.
 //
 
-#include "BitStream.h"
-#include "GolombCode.h"
+#include "../src/BitStream.h"
+#include "../src/GolombCode.h"
 #include "iostream"
+#include <filesystem>
+
 
 bool Golomb_test(int TEST_SIZE, int m, const std::string& filepath){
     BitStreamWrite file = BitStream::writeToFile(filepath);
@@ -21,10 +23,14 @@ bool Golomb_test(int TEST_SIZE, int m, const std::string& filepath){
             std::cout << "Failed at "<< a << " got " << g << std::endl;
         }
     }
-    if(pass)
-        std::cout << "Passed" << std::endl;
-    else
-        std::cout << "Failed" << std::endl;
     file2.close();
+
+    // clean test files
+    try {
+        std::filesystem::remove(filepath);
+    } catch (const std::filesystem::filesystem_error& err){
+        std::cout << "error cleaning test files: " << err.what() << std::endl;
+    }
+
     return pass;
 }

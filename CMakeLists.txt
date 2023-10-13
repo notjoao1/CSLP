@@ -17,7 +17,7 @@ add_executable(GTD-VC src/main.cpp
         src/BitStream.cpp
         src/ColorSpace.cpp
         src/Frame.cpp
-        src/golombtest.cpp
+        tests/golombtest.cpp
         tests/BitStream_Tests.cpp
         tests/mainTest.cpp)
 

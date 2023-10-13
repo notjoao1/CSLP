@@ -5,13 +5,12 @@
 #include "../src/BitStream.h"
 #include <string>
 #include <filesystem>
-
-std::string f_name_single = "tests/singlebitstest.bin";
-std::string f_name_mult = "tests/multiplebitstest.bin";
+#include <iostream>
 
 
-bool SingleBitsTest() {
-    BitStreamWrite write_stream(f_name_single);
+
+bool SingleBitsTest(const std::string& filepath) {
+    BitStreamWrite write_stream(filepath);
 
     // get random 64 bit unsigned int
     srand(time(NULL));
@@ -32,8 +31,15 @@ bool SingleBitsTest() {
     write_stream.close();
 
     // read written bits
-    BitStreamRead read_stream(f_name_single);
+    BitStreamRead read_stream(filepath);
     unsigned long long bits_from_write = read_stream.read(64);
+
+    // clean test files
+    try {
+        std::filesystem::remove(filepath);
+    } catch (const std::filesystem::filesystem_error& err){
+        std::cout << "error cleaning test files: " << err.what() << std::endl;
+    }
 
     if (bits_from_write == bits_to_write)
         return true;
@@ -41,8 +47,8 @@ bool SingleBitsTest() {
 }
 
 
-bool MultipleBitsTest() {
-    BitStreamWrite write_stream(f_name_mult);
+bool MultipleBitsTest(const std::string& filepath) {
+    BitStreamWrite write_stream(filepath);
 
     // get random 64 bit unsigned int
     srand(time(NULL));
@@ -58,20 +64,17 @@ bool MultipleBitsTest() {
     write_stream.close();
 
     // read written bits
-    BitStreamRead read_stream(f_name_mult);
+    BitStreamRead read_stream(filepath);
     unsigned long long bits_from_write = read_stream.read(64);
+
+    // clean test files
+    try {
+        std::filesystem::remove(filepath);
+    } catch (const std::filesystem::filesystem_error& err){
+        std::cout << "error cleaning test files: " << err.what() << std::endl;
+    }
 
     if (bits_from_write == bits_to_write)
         return true;
     return false;
-}
-
-
-void BitStreamCleanFiles() {
-    try {
-        std::filesystem::remove(f_name_single);
-        std::filesystem::remove(f_name_mult);
-    } catch (const std::filesystem::filesystem_error& err){
-
-    }
 }
