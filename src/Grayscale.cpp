@@ -32,6 +32,5 @@ Mat Grayscale::apply(Mat frame) {
         }
     }
 
-    std::cout << "finished reading image" << std::endl;
     return return_frame;
 }
