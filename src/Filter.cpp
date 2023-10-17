@@ -4,9 +4,8 @@
 
 #include "Filter.h"
 
-Mat Filter::apply(cv::Mat frame) {
-    Mat output = convolute(frame);
-    return output;
+Frame Filter::apply(Frame frame) {
+    return frame.fromMat(convolute(frame.toMat()));
 }
 
 Filter::Filter(Mat kernel) {

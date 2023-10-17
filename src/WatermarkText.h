@@ -16,7 +16,7 @@ private:
     string text;
 public:
     WatermarkText(string text);
-    Mat apply(cv::Mat frame) override;
+    Frame apply(Frame frame) override;
 };
 
 

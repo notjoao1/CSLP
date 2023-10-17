@@ -18,6 +18,9 @@ add_executable(GTD-VC src/main.cpp
         src/ColorSpace.cpp
         src/Frame.cpp
         src/Histogram.cpp
+        src/Colors.h
+        src/Channels.cpp
+        src/Histogram.cpp
         src/Threshold.h
         src/Threshold.cpp)
 

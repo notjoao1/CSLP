@@ -6,13 +6,14 @@
 #define GTD_VC_EFFECT_H
 
 #include "opencv2/opencv.hpp"
+#include "Frame.h"
 
 using namespace cv;
 
 // abstract class for effects to apply to each frame
 class Effect {
 public:
-    virtual Mat apply(Mat frame) = 0;
+    virtual Frame apply(Frame frame) = 0;
 
 };
 

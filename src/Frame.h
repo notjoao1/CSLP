@@ -7,22 +7,25 @@
 
 #include "opencv2/opencv.hpp"
 #include "Effect.h"
+#include "Channels.h"
 #include <string>
+
 
 using namespace std;
 using namespace cv;
 
 class Frame {
 private:
-    vector<Mat>channels;
+    Channels channels;
     vector<Effect*>effects;
-    String ColorSpace;
-
 public:
     void addEffect(Effect* effect);
     void applyEffects();
-    void convertColorSpace(String dest);
+    Channels getChannels();
+    void setColorSpace(Color color);
+    void convertColorSpace(Color dest);
     Mat getFrame();
+    void fromMat(Mat& mat);
 };
 
 

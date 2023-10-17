@@ -4,17 +4,19 @@
 
 #include "Threshold.h"
 
-Mat Threshold::apply(cv::Mat frame) {
+Frame Threshold::apply(Frame frame) {
     Mat result;
 
-    Mat return_frame = Mat::zeros(Size(frame.cols, frame.rows), CV_8UC1);
-    for(int i = 0; i < frame.rows; i++) {
-        for (int j = 0; j < frame.cols; j++) {
-            return_frame.at<uchar>(i, j) = ( frame.at<uchar>(i, j) < threshold )? inverted : 1-inverted;
+    Mat channels=frame.getChannels().toMat();
+    Mat return_frame = Mat::zeros(Size(channels.cols, channels.rows), uchar());
+    for(int i = 0; i < channels.rows; i++) {
+        for (int j = 0; j < channels.cols; j++) {
+            return_frame.at<uchar>(i, j) = ( channels.at<uchar>(i, j) < threshold )? inverted *255: (1-inverted)*255;
         }
     }
 
-    return return_frame;
+    frame.fromMat(return_frame);
+    return frame;
 }
 
 Threshold::Threshold(unsigned char t, bool inv) {

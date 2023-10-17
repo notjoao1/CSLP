@@ -14,7 +14,7 @@ private:
     bool inverted;
 public:
     Threshold(unsigned char threshold,bool inverted);
-    Mat apply(cv::Mat frame) override;
+    Frame apply(Frame frame) override;
 };
 
 

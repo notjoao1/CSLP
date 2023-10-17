@@ -5,7 +5,7 @@
 //
 // Created by tiago on 27-09-2023.
 
-Channels ColorSpace::YUV4_2_2(Channels channels){
+Channels ColorSpace::toYUV4_2_2(Channels channels){
 
     Mat U= Mat::zeros(channels.value1.rows, channels.value1.cols / 2 + channels.value1.cols % 2,uchar() );
     Mat V= Mat::zeros(channels.value2.rows, channels.value2.cols / 2 + channels.value2.cols % 2,uchar());
@@ -18,9 +18,9 @@ Channels ColorSpace::YUV4_2_2(Channels channels){
         }
     }
 
-    return {channels.value0,U,V};
+    return {channels.value0,U,V,YUV4_2_2};
 }
-Channels ColorSpace::YUV4_2_0(Channels channels){
+Channels ColorSpace::toYUV4_2_0(Channels channels){
 
     Mat U= Mat::zeros(channels.value1.rows/2+channels.value1.rows % 2, channels.value1.cols / 2 + channels.value1.cols % 2,uchar()  );
     Mat V= Mat::zeros(channels.value2.rows/2+channels.value1.rows % 2, channels.value2.cols / 2 + channels.value2.cols % 2,uchar());
@@ -34,23 +34,17 @@ Channels ColorSpace::YUV4_2_0(Channels channels){
     }
 
 
-    return {channels.value0,U,V};
+    return {channels.value0,U,V,YUV4_2_0};
 }
 
 Channels ColorSpace::RGBtoYUV(Channels channels) {
-    Mat Y = Mat::zeros(channels.value0.rows, channels.value0.cols,uchar());
-    Mat U = Mat::zeros(channels.value0.rows, channels.value0.cols,uchar());
+    Mat Y = Mat::zeros(channels.value0.rows, channels.value0.cols, uchar());
+    Mat U = Mat::zeros(channels.value0.rows, channels.value0.cols, uchar());
     Mat V = Mat::zeros(channels.value0.rows, channels.value0.cols, uchar());
-
-
-    for (int row = 0; row < channels.value0.rows; row++) {
-        for (int col = 0; col < channels.value0.cols; col++) {
-            Y.at<uchar>(row, col) = 0.299 * channels.value2.at<uchar>(row, col) + 0.587 * channels.value1.at<uchar>(row, col) + 0.114 * channels.value0.at<uchar>(row, col);
-            U.at<uchar>(row, col) = 128+ 0.492 * (channels.value0.at<uchar>(row, col) - Y.at<uchar>(row, col));
-            V.at<uchar>(row, col) = 128+ 0.877 * (channels.value2.at<uchar>(row, col) - Y.at<uchar>(row, col));
-        }
-    }
-    return {Y, U, V};
+    Mat matYUV = Mat::zeros(channels.value0.rows, channels.value0.cols, uchar());
+    cvtColor(channels.toMat(),matYUV,COLOR_RGB2YUV);
+    split(matYUV,vector<Mat>{Y,U,V});
+    return {Y,U,V,YUV};
 }
 
 
@@ -58,22 +52,15 @@ Channels ColorSpace::YUVtoRGB(Channels channels) {
     Mat R = Mat::zeros(channels.value0.rows, channels.value0.cols, uchar());
     Mat G = Mat::zeros(channels.value0.rows, channels.value0.cols, uchar());
     Mat B = Mat::zeros(channels.value0.rows, channels.value0.cols, uchar());
-    Mat RGB = Mat::zeros(channels.value0.rows, channels.value0.cols, uchar());
-
-    for (int row = 0; row < channels.value0.rows; row++) {
-        for (int col = 0; col < channels.value0.cols; col++) {
-            R.at<uchar>(row, col) = channels.value0.at<uchar>(row, col) + 1.140 * channels.value2.at<uchar>(row, col);
-            G.at<uchar>(row, col) = channels.value0.at<uchar>(row, col) - 0.395 * channels.value1.at<uchar>(row, col) - 0.581 * channels.value2.at<uchar>(row, col);
-            B.at<uchar>(row, col) = channels.value0.at<uchar>(row, col) + 2.032 * channels.value1.at<uchar>(row, col);
-
-        }
-    }
-    return {R, G, B};
+    Mat matRGB = Mat::zeros(channels.value0.rows, channels.value0.cols, uchar());
+    cvtColor(channels.toMat(),matRGB,COLOR_YUV2RGB);
+    split(matRGB,vector<Mat>{R,G,B});
+    return {R,G,B,RGB};
 
 }
 
-Channels ColorSpace::extend(Channels channels,String type) {
-    if (type=="YUV4_2_2"){
+Channels ColorSpace::extend(Channels channels,Color type) {
+    if (type==YUV4_2_2){
         //parse again to 4:4:4 with 4:2:2 resolution
         Mat fullV= Mat::zeros(channels.value0.rows, channels.value0.cols,uchar());
         Mat fullU= Mat::zeros(channels.value0.rows, channels.value0.cols,uchar());
@@ -86,9 +73,9 @@ Channels ColorSpace::extend(Channels channels,String type) {
                 fullV.at<uchar>(row,2*col+1)=channels.value2.at<uchar>(row,col);
             }
         }
-        return {channels.value0,fullU,fullV};
+        return {channels.value0,fullU,fullV,channels.Colorspace};
     }
-    else if(type=="YUV4_2_0"){
+    else if(type==YUV4_2_0){
         //parse again to 4:4:4 with 4:2:0 resolution
         Mat fullV= Mat::zeros(channels.value0.rows, channels.value0.cols,uchar());
         Mat fullU= Mat::zeros(channels.value0.rows, channels.value0.cols,uchar());
@@ -105,24 +92,24 @@ Channels ColorSpace::extend(Channels channels,String type) {
                 fullV.at<uchar>(2*row+1,2*col+1)=channels.value2.at<uchar>(row,col);
             }
         }
-        return  {channels.value0,fullU,fullV};
+        return  {channels.value0,fullU,fullV,type};
     }
     return channels;
 }
 
-Channels ColorSpace::convert(Channels frame, String src, String dest) {
-    if(src=="RGB" and dest=="YUV")
+Channels ColorSpace::convert(Channels frame, Color src, Color dest) {
+    if(src==RGB and dest==YUV)
         return RGBtoYUV(frame);
-    else if(src=="RGB" and dest=="YUV4_2_2")
-        return YUV4_2_2(RGBtoYUV(frame));
-    else if(src=="RGB" and dest=="YUV4_2_0")
-        return YUV4_2_0(RGBtoYUV(frame));
-    else if(src=="YUV" and dest=="RGB")
+    else if(src==RGB and dest==YUV4_2_2)
+        return toYUV4_2_2(RGBtoYUV(frame));
+    else if(src==RGB and dest==YUV4_2_0)
+        return toYUV4_2_0(RGBtoYUV(frame));
+    else if(src==YUV and dest==RGB)
         return YUVtoRGB(frame);
-    else if(src=="YUV4_2_2" and dest=="RGB")
-        return YUVtoRGB(extend(frame,"4_2_2"));
-    else if(src=="YUV4_2_0" and dest=="RGB")
-        return YUVtoRGB(extend(frame,"4_2_0"));
+    else if(src==YUV4_2_2 and dest==RGB)
+        return YUVtoRGB(extend(frame,YUV4_2_2));
+    else if(src==YUV4_2_0 and dest==RGB)
+        return YUVtoRGB(extend(frame,YUV4_2_0));
     return frame;
 }
 

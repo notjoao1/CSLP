@@ -20,7 +20,7 @@ public:
     //! Class constructor
     //! @param mat_size
     explicit Filter(Mat kernel);
-    Mat apply(cv::Mat frame) override;
+    Frame apply(Frame frame) override;
 };
 
 

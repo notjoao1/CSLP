@@ -15,7 +15,7 @@ private:
     Mat watermark;
 public:
     WatermarkImage(Mat watermark);
-    Mat apply(cv::Mat frame) override;
+    Frame apply(Frame frame) override;
 };
 
 

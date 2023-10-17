@@ -8,9 +8,11 @@
 
 using namespace std;
 
-Mat WatermarkText::apply(cv::Mat frame) {
+Frame WatermarkText::apply(Frame frame) {
+    Mat frameMat=frame.getChannels().toMat();
     // todo: custom coordinates, color (?), and fontScale (?)
-    putText(frame, this->text,cv::Point(20, frame.rows - 30),cv::FONT_HERSHEY_DUPLEX,2,cv::Scalar(0,0,0),2,false);
+    cv::putText(frameMat, this->text,cv::Point(20, frameMat.rows - 30),cv::FONT_HERSHEY_DUPLEX,2,cv::Scalar(0,0,0),2,false);
+    frame.fromMat(frameMat);
     return frame;
 }
 
