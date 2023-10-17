@@ -9,10 +9,8 @@ Mat Filter::apply(cv::Mat frame) {
     return output;
 }
 
-Filter::Filter(int mat_size) {
-    kernel = Mat::ones(Size(mat_size, mat_size), CV_32F);
-    // normalize kernel matrix
-    kernel /= (sum(kernel)[0]);
+Filter::Filter(Mat kernel) {
+    this->kernel = kernel;
 }
 
 
@@ -64,8 +62,6 @@ Mat Filter::convolute(Mat frame) {
 Mat Filter::applyPadding(Mat frame, int padding_size) {
     // apply padding to input frame for convolution (extra pixels will be the color black)
     Mat frame_with_padding;
-
-    std::cout << "padding_size: " << padding_size << std::endl;
 
     // add padding size * 2 to the width and height (left, right, top and bottom padding)
     frame_with_padding = Mat::zeros(Size(frame.cols + padding_size * 2, frame.rows + padding_size * 2), CV_8UC(frame.channels()));

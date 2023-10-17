@@ -8,13 +8,18 @@
 
 #include "Effect.h"
 
-class Filter :public  Effect {
+
+//! \brief Class that applies a filter based on a Kernel matrix.
+class Filter : public  Effect {
 private:
+    //!
     Mat kernel;
     Mat convolute(Mat input_frame);
     Mat applyPadding(Mat frame, int padding_size);
 public:
-    explicit Filter(int mat_size);
+    //! Class constructor
+    //! @param mat_size
+    explicit Filter(Mat kernel);
     Mat apply(cv::Mat frame) override;
 };
 
