@@ -17,6 +17,8 @@ add_executable(GTD-VC src/main.cpp
         src/BitStream.cpp
         src/ColorSpace.cpp
         src/Frame.cpp
-        src/Histogram.cpp)
+        src/Histogram.cpp
+        src/Threshold.h
+        src/Threshold.cpp)
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})
