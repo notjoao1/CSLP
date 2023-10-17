@@ -15,7 +15,7 @@
  */
  class Filter : public  Effect {
 private:
-    //! The filter kernel used for convolution. Matrix should be odd sized.
+    //! The filter kernel used for convolution. Kernel should be odd sized.
     Mat kernel;
      /**
       * @brief Calculates convoluted matrix based on the kernel given to the Filter class on instantiation.
