@@ -7,14 +7,22 @@
 
 #include <vector>
 #include "opencv2/opencv.hpp"
+#include "Frame.h"
 
 using namespace std;
 
 class Histogram {
 private:
     static cv::Mat calcColorHist(const cv::Mat& frame);
+    void calculateAllHistograms();
+    cv::Mat calculateCDF(const cv::Mat& hist) const;
+    int frame_pixels;
+    vector<cv::Mat> hist_by_channel;
+    Mat f;
 public:
-    static void displayHistograms(const cv::Mat& frame);
+    Histogram(const Mat& f);
+    void displayHistograms();
+    cv::Mat equalizeHistogram();
 };
 
 
