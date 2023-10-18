@@ -31,7 +31,7 @@ public:
       * @param frame The input frame in which the blur is applied.
       * @return New frame after applying blur to input frame.
       */
-    Frame apply(Frame frame) override;
+    void apply(Frame* frame) override;
 };
 
 

@@ -12,7 +12,7 @@ Mat Blur::createBlurKernel() {
     return kernel;
 }
 
-Frame Blur::apply(Frame frame) {
-    return f.apply(frame);
+void Blur::apply(Frame* frame) {
+    f.apply(frame);
 }
 

@@ -23,6 +23,8 @@ add_executable(GTD-VC src/main.cpp
         src/Colors.h
         src/Histogram.cpp
         src/Threshold.cpp
+        src/Blur.cpp
+        src/BlurGaussian.cpp
 )
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})
