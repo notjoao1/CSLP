@@ -10,8 +10,9 @@ using namespace cv;
 
 void Grayscale::apply(Frame* frame) {
     Mat frameMat=frame->getChannels().toMat();
-    if (frame->getChannels().Colorspace != GRAYSCALE) {
+    if (frame->getChannels().Colorspace == GRAYSCALE) {
         std::cerr << "Grayscale::apply() ERROR: invalid input frame - must have 3 channels. (Frame unaltered)" << std::endl;
+        return;
     }
     Mat channel[3];
     split(frameMat, channel);

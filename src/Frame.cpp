@@ -29,6 +29,13 @@ Mat Frame::getFrame() {
 void Frame::fromMat(Mat mat) {
     vector<Mat> cha;
     split(mat,cha);
+    // if mat is grayscale, give empty mat to value1 and value2
+    if (cha.size() == 1) {
+        this->channels.value0 = cha[0];
+        this->channels.value1 = Mat::zeros(1, 1, CV_8UC1);
+        this->channels.value2 = Mat::zeros(1, 1, CV_8UC1);
+        return;
+    }
     this->channels.value0=cha[0];
     this->channels.value1=cha[1];
     this->channels.value2=cha[2];
@@ -41,4 +48,8 @@ Channels Frame::getChannels() {
 
 void Frame::setColorSpace(Color color) {
     this->channels.Colorspace=color;
+}
+
+Frame::Frame(Channels c) : channels(c){
+    this->channels = std::move(c);
 }

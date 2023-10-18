@@ -27,6 +27,7 @@ public:
     void convertColorSpace(Color dest);
     Mat getFrame();
     void fromMat(Mat mat);
+    Frame(Channels c);
 };
 
 
