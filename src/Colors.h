@@ -9,5 +9,7 @@ enum Color {
     RGB=1,
     YUV4_2_2=2,
     YUV4_2_0=3,
-    GRAYSCALE=4};
+    GRAYSCALE=4,
+    BGR = 5,
+};
 #endif //GTD_VC_COLORS_H
