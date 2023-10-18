@@ -13,7 +13,7 @@ using namespace cv;
 
 class Grayscale : public Effect {
 public:
-    Frame apply(Frame frame) override;
+    void apply(Frame* frame) override;
 };
 
 

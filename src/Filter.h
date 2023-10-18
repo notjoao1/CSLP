@@ -42,7 +42,7 @@ public:
       * @param frame The input frame to which the convolution is applied.
       * @return The resulting frame after convolution.
       */
-    Frame apply(Frame frame) override;
+    void apply(Frame* frame) override;
 };
 
 

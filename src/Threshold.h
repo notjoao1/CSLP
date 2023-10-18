@@ -14,7 +14,7 @@ private:
     bool inverted;
 public:
     Threshold(unsigned char threshold,bool inverted);
-    Frame apply(Frame frame) override;
+    void apply(Frame* frame) override;
 };
 
 

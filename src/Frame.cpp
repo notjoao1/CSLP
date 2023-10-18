@@ -5,10 +5,10 @@
 #include "Frame.h"
 
 #include <utility>
-
+#include "Effect.h"
 void Frame::applyEffects() {
     for(Effect* effect:this->effects){
-        this->channels=effect->apply(this->channels.toMat());
+        effect->apply(this);
     }
 }
 
@@ -26,7 +26,7 @@ Mat Frame::getFrame() {
     return this->channels.toMat();
 }
 
-void Frame::fromMat(Mat& mat) {
+void Frame::fromMat(Mat mat) {
     vector<Mat> cha;
     split(mat,cha);
     this->channels.value0=cha[0];

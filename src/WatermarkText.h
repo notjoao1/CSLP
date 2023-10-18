@@ -16,7 +16,7 @@ private:
     string text;
 public:
     WatermarkText(string text);
-    Frame apply(Frame frame) override;
+    void apply(Frame* frame) override;
 };
 
 

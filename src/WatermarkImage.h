@@ -15,7 +15,7 @@ private:
     Mat watermark;
 public:
     WatermarkImage(Mat watermark);
-    Frame apply(Frame frame) override;
+    void apply(Frame* frame) override;
 };
 
 

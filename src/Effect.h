@@ -13,8 +13,7 @@ using namespace cv;
 // abstract class for effects to apply to each frame
 class Effect {
 public:
-    virtual Frame apply(Frame frame) = 0;
-
+    virtual void apply(Frame* frame) = 0;
 };
 
 

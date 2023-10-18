@@ -32,8 +32,6 @@ Channels ColorSpace::toYUV4_2_0(Channels channels){
             V.at<uchar>(row/2,col/2)=channels.value2.at<uchar>(row,col);
         }
     }
-
-
     return {channels.value0,U,V,YUV4_2_0};
 }
 
@@ -47,8 +45,8 @@ Channels ColorSpace::RGBtoYUV(Channels channels) {
     return {Y,U,V,YUV};
 }
 
-
 Channels ColorSpace::YUVtoRGB(Channels channels) {
+
     Mat R = Mat::zeros(channels.value0.rows, channels.value0.cols, uchar());
     Mat G = Mat::zeros(channels.value0.rows, channels.value0.cols, uchar());
     Mat B = Mat::zeros(channels.value0.rows, channels.value0.cols, uchar());

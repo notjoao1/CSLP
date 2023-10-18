@@ -4,11 +4,10 @@
 
 #ifndef GTD_VC_CHANNELS_H
 #define GTD_VC_CHANNELS_H
-#include <utility>
 
+#include <utility>
 #include "opencv2/opencv.hpp"
 #include "Colors.h"
-#include "ColorSpace.h"
 
 using namespace std;
 using namespace cv;

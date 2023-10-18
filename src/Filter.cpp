@@ -4,8 +4,8 @@
 
 #include "Filter.h"
 
-Frame Filter::apply(Frame frame) {
-    return frame.fromMat(convolute(frame.toMat()));
+void Filter::apply(Frame* frame) {
+    frame->fromMat(convolute(frame->getChannels().toMat()));
 }
 
 Filter::Filter(Mat kernel) {

@@ -10,10 +10,10 @@ WatermarkImage::WatermarkImage(Mat watermark) {
     this->watermark = watermark;
 }
 
-Frame WatermarkImage::apply(Frame frame) {
+void WatermarkImage::apply(Frame* frame) {
     // reduzir o tamanho da watermark para ser 20% da imagem base
     // mantem o aspect ratio da watermark inicial, não da imagem base
-    Mat frameMat=frame.getChannels().toMat();
+    Mat frameMat=frame->getChannels().toMat();
     int new_height = int(frameMat.rows * 0.2);
     int new_width = int(new_height / (double(this->watermark.rows) / double(this->watermark.cols)));
 
@@ -36,6 +36,5 @@ Frame WatermarkImage::apply(Frame frame) {
 
     // adicionar watermark à region of interest
     watermark_overlapped.copyTo(original_roi);
-    frame.fromMat(frameMat);
-    return frame;
+    frame->fromMat(frameMat);
 }

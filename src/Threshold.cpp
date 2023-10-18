@@ -4,10 +4,10 @@
 
 #include "Threshold.h"
 
-Frame Threshold::apply(Frame frame) {
+void Threshold::apply(Frame* frame) {
     Mat result;
 
-    Mat channels=frame.getChannels().toMat();
+    Mat channels=frame->getChannels().toMat();
     Mat return_frame = Mat::zeros(Size(channels.cols, channels.rows), uchar());
     for(int i = 0; i < channels.rows; i++) {
         for (int j = 0; j < channels.cols; j++) {
@@ -15,8 +15,7 @@ Frame Threshold::apply(Frame frame) {
         }
     }
 
-    frame.fromMat(return_frame);
-    return frame;
+    frame->fromMat(return_frame);
 }
 
 Threshold::Threshold(unsigned char t, bool inv) {

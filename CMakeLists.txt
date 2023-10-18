@@ -8,6 +8,10 @@ find_package(OpenCV REQUIRED)
 add_executable(GTD-VC src/main.cpp
         src/ImageManipulator.cpp
         src/VideoManipulator.cpp
+        src/Channels.cpp
+        src/Effect.h
+        src/Frame.cpp
+        src/ColorSpace.cpp
         src/WatermarkImage.cpp
         src/WatermarkText.cpp
         src/Grayscale.cpp
@@ -15,13 +19,10 @@ add_executable(GTD-VC src/main.cpp
         src/BitStreamWrite.cpp
         src/BitStreamRead.cpp
         src/BitStream.cpp
-        src/ColorSpace.cpp
-        src/Frame.cpp
         src/Histogram.cpp
         src/Colors.h
-        src/Channels.cpp
         src/Histogram.cpp
-        src/Threshold.h
-        src/Threshold.cpp)
+        src/Threshold.cpp
+)
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})

@@ -7,21 +7,21 @@
 #include "ImageManipulator.h"
 #include "VideoManipulator.h"
 #include "ColorSpace.h"
+#include "Channels.h"
+
 int main() {
+
     VideoManipulator vm;
     Mat image= cv::imread("../resources/image.jpeg");
     Mat test;
     vector<Mat> channels1(3);
     split(image,channels1);
-    Channels channels(channels1[0],channels1[1],channels1[2]);
-    channels=ColorSpace::convert(channels,"RGB","YUV4_2_2");
-    channels=ColorSpace::extend(channels,"YUV4_2_2");
-
+    Channels channels(channels1[0],channels1[1],channels1[2],RGB);
+    channels=ColorSpace::convert(channels,RGB,YUV);
+    channels=ColorSpace::extend(channels,YUV);
     merge(vector<Mat>{channels.value0,channels.value1,channels.value2},test);
-
     imshow("Original RGB",image);
     cvtColor(test,test,COLOR_YUV2RGB);
-    cvtColor(test,test,COLOR_RGB2BGR);
     imshow("Final YUV", test);
     waitKey();
     cout<<image.type();
@@ -29,4 +29,5 @@ int main() {
 
 
     return 0;
+
 }
