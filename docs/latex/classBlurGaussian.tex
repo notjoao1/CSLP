@@ -1,0 +1,61 @@
+\hypertarget{classBlurGaussian}{}\doxysection{Blur\+Gaussian Class Reference}
+\label{classBlurGaussian}\index{BlurGaussian@{BlurGaussian}}
+
+
+Class that wraps around filter to apply a specific filter kernel that produces a Gaussian \mbox{\hyperlink{classBlur}{Blur}} on a frame.  
+
+
+
+
+{\ttfamily \#include $<$Blur\+Gaussian.\+h$>$}
+
+
+
+Inheritance diagram for Blur\+Gaussian\+:
+% FIG 0
+
+
+Collaboration diagram for Blur\+Gaussian\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classBlurGaussian_a78ce444863420a0588f1b9ae4ea51574}\label{classBlurGaussian_a78ce444863420a0588f1b9ae4ea51574}} 
+\mbox{\hyperlink{classBlurGaussian_a78ce444863420a0588f1b9ae4ea51574}{Blur\+Gaussian}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for the \mbox{\hyperlink{classBlurGaussian}{Blur\+Gaussian}} class. Also creates an instance of \mbox{\hyperlink{classFilter}{Filter}} with a specific kernel that is created by Blur\+Gaussian\+::create\+Blur\+Kernel() \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classBlurGaussian_ad01acb2a5a2bf907613937115accae1d}{apply}} (\mbox{\hyperlink{classFrame}{Frame}} $\ast$frame) override
+\begin{DoxyCompactList}\small\item\em Applies blur filter kernel to image. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that wraps around filter to apply a specific filter kernel that produces a Gaussian \mbox{\hyperlink{classBlur}{Blur}} on a frame. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classBlurGaussian_ad01acb2a5a2bf907613937115accae1d}\label{classBlurGaussian_ad01acb2a5a2bf907613937115accae1d}} 
+\index{BlurGaussian@{BlurGaussian}!apply@{apply}}
+\index{apply@{apply}!BlurGaussian@{BlurGaussian}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Blur\+Gaussian\+::apply (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFrame}{Frame}} $\ast$}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Applies blur filter kernel to image. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & The input frame in which the gaussian blur is applied. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New frame after applying gaussian blur to input frame. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classEffect}{Effect}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/Blur\+Gaussian.\+h\item 
+src/Blur\+Gaussian.\+cpp\end{DoxyCompactItemize}

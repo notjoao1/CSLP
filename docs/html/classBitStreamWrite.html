@@ -69,25 +69,132 @@ $(function() {
 <div class="title">BitStreamWrite Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class for writing bits to a file stream.  
+ <a href="classBitStreamWrite.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="BitStreamWrite_8h_source.html">BitStreamWrite.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af05f2d0d603599b16e3e9b34960db19e"><td class="memItemLeft" align="right" valign="top"><a id="af05f2d0d603599b16e3e9b34960db19e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>BitStreamWrite</b> (const std::string &amp;filename)</td></tr>
+<tr class="memitem:af05f2d0d603599b16e3e9b34960db19e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBitStreamWrite.html#af05f2d0d603599b16e3e9b34960db19e">BitStreamWrite</a> (const std::string &amp;filename)</td></tr>
+<tr class="memdesc:af05f2d0d603599b16e3e9b34960db19e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <a class="el" href="classBitStreamWrite.html" title="A class for writing bits to a file stream.">BitStreamWrite</a> class.  <a href="classBitStreamWrite.html#af05f2d0d603599b16e3e9b34960db19e">More...</a><br /></td></tr>
 <tr class="separator:af05f2d0d603599b16e3e9b34960db19e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a780b207be6db9e55bd75b7c74e988406"><td class="memItemLeft" align="right" valign="top"><a id="a780b207be6db9e55bd75b7c74e988406"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>close</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBitStreamWrite.html#a780b207be6db9e55bd75b7c74e988406">close</a> ()</td></tr>
+<tr class="memdesc:a780b207be6db9e55bd75b7c74e988406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the file stream, ensuring that any remaining bits are written to the file. <br /></td></tr>
 <tr class="separator:a780b207be6db9e55bd75b7c74e988406"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c26ebc82570c3550514c7634f5c6090"><td class="memItemLeft" align="right" valign="top"><a id="a7c26ebc82570c3550514c7634f5c6090"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>write_bit</b> (bool b)</td></tr>
+<tr class="memitem:a7c26ebc82570c3550514c7634f5c6090"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBitStreamWrite.html#a7c26ebc82570c3550514c7634f5c6090">write_bit</a> (bool b)</td></tr>
+<tr class="memdesc:a7c26ebc82570c3550514c7634f5c6090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a single bit to the file.  <a href="classBitStreamWrite.html#a7c26ebc82570c3550514c7634f5c6090">More...</a><br /></td></tr>
 <tr class="separator:a7c26ebc82570c3550514c7634f5c6090"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a598bbc6d3929926192bc11a8c0719d40"><td class="memItemLeft" align="right" valign="top"><a id="a598bbc6d3929926192bc11a8c0719d40"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (int n, unsigned long long bits)</td></tr>
+<tr class="memitem:a598bbc6d3929926192bc11a8c0719d40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBitStreamWrite.html#a598bbc6d3929926192bc11a8c0719d40">write</a> (int n, unsigned long long bits)</td></tr>
+<tr class="memdesc:a598bbc6d3929926192bc11a8c0719d40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a specified number of bits to the file.  <a href="classBitStreamWrite.html#a598bbc6d3929926192bc11a8c0719d40">More...</a><br /></td></tr>
 <tr class="separator:a598bbc6d3929926192bc11a8c0719d40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class for writing bits to a file stream. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="af05f2d0d603599b16e3e9b34960db19e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af05f2d0d603599b16e3e9b34960db19e">&#9670;&nbsp;</a></span>BitStreamWrite()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">BitStreamWrite::BitStreamWrite </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor for the <a class="el" href="classBitStreamWrite.html" title="A class for writing bits to a file stream.">BitStreamWrite</a> class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>The name of the file to write to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a598bbc6d3929926192bc11a8c0719d40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a598bbc6d3929926192bc11a8c0719d40">&#9670;&nbsp;</a></span>write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BitStreamWrite::write </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long long&#160;</td>
+          <td class="paramname"><em>bits</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes a specified number of bits to the file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>The number of bits to be written. </td></tr>
+    <tr><td class="paramname">bits</td><td>The bits to be written. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7c26ebc82570c3550514c7634f5c6090"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c26ebc82570c3550514c7634f5c6090">&#9670;&nbsp;</a></span>write_bit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BitStreamWrite::write_bit </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes a single bit to the file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>The boolean value to be written. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="BitStreamWrite_8h_source.html">BitStreamWrite.h</a></li>
-<li>BitStreamWrite.cpp</li>
+<li>src/<a class="el" href="BitStreamWrite_8h_source.html">BitStreamWrite.h</a></li>
+<li>src/BitStreamWrite.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['bitstream_15',['BitStream',['../classBitStream.html',1,'']]],
-  ['bitstreamread_16',['BitStreamRead',['../classBitStreamRead.html',1,'']]],
-  ['bitstreamwrite_17',['BitStreamWrite',['../classBitStreamWrite.html',1,'']]]
+  ['bitstream_29',['BitStream',['../classBitStream.html',1,'']]],
+  ['bitstreamread_30',['BitStreamRead',['../classBitStreamRead.html',1,'']]],
+  ['bitstreamwrite_31',['BitStreamWrite',['../classBitStreamWrite.html',1,'']]],
+  ['blur_32',['Blur',['../classBlur.html',1,'']]],
+  ['blurgaussian_33',['BlurGaussian',['../classBlurGaussian.html',1,'']]]
 ];

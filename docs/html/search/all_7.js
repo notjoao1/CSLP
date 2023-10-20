@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['threshold_11',['Threshold',['../classThreshold.html',1,'']]]
+  ['histogram_19',['Histogram',['../classHistogram.html',1,'']]]
 ];

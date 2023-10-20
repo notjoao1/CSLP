@@ -2,6 +2,15 @@
 \label{classFilter}\index{Filter@{Filter}}
 
 
+Generic filter class that applies given filter kernel as a convolution to input matrix.  
+
+
+
+
+{\ttfamily \#include $<$Filter.\+h$>$}
+
+
+
 Inheritance diagram for Filter\+:
 % FIG 0
 
@@ -11,15 +20,59 @@ Collaboration diagram for Filter\+:
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classFilter_ad5073fc1d590d9af4fd8fce3e57f52eb}\label{classFilter_ad5073fc1d590d9af4fd8fce3e57f52eb}} 
-{\bfseries Filter} (int mat\+\_\+size)
-\item 
-\mbox{\Hypertarget{classFilter_ae843db2db3be92ad8ce12df03a0ef93d}\label{classFilter_ae843db2db3be92ad8ce12df03a0ef93d}} 
-Mat {\bfseries apply} (cv\+::\+Mat frame) override
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{classFilter_ac608e3bb64609296eb6f59ba4a67ce1c}{Filter}} (Mat kernel)
+\begin{DoxyCompactList}\small\item\em Constructor for the \mbox{\hyperlink{classFilter}{Filter}} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classFilter_a6516371f944caf11a13913a90803265e}{apply}} (\mbox{\hyperlink{classFrame}{Frame}} $\ast$frame) override
+\begin{DoxyCompactList}\small\item\em Applies convolution to the input frame using the provided filter kernel on class instantiation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Generic filter class that applies given filter kernel as a convolution to input matrix. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classFilter_ac608e3bb64609296eb6f59ba4a67ce1c}\label{classFilter_ac608e3bb64609296eb6f59ba4a67ce1c}} 
+\index{Filter@{Filter}!Filter@{Filter}}
+\index{Filter@{Filter}!Filter@{Filter}}
+\doxysubsubsection{\texorpdfstring{Filter()}{Filter()}}
+{\footnotesize\ttfamily Filter\+::\+Filter (\begin{DoxyParamCaption}\item[{Mat}]{kernel }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructor for the \mbox{\hyperlink{classFilter}{Filter}} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em kernel} & The filter kernel that will be applied for convolution. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classFilter_a6516371f944caf11a13913a90803265e}\label{classFilter_a6516371f944caf11a13913a90803265e}} 
+\index{Filter@{Filter}!apply@{apply}}
+\index{apply@{apply}!Filter@{Filter}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Filter\+::apply (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFrame}{Frame}} $\ast$}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Applies convolution to the input frame using the provided filter kernel on class instantiation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & The input frame to which the convolution is applied. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The resulting frame after convolution. 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classEffect}{Effect}}.
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-Filter.\+h\item 
-Filter.\+cpp\end{DoxyCompactItemize}
+src/Filter.\+h\item 
+src/Filter.\+cpp\end{DoxyCompactItemize}

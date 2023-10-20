@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>GTD-VC: Histogram.h Source File</title>
+<title>GTD-VC: src/Histogram.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -46,7 +46,6 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -61,6 +60,11 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">Histogram.h</div>  </div>
@@ -75,20 +79,28 @@ $(function() {
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;opencv2/opencv.hpp&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classHistogram.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="classHistogram.html">Histogram</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">static</span> cv::Mat calcColorHist(<span class="keyword">const</span> cv::Mat&amp; frame);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> displayHistograms(<span class="keyword">const</span> cv::Mat&amp; frame);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;};</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#endif //GTD_VC_HISTOGRAM_H</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;Frame.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classHistogram.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="classHistogram.html">Histogram</a> {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">static</span> cv::Mat calcColorHist(<span class="keyword">const</span> cv::Mat&amp; frame);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">void</span> calculateAllHistograms();</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    cv::Mat calculateCDF(<span class="keyword">const</span> cv::Mat&amp; hist) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">int</span> frame_pixels;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    vector&lt;cv::Mat&gt; hist_by_channel;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    Mat f;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="classHistogram.html">Histogram</a>(<span class="keyword">const</span> Mat&amp; f);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">void</span> displayHistograms();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    cv::Mat equalizeHistogram();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;};</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#endif //GTD_VC_HISTOGRAM_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassHistogram_html"><div class="ttname"><a href="classHistogram.html">Histogram</a></div><div class="ttdef"><b>Definition:</b> Histogram.h:13</div></div>
+<div class="ttc" id="aclassHistogram_html"><div class="ttname"><a href="classHistogram.html">Histogram</a></div><div class="ttdef"><b>Definition:</b> Histogram.h:14</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

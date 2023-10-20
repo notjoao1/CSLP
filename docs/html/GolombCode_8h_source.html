@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>GTD-VC: GolombCode.h Source File</title>
+<title>GTD-VC: src/GolombCode.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -46,7 +46,6 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -61,6 +60,11 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">GolombCode.h</div>  </div>
@@ -77,28 +81,36 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;BitStreamRead.h&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;BitStreamWrite.h&quot;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classGolombCode.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="classGolombCode.html">GolombCode</a> {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">static</span> std::vector&lt;bool&gt; encode(<span class="keywordtype">int</span> num,<span class="keywordtype">int</span> m);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> decode_one(<span class="keywordtype">int</span> m,std::vector&lt;bool&gt; stream);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">static</span> std::vector&lt;int&gt; decode(<span class="keywordtype">int</span> m, <span class="keyword">const</span> std::vector&lt;bool&gt;&amp; stream , <span class="keywordtype">int</span> n);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> decodeFrom64bits(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> i , <span class="keywordtype">int</span> m);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> encode(<span class="keywordtype">int</span> i,<span class="keywordtype">int</span> m, <a class="code" href="classBitStreamWrite.html">BitStreamWrite</a>&amp; stream);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> encode(std::vector&lt;int&gt; num_array,<span class="keywordtype">int</span> m, <a class="code" href="classBitStreamWrite.html">BitStreamWrite</a>&amp; stream);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> decode_one(<span class="keywordtype">int</span> m,<a class="code" href="classBitStreamRead.html">BitStreamRead</a>&amp; stream);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">static</span> std::vector&lt;int&gt; decode(<span class="keywordtype">int</span> m,<a class="code" href="classBitStreamRead.html">BitStreamRead</a>&amp; b,<span class="keywordtype">int</span> n);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;};</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classGolombCode.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="classGolombCode.html">GolombCode</a> {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">static</span> std::vector&lt;bool&gt; <a class="code" href="classGolombCode.html#ad758b9fcd0c694cde6fae3f5961690ea">encode</a>(<span class="keywordtype">int</span> num, <span class="keywordtype">int</span> m);</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#endif //GTD_VC_GOLOMBCODE_H</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="classGolombCode.html#abcd5bbec9e1de0e64a0af25f057b7263">decode_one</a>(<span class="keywordtype">int</span> m, std::vector&lt;bool&gt; stream);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">static</span> std::vector&lt;int&gt; <a class="code" href="classGolombCode.html#a1b598e166038949947a89744e5ca2810">decode</a>(<span class="keywordtype">int</span> m, <span class="keyword">const</span> std::vector&lt;bool&gt; &amp;stream, <span class="keywordtype">int</span> n);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="classGolombCode.html#aee717bd0d887b4a016690ad65fb59c4d">decodeFrom64bits</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> i, <span class="keywordtype">int</span> m);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classGolombCode.html#ad758b9fcd0c694cde6fae3f5961690ea">encode</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> m, <a class="code" href="classBitStreamWrite.html">BitStreamWrite</a> &amp;stream);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classGolombCode.html#ad758b9fcd0c694cde6fae3f5961690ea">encode</a>(std::vector&lt;int&gt; num_array, <span class="keywordtype">int</span> m, <a class="code" href="classBitStreamWrite.html">BitStreamWrite</a> &amp;stream);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="classGolombCode.html#abcd5bbec9e1de0e64a0af25f057b7263">decode_one</a>(<span class="keywordtype">int</span> m, <a class="code" href="classBitStreamRead.html">BitStreamRead</a> &amp;stream);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">static</span> std::vector&lt;int&gt; <a class="code" href="classGolombCode.html#a1b598e166038949947a89744e5ca2810">decode</a>(<span class="keywordtype">int</span> m, <a class="code" href="classBitStreamRead.html">BitStreamRead</a> &amp;b, <span class="keywordtype">int</span> n);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;};</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#endif //GTD_VC_GOLOMBCODE_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassBitStreamRead_html"><div class="ttname"><a href="classBitStreamRead.html">BitStreamRead</a></div><div class="ttdef"><b>Definition:</b> BitStreamRead.h:10</div></div>
-<div class="ttc" id="aclassGolombCode_html"><div class="ttname"><a href="classGolombCode.html">GolombCode</a></div><div class="ttdef"><b>Definition:</b> GolombCode.h:12</div></div>
-<div class="ttc" id="aclassBitStreamWrite_html"><div class="ttname"><a href="classBitStreamWrite.html">BitStreamWrite</a></div><div class="ttdef"><b>Definition:</b> BitStreamWrite.h:10</div></div>
+<div class="ttc" id="aclassBitStreamRead_html"><div class="ttname"><a href="classBitStreamRead.html">BitStreamRead</a></div><div class="ttdoc">A class for reading bits from a file stream.</div><div class="ttdef"><b>Definition:</b> BitStreamRead.h:14</div></div>
+<div class="ttc" id="aclassGolombCode_html"><div class="ttname"><a href="classGolombCode.html">GolombCode</a></div><div class="ttdoc">A class for encoding and decoding Golomb codes.</div><div class="ttdef"><b>Definition:</b> GolombCode.h:16</div></div>
+<div class="ttc" id="aclassBitStreamWrite_html"><div class="ttname"><a href="classBitStreamWrite.html">BitStreamWrite</a></div><div class="ttdoc">A class for writing bits to a file stream.</div><div class="ttdef"><b>Definition:</b> BitStreamWrite.h:14</div></div>
+<div class="ttc" id="aclassGolombCode_html_abcd5bbec9e1de0e64a0af25f057b7263"><div class="ttname"><a href="classGolombCode.html#abcd5bbec9e1de0e64a0af25f057b7263">GolombCode::decode_one</a></div><div class="ttdeci">static int decode_one(int m, std::vector&lt; bool &gt; stream)</div><div class="ttdoc">Decodes one integer from a Golomb-encoded bit stream using a specified parameter.</div><div class="ttdef"><b>Definition:</b> GolombCode.cpp:57</div></div>
+<div class="ttc" id="aclassGolombCode_html_ad758b9fcd0c694cde6fae3f5961690ea"><div class="ttname"><a href="classGolombCode.html#ad758b9fcd0c694cde6fae3f5961690ea">GolombCode::encode</a></div><div class="ttdeci">static std::vector&lt; bool &gt; encode(int num, int m)</div><div class="ttdoc">Encodes an integer into a Golomb code with a specified parameter.</div><div class="ttdef"><b>Definition:</b> GolombCode.cpp:10</div></div>
+<div class="ttc" id="aclassGolombCode_html_aee717bd0d887b4a016690ad65fb59c4d"><div class="ttname"><a href="classGolombCode.html#aee717bd0d887b4a016690ad65fb59c4d">GolombCode::decodeFrom64bits</a></div><div class="ttdeci">static int decodeFrom64bits(unsigned long long i, int m)</div><div class="ttdoc">Decodes an integer from a 64-bit value using a specified parameter.</div><div class="ttdef"><b>Definition:</b> GolombCode.cpp:75</div></div>
+<div class="ttc" id="aclassGolombCode_html_a1b598e166038949947a89744e5ca2810"><div class="ttname"><a href="classGolombCode.html#a1b598e166038949947a89744e5ca2810">GolombCode::decode</a></div><div class="ttdeci">static std::vector&lt; int &gt; decode(int m, const std::vector&lt; bool &gt; &amp;stream, int n)</div><div class="ttdoc">Decodes a sequence of integers from a Golomb-encoded bit stream using a specified parameter.</div><div class="ttdef"><b>Definition:</b> GolombCode.cpp:66</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

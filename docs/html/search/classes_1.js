@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['colorspace_18',['ColorSpace',['../classColorSpace.html',1,'']]]
+  ['channels_34',['Channels',['../structChannels.html',1,'']]],
+  ['colorspace_35',['ColorSpace',['../classColorSpace.html',1,'']]]
 ];

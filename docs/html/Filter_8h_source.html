@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>GTD-VC: Filter.h Source File</title>
+<title>GTD-VC: src/Filter.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -46,7 +46,6 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -61,6 +60,11 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">Filter.h</div>  </div>
@@ -76,21 +80,25 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;Effect.h&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classFilter.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="classFilter.html">Filter</a> :<span class="keyword">public</span>  <a class="code" href="classEffect.html">Effect</a> {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    Mat kernel;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    Mat convolute(Mat input_frame);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    Mat applyPadding(Mat frame, <span class="keywordtype">int</span> padding_size);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classFilter.html">Filter</a>(<span class="keywordtype">int</span> mat_size);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    Mat apply(cv::Mat frame) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;};</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#endif //GTD_VC_FILTER_H</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classFilter.html">   16</a></span>&#160; <span class="keyword">class </span><a class="code" href="classFilter.html">Filter</a> : <span class="keyword">public</span>  <a class="code" href="classEffect.html">Effect</a> {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    Mat kernel;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    Mat convolute(Mat input_frame);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    Mat applyPadding(Mat frame, <span class="keywordtype">int</span> padding_size);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classFilter.html#ac608e3bb64609296eb6f59ba4a67ce1c">Filter</a>(Mat kernel);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classFilter.html#a6516371f944caf11a13913a90803265e">apply</a>(<a class="code" href="classFrame.html">Frame</a>* frame) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;};</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif //GTD_VC_FILTER_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassFilter_html"><div class="ttname"><a href="classFilter.html">Filter</a></div><div class="ttdef"><b>Definition:</b> Filter.h:11</div></div>
-<div class="ttc" id="aclassEffect_html"><div class="ttname"><a href="classEffect.html">Effect</a></div><div class="ttdef"><b>Definition:</b> Effect.h:13</div></div>
+<div class="ttc" id="aclassFilter_html_a6516371f944caf11a13913a90803265e"><div class="ttname"><a href="classFilter.html#a6516371f944caf11a13913a90803265e">Filter::apply</a></div><div class="ttdeci">void apply(Frame *frame) override</div><div class="ttdoc">Applies convolution to the input frame using the provided filter kernel on class instantiation.</div><div class="ttdef"><b>Definition:</b> Filter.cpp:7</div></div>
+<div class="ttc" id="aclassFrame_html"><div class="ttname"><a href="classFrame.html">Frame</a></div><div class="ttdef"><b>Definition:</b> Frame.h:18</div></div>
+<div class="ttc" id="aclassFilter_html"><div class="ttname"><a href="classFilter.html">Filter</a></div><div class="ttdoc">Generic filter class that applies given filter kernel as a convolution to input matrix.</div><div class="ttdef"><b>Definition:</b> Filter.h:16</div></div>
+<div class="ttc" id="aclassFilter_html_ac608e3bb64609296eb6f59ba4a67ce1c"><div class="ttname"><a href="classFilter.html#ac608e3bb64609296eb6f59ba4a67ce1c">Filter::Filter</a></div><div class="ttdeci">Filter(Mat kernel)</div><div class="ttdoc">Constructor for the Filter class.</div><div class="ttdef"><b>Definition:</b> Filter.cpp:11</div></div>
+<div class="ttc" id="aclassEffect_html"><div class="ttname"><a href="classEffect.html">Effect</a></div><div class="ttdef"><b>Definition:</b> Effect.h:14</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
