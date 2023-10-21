@@ -31,7 +31,6 @@ public:
     /**
       * @brief Applies blur filter kernel to image.
       * @param frame The input frame in which the gaussian blur is applied.
-      * @return New frame after applying gaussian blur to input frame.
       */
     void apply(Frame* frame) override;
 };

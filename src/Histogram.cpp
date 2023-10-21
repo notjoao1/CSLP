@@ -62,7 +62,9 @@ Mat Histogram::calcColorHist(const Mat& channel) {
 }
 
 cv::Mat Histogram::equalizeHistogram() {
-    // TODO: verificar o caso em que o histograma ainda não foi calculado (hist_by_channel.size() == 0) e o user tenta chamar esta função
+    // if histograms haven't been calculated, calculate them
+    if (hist_by_channel.empty())
+        calculateAllHistograms();
     Mat channels[f.channels()];
     split(f, channels);
 
