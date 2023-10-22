@@ -1,17 +1,61 @@
-\hypertarget{classHistogram}{}\doxysection{Histogram Class Reference}
-\label{classHistogram}\index{Histogram@{Histogram}}
-\doxysubsection*{Public Member Functions}
+\doxysection{Histogram Class Reference}
+\hypertarget{classHistogram}{}\label{classHistogram}\index{Histogram@{Histogram}}
+
+
+Class used to do histogram related operations on frames, such as displaying color histograms and equalizing color histograms.  
+
+
+
+
+{\ttfamily \#include $<$Histogram.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classHistogram_a078c733d42e815b49e1e11ffdbf987db}\label{classHistogram_a078c733d42e815b49e1e11ffdbf987db}} 
-{\bfseries Histogram} (const Mat \&f)
-\item 
-\mbox{\Hypertarget{classHistogram_abd45d18242aea6fe7a2695d2824c2ce7}\label{classHistogram_abd45d18242aea6fe7a2695d2824c2ce7}} 
+\mbox{\hyperlink{classHistogram_a078c733d42e815b49e1e11ffdbf987db}{Histogram}} (const Mat \&f)
+\begin{DoxyCompactList}\small\item\em \doxylink{classHistogram}{Histogram} class constructor. \end{DoxyCompactList}\item 
+\Hypertarget{classHistogram_abd45d18242aea6fe7a2695d2824c2ce7}\label{classHistogram_abd45d18242aea6fe7a2695d2824c2ce7} 
 void {\bfseries display\+Histograms} ()
-\item 
-\mbox{\Hypertarget{classHistogram_a6ee02d4540f0855e9d12c1cda5ca7a3e}\label{classHistogram_a6ee02d4540f0855e9d12c1cda5ca7a3e}} 
-cv\+::\+Mat {\bfseries equalize\+Histogram} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Displays histograms for all channels in frame associated to \doxylink{classHistogram}{Histogram} object. \end{DoxyCompactList}\item 
+cv\+::\+Mat \mbox{\hyperlink{classHistogram_a6ee02d4540f0855e9d12c1cda5ca7a3e}{equalize\+Histogram}} ()
+\begin{DoxyCompactList}\small\item\em Equalizes histogram to improve frame contrast. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class used to do histogram related operations on frames, such as displaying color histograms and equalizing color histograms. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classHistogram_a078c733d42e815b49e1e11ffdbf987db}\label{classHistogram_a078c733d42e815b49e1e11ffdbf987db} 
+\index{Histogram@{Histogram}!Histogram@{Histogram}}
+\index{Histogram@{Histogram}!Histogram@{Histogram}}
+\doxysubsubsection{\texorpdfstring{Histogram()}{Histogram()}}
+{\footnotesize\ttfamily Histogram\+::\+Histogram (\begin{DoxyParamCaption}\item[{const Mat \&}]{f }\end{DoxyParamCaption})}
+
+
+
+\doxylink{classHistogram}{Histogram} class constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em f} & Input frame. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classHistogram_a6ee02d4540f0855e9d12c1cda5ca7a3e}\label{classHistogram_a6ee02d4540f0855e9d12c1cda5ca7a3e} 
+\index{Histogram@{Histogram}!equalizeHistogram@{equalizeHistogram}}
+\index{equalizeHistogram@{equalizeHistogram}!Histogram@{Histogram}}
+\doxysubsubsection{\texorpdfstring{equalizeHistogram()}{equalizeHistogram()}}
+{\footnotesize\ttfamily cv\+::\+Mat Histogram\+::equalize\+Histogram (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Equalizes histogram to improve frame contrast. 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{classFrame}{Frame} with equalized histograms. 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

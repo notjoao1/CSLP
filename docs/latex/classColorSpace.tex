@@ -1,14 +1,69 @@
-\hypertarget{classColorSpace}{}\doxysection{Color\+Space Class Reference}
-\label{classColorSpace}\index{ColorSpace@{ColorSpace}}
-\doxysubsection*{Static Public Member Functions}
+\doxysection{Color\+Space Class Reference}
+\hypertarget{classColorSpace}{}\label{classColorSpace}\index{ColorSpace@{ColorSpace}}
+
+
+Class that supports all Color Space operations inside a \doxylink{structChannels}{Channels} Object.  
+
+
+
+
+{\ttfamily \#include $<$Color\+Space.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classColorSpace_adfa6849d7b2e73c94ee4a140ac82008e}\label{classColorSpace_adfa6849d7b2e73c94ee4a140ac82008e}} 
-static \mbox{\hyperlink{structChannels}{Channels}} {\bfseries extend} (\mbox{\hyperlink{structChannels}{Channels}} frame, Color type)
-\item 
-\mbox{\Hypertarget{classColorSpace_a4bb6a0c40799e946d6d6e1c6ef9e1f7e}\label{classColorSpace_a4bb6a0c40799e946d6d6e1c6ef9e1f7e}} 
-static \mbox{\hyperlink{structChannels}{Channels}} {\bfseries convert} (\mbox{\hyperlink{structChannels}{Channels}} frame, Color src, Color dest)
-\end{DoxyCompactItemize}
+static \mbox{\hyperlink{structChannels}{Channels}} \mbox{\hyperlink{classColorSpace_adfa6849d7b2e73c94ee4a140ac82008e}{extend}} (\mbox{\hyperlink{structChannels}{Channels}} frame, Color type)
+\begin{DoxyCompactList}\small\item\em Extends a sub-\/sampled object to full-\/definition. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{structChannels}{Channels}} \mbox{\hyperlink{classColorSpace_a4bb6a0c40799e946d6d6e1c6ef9e1f7e}{convert}} (\mbox{\hyperlink{structChannels}{Channels}} frame, Color src, Color dest)
+\begin{DoxyCompactList}\small\item\em Converts a \doxylink{structChannels}{Channels} object from Color Space src to dest. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that supports all Color Space operations inside a \doxylink{structChannels}{Channels} Object. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classColorSpace_a4bb6a0c40799e946d6d6e1c6ef9e1f7e}\label{classColorSpace_a4bb6a0c40799e946d6d6e1c6ef9e1f7e} 
+\index{ColorSpace@{ColorSpace}!convert@{convert}}
+\index{convert@{convert}!ColorSpace@{ColorSpace}}
+\doxysubsubsection{\texorpdfstring{convert()}{convert()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChannels}{Channels}} Color\+Space\+::convert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChannels}{Channels}}}]{frame,  }\item[{Color}]{src,  }\item[{Color}]{dest }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Converts a \doxylink{structChannels}{Channels} object from Color Space src to dest. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & frame to be extended, stored in \doxylink{structChannels}{Channels} structure. \\
+\hline
+{\em src} & Original Color Space of frame. \\
+\hline
+{\em dst} & Intended final Color Space of frame. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Altered \doxylink{structChannels}{Channels} Object. 
+\end{DoxyReturn}
+\Hypertarget{classColorSpace_adfa6849d7b2e73c94ee4a140ac82008e}\label{classColorSpace_adfa6849d7b2e73c94ee4a140ac82008e} 
+\index{ColorSpace@{ColorSpace}!extend@{extend}}
+\index{extend@{extend}!ColorSpace@{ColorSpace}}
+\doxysubsubsection{\texorpdfstring{extend()}{extend()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChannels}{Channels}} Color\+Space\+::extend (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChannels}{Channels}}}]{frame,  }\item[{Color}]{type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Extends a sub-\/sampled object to full-\/definition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & frame to be extended, stored in \doxylink{structChannels}{Channels} structure. \\
+\hline
+{\em type} & Color Space of frame. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Altered \doxylink{structChannels}{Channels} Object. 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

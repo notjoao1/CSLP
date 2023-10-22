@@ -1,0 +1,27 @@
+\doxysection{Blur.\+h}
+\hypertarget{Blur_8h_source}{}\label{Blur_8h_source}\index{src/Blur.h@{src/Blur.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ JPe\_D\ on\ 10/17/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ GTD\_VC\_BLUR\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ GTD\_VC\_BLUR\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}Filter.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classBlur}{Blur}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classEffect}{Effect}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{classFilter}{Filter}}\ f;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{static}\ Mat\ createBlurKernel();}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{classBlur_a8662d98d6e52841270fc4e42c1a7dd52}{Blur}}();}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classBlur_aab80dd1a9ce6ef4b039833f55ca23b94}{apply}}(\mbox{\hyperlink{classFrame}{Frame}}*\ frame)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//GTD\_VC\_BLUR\_H}}
+
+\end{DoxyCode}

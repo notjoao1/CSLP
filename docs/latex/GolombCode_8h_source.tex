@@ -1,0 +1,39 @@
+\doxysection{Golomb\+Code.\+h}
+\hypertarget{GolombCode_8h_source}{}\label{GolombCode_8h_source}\index{src/GolombCode.h@{src/GolombCode.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ Kikom\ on\ 01/10/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ GTD\_VC\_GOLOMBCODE\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ GTD\_VC\_GOLOMBCODE\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}BitStreamRead.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}BitStreamWrite.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classGolombCode}{GolombCode}}\ \{}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<bool>\ \mbox{\hyperlink{classGolombCode_ad758b9fcd0c694cde6fae3f5961690ea}{encode}}(\textcolor{keywordtype}{int}\ num,\ \textcolor{keywordtype}{int}\ m);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classGolombCode_abcd5bbec9e1de0e64a0af25f057b7263}{decode\_one}}(\textcolor{keywordtype}{int}\ m,\ std::vector<bool>\ stream);}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<int>\ \mbox{\hyperlink{classGolombCode_a1b598e166038949947a89744e5ca2810}{decode}}(\textcolor{keywordtype}{int}\ m,\ \textcolor{keyword}{const}\ std::vector<bool>\ \&stream,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classGolombCode_aee717bd0d887b4a016690ad65fb59c4d}{decodeFrom64bits}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ i,\ \textcolor{keywordtype}{int}\ m);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGolombCode_ad758b9fcd0c694cde6fae3f5961690ea}{encode}}(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ m,\ \mbox{\hyperlink{classBitStreamWrite}{BitStreamWrite}}\ \&stream);}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGolombCode_ad758b9fcd0c694cde6fae3f5961690ea}{encode}}(std::vector<int>\ num\_array,\ \textcolor{keywordtype}{int}\ m,\ \mbox{\hyperlink{classBitStreamWrite}{BitStreamWrite}}\ \&stream);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classGolombCode_abcd5bbec9e1de0e64a0af25f057b7263}{decode\_one}}(\textcolor{keywordtype}{int}\ m,\ \mbox{\hyperlink{classBitStreamRead}{BitStreamRead}}\ \&stream);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<int>\ \mbox{\hyperlink{classGolombCode_a1b598e166038949947a89744e5ca2810}{decode}}(\textcolor{keywordtype}{int}\ m,\ \mbox{\hyperlink{classBitStreamRead}{BitStreamRead}}\ \&b,\ \textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{00085\ \};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//GTD\_VC\_GOLOMBCODE\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,5 @@
+<map id="Threshold" name="Threshold">
+<area shape="rect" id="Node000001" title="Class used apply threshold based segmentation on an image." alt="" coords="5,79,92,104"/>
+<area shape="rect" id="Node000002" href="$classEffect.html" title="Abstract class used to define an interface for effects to apply to an image." alt="" coords="19,5,78,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="51,44,51,79,46,79,46,44"/>
+</map>

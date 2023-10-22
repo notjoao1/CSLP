@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['read_59',['read',['../classBitStreamRead.html#ac72e2c947cdc7a9c4c6dd12790bb7e78',1,'BitStreamRead']]],
-  ['read_5fbit_60',['read_bit',['../classBitStreamRead.html#ae568c70248fea252fb3c2e346a4d64ff',1,'BitStreamRead']]]
+  ['getchannels_0',['getChannels',['../classFrame.html#a25dcde58b66cadfe53ed03cb6e131567',1,'Frame']]],
+  ['getframe_1',['getFrame',['../classFrame.html#afcc3a4688e387290bcbb2370a37935a1',1,'Frame']]]
 ];

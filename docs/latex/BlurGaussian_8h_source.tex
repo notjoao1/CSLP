@@ -1,0 +1,28 @@
+\doxysection{Blur\+Gaussian.\+h}
+\hypertarget{BlurGaussian_8h_source}{}\label{BlurGaussian_8h_source}\index{src/BlurGaussian.h@{src/BlurGaussian.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ JPe\_D\ on\ 10/17/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ GTD\_VC\_BLURGAUSSIAN\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ GTD\_VC\_BLURGAUSSIAN\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}Filter.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classBlurGaussian}{BlurGaussian}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classEffect}{Effect}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{classFilter}{Filter}}\ f;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ Mat\ createBlurKernel();}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{classBlurGaussian_a78ce444863420a0588f1b9ae4ea51574}{BlurGaussian}}();}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classBlurGaussian_ad01acb2a5a2bf907613937115accae1d}{apply}}(\mbox{\hyperlink{classFrame}{Frame}}*\ frame)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00036\ \};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//GTD\_VC\_BLURGAUSSIAN\_H}}
+
+\end{DoxyCode}

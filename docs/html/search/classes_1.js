@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['channels_34',['Channels',['../structChannels.html',1,'']]],
-  ['colorspace_35',['ColorSpace',['../classColorSpace.html',1,'']]]
+  ['channels_0',['Channels',['../structChannels.html',1,'']]],
+  ['colorspace_1',['ColorSpace',['../classColorSpace.html',1,'']]]
 ];

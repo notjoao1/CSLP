@@ -1,14 +1,43 @@
-\hypertarget{classVideoManipulator}{}\doxysection{Video\+Manipulator Class Reference}
-\label{classVideoManipulator}\index{VideoManipulator@{VideoManipulator}}
-\doxysubsection*{Public Member Functions}
+\doxysection{Video\+Manipulator Class Reference}
+\hypertarget{classVideoManipulator}{}\label{classVideoManipulator}\index{VideoManipulator@{VideoManipulator}}
+
+
+Class used to play video files.  
+
+
+
+
+{\ttfamily \#include $<$Video\+Manipulator.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classVideoManipulator_a73bd4908319ed09299cb8a2fee85f5ec}\label{classVideoManipulator_a73bd4908319ed09299cb8a2fee85f5ec}} 
-void {\bfseries from\+File} (const string \&filename)
-\item 
-\mbox{\Hypertarget{classVideoManipulator_ac792d38bc1fd1a10022e3b7b1efca2d7}\label{classVideoManipulator_ac792d38bc1fd1a10022e3b7b1efca2d7}} 
+bool \mbox{\hyperlink{classVideoManipulator_aa689061e8fb88d59d13e94ca43f0a4b4}{from\+File}} (string filename)
+\begin{DoxyCompactList}\small\item\em Read video from video file. \end{DoxyCompactList}\item 
+\Hypertarget{classVideoManipulator_ac792d38bc1fd1a10022e3b7b1efca2d7}\label{classVideoManipulator_ac792d38bc1fd1a10022e3b7b1efca2d7} 
 void {\bfseries play} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Play video using Open\+CV Video\+Capture class. Will play with original framerate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class used to play video files. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVideoManipulator_aa689061e8fb88d59d13e94ca43f0a4b4}\label{classVideoManipulator_aa689061e8fb88d59d13e94ca43f0a4b4} 
+\index{VideoManipulator@{VideoManipulator}!fromFile@{fromFile}}
+\index{fromFile@{fromFile}!VideoManipulator@{VideoManipulator}}
+\doxysubsubsection{\texorpdfstring{fromFile()}{fromFile()}}
+{\footnotesize\ttfamily bool Video\+Manipulator\+::from\+File (\begin{DoxyParamCaption}\item[{string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Read video from video file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Path to the source video. \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

@@ -8,26 +8,32 @@
 #include "VideoManipulator.h"
 #include "ColorSpace.h"
 #include "Channels.h"
+#include "Blur.h"
+#include "BlurGaussian.h"
+#include "Colors.h"
+#include "Grayscale.h"
+#include "Histogram.h"
+#include "WatermarkImage.h"
+#include "WatermarkText.h"
 
 int main() {
-
     VideoManipulator vm;
-    Mat image= cv::imread("../resources/image.jpeg");
-    Mat test;
-    vector<Mat> channels1(3);
-    split(image,channels1);
-    Channels channels(channels1[0],channels1[1],channels1[2],RGB);
-    channels=ColorSpace::convert(channels,RGB,YUV);
-    channels=ColorSpace::extend(channels,YUV);
-    merge(vector<Mat>{channels.value0,channels.value1,channels.value2},test);
-    imshow("Original RGB",image);
-    cvtColor(test,test,COLOR_YUV2RGB);
-    imshow("Final YUV", test);
+    Mat image= cv::imread("resources/bu.PNG");
+    Histogram h(image);
+    h.displayHistograms();
+    Mat equalizedBuh = h.equalizeHistogram();
+    WatermarkImage wi(cv::imread("resources/bu.PNG"));
+    WatermarkText wt("buh", BLACK);
+    vector<Mat> split_buh;
+    split(equalizedBuh, split_buh);
+    Channels c(split_buh[0], split_buh[1], split_buh[2], BGR);
+    Frame f(c);
+    f.addEffect(&wi);
+    f.addEffect(&wt);
+    f.applyEffects();
+    imshow("ORIGINAL BUH", image);
+    imshow("EQUALIZED & WATERMARKED BUH", f.getChannels().toMat());
     waitKey();
-    cout<<image.type();
-    //ColorSpace::YUV4_2_0(image);
-
-
     return 0;
 
 }

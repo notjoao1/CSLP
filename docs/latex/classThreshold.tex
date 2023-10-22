@@ -1,22 +1,81 @@
-\hypertarget{classThreshold}{}\doxysection{Threshold Class Reference}
-\label{classThreshold}\index{Threshold@{Threshold}}
+\doxysection{Threshold Class Reference}
+\hypertarget{classThreshold}{}\label{classThreshold}\index{Threshold@{Threshold}}
+
+
+Class used apply threshold based segmentation on an image.  
+
+
+
+
+{\ttfamily \#include $<$Threshold.\+h$>$}
+
 
 
 Inheritance diagram for Threshold\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=145pt]{classThreshold__inherit__graph}
+\end{center}
+\end{figure}
 
 
 Collaboration diagram for Threshold\+:
-% FIG 1
-\doxysubsection*{Public Member Functions}
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=145pt]{classThreshold__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classThreshold_a4908f9ca3a4451f51bb2411de9c66a51}\label{classThreshold_a4908f9ca3a4451f51bb2411de9c66a51}} 
-{\bfseries Threshold} (unsigned char threshold, bool inverted)
-\item 
-\mbox{\Hypertarget{classThreshold_a4dac31c5e262c7b23e6f6e9cf54048a5}\label{classThreshold_a4dac31c5e262c7b23e6f6e9cf54048a5}} 
-void {\bfseries apply} (\mbox{\hyperlink{classFrame}{Frame}} $\ast$frame) override
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{classThreshold_a4908f9ca3a4451f51bb2411de9c66a51}{Threshold}} (unsigned char threshold, bool inverted)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classThreshold}{Threshold} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classThreshold_a4dac31c5e262c7b23e6f6e9cf54048a5}{apply}} (\mbox{\hyperlink{classFrame}{Frame}} \texorpdfstring{$\ast$}{*}frame) override
+\begin{DoxyCompactList}\small\item\em Apply image segmentation algorithm based on threshold with given values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class used apply threshold based segmentation on an image. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classThreshold_a4908f9ca3a4451f51bb2411de9c66a51}\label{classThreshold_a4908f9ca3a4451f51bb2411de9c66a51} 
+\index{Threshold@{Threshold}!Threshold@{Threshold}}
+\index{Threshold@{Threshold}!Threshold@{Threshold}}
+\doxysubsubsection{\texorpdfstring{Threshold()}{Threshold()}}
+{\footnotesize\ttfamily Threshold\+::\+Threshold (\begin{DoxyParamCaption}\item[{unsigned char}]{threshold,  }\item[{bool}]{inverted }\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classThreshold}{Threshold} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em threshold} & \doxylink{classThreshold}{Threshold} for pixel values \\
+\hline
+{\em inverted} & Invert the pixel output values during application of algorithm \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classThreshold_a4dac31c5e262c7b23e6f6e9cf54048a5}\label{classThreshold_a4dac31c5e262c7b23e6f6e9cf54048a5} 
+\index{Threshold@{Threshold}!apply@{apply}}
+\index{apply@{apply}!Threshold@{Threshold}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Threshold\+::apply (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFrame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Apply image segmentation algorithm based on threshold with given values. 
+
+
+
+Implements \mbox{\hyperlink{classEffect_ae2b1b00e90b01774ccc4c4a2f3b33ae4}{Effect}}.
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

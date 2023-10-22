@@ -1,22 +1,84 @@
-\hypertarget{classWatermarkImage}{}\doxysection{Watermark\+Image Class Reference}
-\label{classWatermarkImage}\index{WatermarkImage@{WatermarkImage}}
+\doxysection{Watermark\+Image Class Reference}
+\hypertarget{classWatermarkImage}{}\label{classWatermarkImage}\index{WatermarkImage@{WatermarkImage}}
+
+
+Class used to apply a watermark image onto another frame.  
+
+
+
+
+{\ttfamily \#include $<$Watermark\+Image.\+h$>$}
+
 
 
 Inheritance diagram for Watermark\+Image\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=181pt]{classWatermarkImage__inherit__graph}
+\end{center}
+\end{figure}
 
 
 Collaboration diagram for Watermark\+Image\+:
-% FIG 1
-\doxysubsection*{Public Member Functions}
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=181pt]{classWatermarkImage__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classWatermarkImage_af9110b9341d85dcdc86c0e5108b20109}\label{classWatermarkImage_af9110b9341d85dcdc86c0e5108b20109}} 
-{\bfseries Watermark\+Image} (Mat watermark)
-\item 
-\mbox{\Hypertarget{classWatermarkImage_a6de23551c117dc7d7d1fe5c4e78f4e9a}\label{classWatermarkImage_a6de23551c117dc7d7d1fe5c4e78f4e9a}} 
-void {\bfseries apply} (\mbox{\hyperlink{classFrame}{Frame}} $\ast$frame) override
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{classWatermarkImage_af9110b9341d85dcdc86c0e5108b20109}{Watermark\+Image}} (Mat watermark)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classWatermarkImage}{Watermark\+Image} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWatermarkImage_a6de23551c117dc7d7d1fe5c4e78f4e9a}{apply}} (\mbox{\hyperlink{classFrame}{Frame}} \texorpdfstring{$\ast$}{*}frame) override
+\begin{DoxyCompactList}\small\item\em Apply watermark image onto input \textquotesingle{}frame\textquotesingle{}. By default, will apply watermark in top corner with 20\% size of \textquotesingle{}frame\textquotesingle{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class used to apply a watermark image onto another frame. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classWatermarkImage_af9110b9341d85dcdc86c0e5108b20109}\label{classWatermarkImage_af9110b9341d85dcdc86c0e5108b20109} 
+\index{WatermarkImage@{WatermarkImage}!WatermarkImage@{WatermarkImage}}
+\index{WatermarkImage@{WatermarkImage}!WatermarkImage@{WatermarkImage}}
+\doxysubsubsection{\texorpdfstring{WatermarkImage()}{WatermarkImage()}}
+{\footnotesize\ttfamily Watermark\+Image\+::\+Watermark\+Image (\begin{DoxyParamCaption}\item[{Mat}]{watermark }\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classWatermarkImage}{Watermark\+Image} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em watermark} & Matrix representing the watermark image to be applied. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classWatermarkImage_a6de23551c117dc7d7d1fe5c4e78f4e9a}\label{classWatermarkImage_a6de23551c117dc7d7d1fe5c4e78f4e9a} 
+\index{WatermarkImage@{WatermarkImage}!apply@{apply}}
+\index{apply@{apply}!WatermarkImage@{WatermarkImage}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Watermark\+Image\+::apply (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFrame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Apply watermark image onto input \textquotesingle{}frame\textquotesingle{}. By default, will apply watermark in top corner with 20\% size of \textquotesingle{}frame\textquotesingle{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & \doxylink{classFrame}{Frame} in which the watermark image will be applied. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classEffect_ae2b1b00e90b01774ccc4c4a2f3b33ae4}{Effect}}.
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

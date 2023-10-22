@@ -1,0 +1,29 @@
+\doxysection{Filter.\+h}
+\hypertarget{Filter_8h_source}{}\label{Filter_8h_source}\index{src/Filter.h@{src/Filter.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ JPe\_D\ on\ 10/4/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ GTD\_VC\_FILTER\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ GTD\_VC\_FILTER\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Effect.h"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00016\ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classFilter}{Filter}}\ :\ \textcolor{keyword}{public}\ \ \mbox{\hyperlink{classEffect}{Effect}}\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00019\ \ \ \ \ Mat\ kernel;}
+\DoxyCodeLine{00025\ \ \ \ \ Mat\ convolute(Mat\ input\_frame);}
+\DoxyCodeLine{00033\ \ \ \ \ Mat\ applyPadding(Mat\ frame,\ \textcolor{keywordtype}{int}\ padding\_size);}
+\DoxyCodeLine{00034\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classFilter}{Filter}}(Mat\ kernel);}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFilter_a6516371f944caf11a13913a90803265e}{apply}}(\mbox{\hyperlink{classFrame}{Frame}}*\ frame)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00046\ \};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//GTD\_VC\_FILTER\_H}}
+
+\end{DoxyCode}

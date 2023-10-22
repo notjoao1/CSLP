@@ -1,0 +1,37 @@
+\doxysection{Channels.\+h}
+\hypertarget{Channels_8h_source}{}\label{Channels_8h_source}\index{src/Channels.h@{src/Channels.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ tiago\ on\ 13-\/10-\/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ GTD\_VC\_CHANNELS\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ GTD\_VC\_CHANNELS\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}opencv2/opencv.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Colors.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00013\ \textcolor{keyword}{using\ namespace\ }cv;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structChannels}{Channels}}\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ Mat\ value0;}
+\DoxyCodeLine{00017\ \ \ \ \ Mat\ value1;}
+\DoxyCodeLine{00018\ \ \ \ \ Mat\ value2;}
+\DoxyCodeLine{00019\ \ \ \ \ Color\ Colorspace;}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{structChannels}{Channels}}(Mat\ v1,Color\ v4)}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ :\ value0(std::move(v1)),\ value1(Mat::zeros(1,1,uchar())),\ value2(Mat::zeros(1,1,uchar())),\ Colorspace(v4)\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \}}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{structChannels}{Channels}}(Mat\ v1,\ Mat\ v2,\ Mat\ v3,Color\ v4)}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ :\ value0(std::move(v1)),\ value1(std::move(v2)),\ value2(std::move(v3)),\ Colorspace(v4)\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ setColorspace(Color\ color);}
+\DoxyCodeLine{00027\ \ \ \ \ Mat\ toMat();}
+\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//GTD\_VC\_CHANNELS\_H}}
+
+\end{DoxyCode}

@@ -1,19 +1,64 @@
-\hypertarget{classGrayscale}{}\doxysection{Grayscale Class Reference}
-\label{classGrayscale}\index{Grayscale@{Grayscale}}
+\doxysection{Grayscale Class Reference}
+\hypertarget{classGrayscale}{}\label{classGrayscale}\index{Grayscale@{Grayscale}}
+
+
+Class used to apply a grayscale effect to an image.  
+
+
+
+
+{\ttfamily \#include $<$Grayscale.\+h$>$}
+
 
 
 Inheritance diagram for Grayscale\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=145pt]{classGrayscale__inherit__graph}
+\end{center}
+\end{figure}
 
 
 Collaboration diagram for Grayscale\+:
-% FIG 1
-\doxysubsection*{Public Member Functions}
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=145pt]{classGrayscale__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classGrayscale_ab8a2b170e63f7ca7679488f9b5c4e2ed}\label{classGrayscale_ab8a2b170e63f7ca7679488f9b5c4e2ed}} 
-void {\bfseries apply} (\mbox{\hyperlink{classFrame}{Frame}} $\ast$frame) override
-\end{DoxyCompactItemize}
+void \mbox{\hyperlink{classGrayscale_ab8a2b170e63f7ca7679488f9b5c4e2ed}{apply}} (\mbox{\hyperlink{classFrame}{Frame}} \texorpdfstring{$\ast$}{*}frame) override
+\begin{DoxyCompactList}\small\item\em Change frame\textquotesingle{}s colorspace to \doxylink{classGrayscale}{Grayscale}. Only works for multi-\/channel frames BGR frames. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class used to apply a grayscale effect to an image. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classGrayscale_ab8a2b170e63f7ca7679488f9b5c4e2ed}\label{classGrayscale_ab8a2b170e63f7ca7679488f9b5c4e2ed} 
+\index{Grayscale@{Grayscale}!apply@{apply}}
+\index{apply@{apply}!Grayscale@{Grayscale}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Grayscale\+::apply (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFrame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Change frame\textquotesingle{}s colorspace to \doxylink{classGrayscale}{Grayscale}. Only works for multi-\/channel frames BGR frames. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & The input frame in the effect will be applied. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classEffect_ae2b1b00e90b01774ccc4c4a2f3b33ae4}{Effect}}.
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
