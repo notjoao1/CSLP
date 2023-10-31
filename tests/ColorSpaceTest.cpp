@@ -5,8 +5,8 @@
 #include "opencv2/opencv.hpp"
 #include "../src/ImageManipulator.h"
 #include "../src/VideoManipulator.h"
-#include "../src/ColorSpace.h"
-#include "../src/Channels.h"
+#include "../src/Color/ColorSpace.h"
+#include "../src/Storage/Channels.h"
 
 int main() {
 

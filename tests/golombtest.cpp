@@ -2,8 +2,8 @@
 // Created by Kikom on 13/10/2023.
 //
 
-#include "../src/BitStream.h"
-#include "../src/GolombCode.h"
+#include "../src/BitStream/BitStream.h"
+#include "../src/Encoding/GolombCode.h"
 #include "iostream"
 #include <filesystem>
 

@@ -5,7 +5,7 @@
 #include "Frame.h"
 
 #include <utility>
-#include "Effect.h"
+#include "../Effects/Effect.h"
 void Frame::applyEffects() {
     for(Effect* effect:this->effects){
         effect->apply(this);

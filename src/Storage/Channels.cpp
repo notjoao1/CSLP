@@ -2,7 +2,7 @@
 // Created by tiago on 17-10-2023.
 //
 #include "Channels.h"
-#include "ColorSpace.h"
+#include "../Color/ColorSpace.h"
 
 Mat Channels::toMat(){
     Mat res=Mat::zeros(value0.rows,value0.cols,uchar());

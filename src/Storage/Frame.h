@@ -7,7 +7,7 @@
 
 #include "opencv2/opencv.hpp"
 #include "Channels.h"
-#include "ColorSpace.h"
+#include "../Color/ColorSpace.h"
 #include <string>
 
 

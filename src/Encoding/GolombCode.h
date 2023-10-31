@@ -6,8 +6,8 @@
 #define GTD_VC_GOLOMBCODE_H
 
 #include <vector>
-#include "BitStreamRead.h"
-#include "BitStreamWrite.h"
+#include "../BitStream/BitStreamRead.h"
+#include "../BitStream/BitStreamWrite.h"
 
 /**
  * @class GolombCode

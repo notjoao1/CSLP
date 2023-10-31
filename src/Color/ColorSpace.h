@@ -6,7 +6,7 @@
 #define GTD_VC_COLORSPACE_H
 #include "opencv2/opencv.hpp"
 #include <string>
-#include "Channels.h"
+#include "../Storage/Channels.h"
 #include "Colors.h"
 
 using namespace std;

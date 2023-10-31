@@ -7,7 +7,7 @@
 
 #include <utility>
 #include "opencv2/opencv.hpp"
-#include "Colors.h"
+#include "../Color/Colors.h"
 
 using namespace std;
 using namespace cv;

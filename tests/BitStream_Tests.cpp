@@ -2,7 +2,7 @@
 // Created by JPe_D on 10/13/2023.
 //
 
-#include "../src/BitStream.h"
+#include "../src/BitStream/BitStream.h"
 #include <string>
 #include <filesystem>
 #include <iostream>
