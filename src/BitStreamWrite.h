@@ -16,7 +16,7 @@ private:
     unsigned long long small_buffer = 0; /**< Small buffer to store bits temporarily. */
     int small_buffer_pointer = -1; /**< Pointer to the current position in the small buffer. */
     std::vector<unsigned long long> big_buffer; /**< Vector to store a large buffer of bits. */
-    const long big_buffer_max_size = 4096*256; /**< Maximum size of the big buffer. */
+    const long big_buffer_max_size = 4096; /**< Maximum size of the big buffer. */
     std::fstream file; /**< File stream for writing. */
 
     /**
