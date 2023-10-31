@@ -12,7 +12,7 @@ private:
     unsigned long long small_buffer = 0;
     int small_buffer_pointer = -1;
     std::vector<unsigned long long> big_buffer;
-    const long big_buffer_max_size = 4096;
+    const long big_buffer_max_size = 65536;
     long big_buffer_pointer = big_buffer_max_size-1;
     std::fstream file;
 
