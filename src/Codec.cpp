@@ -3,16 +3,26 @@
 //
 
 #include "Codec.h"
+#include <string>
 
-void Codec::encode() {
+
+// TODO: meter o input_file no
+Codec::Codec(const std::string& input_file, const std::string& output_file) : v(), stream(output_file) {
+}
+
+void Codec::encodeVideo() {
 
 }
 
-void Codec::decode() {
+void Codec::decodeVideo() {
 
 }
 
-Codec::Codec(VideoManipulator v, BitStreamWrite stream) {
+void Codec::encodeChannel() {
+
+}
+
+void Codec::decodeChannel() {
 
 }
 

@@ -13,12 +13,16 @@ using namespace std;
 
 class Codec {
 public:
-    Codec(VideoManipulator v, BitStreamWrite stream);
-    void encode();
-    void decode();
+    Codec(const std::string& input_file, const std::string& output_file);
+    void encodeVideo();
+    void decodeVideo();
+    void encodeChannel();
+    void decodeChannel();
     static unsigned char JPEG_LS(unsigned char a,unsigned char b,unsigned char c,unsigned char x);
 
 private:
+    VideoManipulator v;
+    BitStreamWrite stream;
 };
 
 
