@@ -24,6 +24,8 @@ add_executable(GTD-VC src/Representation/ImageManipulator.cpp
         src/Effects/Threshold.cpp
         src/Effects/Blur.cpp
         src/Effects/BlurGaussian.cpp
+        src/Codec.cpp
+        src/Codec.h
 )
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})
