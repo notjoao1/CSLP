@@ -5,9 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(OpenCV REQUIRED)
 
-add_executable(GTD-VC src/main.cpp
-        src/ImageManipulator.cpp
-        src/VideoManipulator.cpp
+add_executable(GTD-VC src/Representation/ImageManipulator.cpp
+        src/Representation/VideoManipulator.cpp
         src/Storage/Channels.cpp
         src/Effects/Effect.h
         src/Storage/Frame.cpp

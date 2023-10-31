@@ -3,8 +3,8 @@
 //
 #include <iostream>
 #include "opencv2/opencv.hpp"
-#include "../src/ImageManipulator.h"
-#include "../src/VideoManipulator.h"
+#include "../src/Representation/ImageManipulator.h"
+#include "../src/Representation/VideoManipulator.h"
 #include "../src/Color/ColorSpace.h"
 #include "../src/Storage/Channels.h"
 
