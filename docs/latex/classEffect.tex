@@ -1,5 +1,56 @@
-\hypertarget{classEffect}{}\doxysection{Effect Class Reference}
-\label{classEffect}\index{Effect@{Effect}}
+\doxysection{Effect Class Reference}
+\hypertarget{classEffect}{}\label{classEffect}\index{Effect@{Effect}}
+
+
+Abstract class used to define an interface for effects to apply to an image.  
+
+
+
+
+{\ttfamily \#include $<$Effect.\+h$>$}
+
 
 
 Inheritance diagram for Effect\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classEffect__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{classEffect_ae2b1b00e90b01774ccc4c4a2f3b33ae4}{apply}} (\mbox{\hyperlink{classFrame}{Frame}} \texorpdfstring{$\ast$}{*}frame)=0
+\begin{DoxyCompactList}\small\item\em Abstract method to be overwritten by children classes to apply effects to images. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract class used to define an interface for effects to apply to an image. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classEffect_ae2b1b00e90b01774ccc4c4a2f3b33ae4}\label{classEffect_ae2b1b00e90b01774ccc4c4a2f3b33ae4} 
+\index{Effect@{Effect}!apply@{apply}}
+\index{apply@{apply}!Effect@{Effect}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily virtual void Effect\+::apply (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFrame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Abstract method to be overwritten by children classes to apply effects to images. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & The input frame in which the effect will be applied. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classBlur_aab80dd1a9ce6ef4b039833f55ca23b94}{Blur}}, \mbox{\hyperlink{classBlurGaussian_ad01acb2a5a2bf907613937115accae1d}{Blur\+Gaussian}}, \mbox{\hyperlink{classFilter_a6516371f944caf11a13913a90803265e}{Filter}}, \mbox{\hyperlink{classGrayscale_ab8a2b170e63f7ca7679488f9b5c4e2ed}{Grayscale}}, \mbox{\hyperlink{classThreshold_a4dac31c5e262c7b23e6f6e9cf54048a5}{Threshold}}, \mbox{\hyperlink{classWatermarkImage_a6de23551c117dc7d7d1fe5c4e78f4e9a}{Watermark\+Image}}, and \mbox{\hyperlink{classWatermarkText_a8e0934d07136da59036c2d7c2acac314}{Watermark\+Text}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/Effect.\+h\end{DoxyCompactItemize}

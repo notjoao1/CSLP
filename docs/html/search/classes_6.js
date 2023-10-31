@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['imagemanipulator_25',['ImageManipulator',['../classImageManipulator.html',1,'']]]
+  ['imagemanipulator_0',['ImageManipulator',['../classImageManipulator.html',1,'']]]
 ];

@@ -79,27 +79,6 @@ void BitStreamRead::close() {
 }
 
 
-void BitStreamRead::push_front(int n,unsigned long long bits) {
-    bits<<=64-n;
-    bits>>=64-n;
-    if(this->small_buffer_pointer+n>64){
-        int a = 64-this->small_buffer_pointer;
-        bits>>=a;
-        bits<<=64-n+a;
-        this->small_buffer=bits;
-        this->big_buffer_pointer--;
-        this->small_buffer_pointer=n-a;
-        return;
-    }
-    this->small_buffer>>=n;
-    if(n>63)
-        this->small_buffer=0;
-    bits<<=64-n+this->small_buffer_pointer;
-    this->small_buffer_pointer+=n;
-    this->small_buffer = this->small_buffer | bits;
-
-}
-
 void BitStreamRead::back_front(int n) {
     if(this->small_buffer_pointer+n>64){
         if(big_buffer_pointer<1){

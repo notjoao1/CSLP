@@ -10,9 +10,17 @@
 
 using namespace cv;
 
-// abstract class for effects to apply to each frame
+/**
+ * @class Effect
+ * @brief Abstract class used to define an interface for effects to apply to an image.
+ */
 class Effect {
 public:
+    /**
+      * @brief Abstract method to be overwritten by children classes to
+      * apply effects to images.
+      * @param frame The input frame in which the effect will be applied.
+      */
     virtual void apply(Frame* frame) = 0;
 };
 

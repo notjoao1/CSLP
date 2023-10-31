@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['golombcode_22',['GolombCode',['../classGolombCode.html',1,'']]],
-  ['grayscale_23',['Grayscale',['../classGrayscale.html',1,'']]]
+  ['golombcode_0',['GolombCode',['../classGolombCode.html',1,'']]],
+  ['grayscale_1',['Grayscale',['../classGrayscale.html',1,'']]]
 ];

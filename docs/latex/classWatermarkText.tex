@@ -1,25 +1,89 @@
-\hypertarget{classWatermarkText}{}\doxysection{Watermark\+Text Class Reference}
-\label{classWatermarkText}\index{WatermarkText@{WatermarkText}}
+\doxysection{Watermark\+Text Class Reference}
+\hypertarget{classWatermarkText}{}\label{classWatermarkText}\index{WatermarkText@{WatermarkText}}
+
+
+Class used to apply watermark text onto an image.  
+
+
+
+
+{\ttfamily \#include $<$Watermark\+Text.\+h$>$}
+
 
 
 Inheritance diagram for Watermark\+Text\+:
-% FIG 0
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=171pt]{classWatermarkText__inherit__graph}
+\end{center}
+\end{figure}
 
 
 Collaboration diagram for Watermark\+Text\+:
-% FIG 1
-\doxysubsection*{Public Member Functions}
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=171pt]{classWatermarkText__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classWatermarkText_a7e96c674e55a87847d9906c384035365}\label{classWatermarkText_a7e96c674e55a87847d9906c384035365}} 
-{\bfseries Watermark\+Text} (string text)
-\item 
-\mbox{\Hypertarget{classWatermarkText_a17ac2240158888fefd0bd5616dbd3fc0}\label{classWatermarkText_a17ac2240158888fefd0bd5616dbd3fc0}} 
-Mat {\bfseries apply} (cv\+::\+Mat frame) override
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{classWatermarkText_a46843758f5cbfd98787ebef0eb99e789}{Watermark\+Text}} (const string \&text, Text\+Color color)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classWatermarkText}{Watermark\+Text} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classWatermarkText_a8e0934d07136da59036c2d7c2acac314}{apply}} (\mbox{\hyperlink{classFrame}{Frame}} \texorpdfstring{$\ast$}{*}frame) override
+\begin{DoxyCompactList}\small\item\em Apply watermark text onto input \textquotesingle{}frame\textquotesingle{}. By default, will apply watermark in bottom corner. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class used to apply watermark text onto an image. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classWatermarkText_a46843758f5cbfd98787ebef0eb99e789}\label{classWatermarkText_a46843758f5cbfd98787ebef0eb99e789} 
+\index{WatermarkText@{WatermarkText}!WatermarkText@{WatermarkText}}
+\index{WatermarkText@{WatermarkText}!WatermarkText@{WatermarkText}}
+\doxysubsubsection{\texorpdfstring{WatermarkText()}{WatermarkText()}}
+{\footnotesize\ttfamily Watermark\+Text\+::\+Watermark\+Text (\begin{DoxyParamCaption}\item[{const string \&}]{text,  }\item[{Text\+Color}]{color }\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{classWatermarkText}{Watermark\+Text} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & String watermark to be applied. \\
+\hline
+{\em color} & Color for watermark text. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classWatermarkText_a8e0934d07136da59036c2d7c2acac314}\label{classWatermarkText_a8e0934d07136da59036c2d7c2acac314} 
+\index{WatermarkText@{WatermarkText}!apply@{apply}}
+\index{apply@{apply}!WatermarkText@{WatermarkText}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Watermark\+Text\+::apply (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFrame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Apply watermark text onto input \textquotesingle{}frame\textquotesingle{}. By default, will apply watermark in bottom corner. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & \doxylink{classFrame}{Frame} in which the watermark image will be applied. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classEffect_ae2b1b00e90b01774ccc4c4a2f3b33ae4}{Effect}}.
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-Watermark\+Text.\+h\item 
-Watermark\+Text.\+cpp\end{DoxyCompactItemize}
+src/Watermark\+Text.\+h\item 
+src/Watermark\+Text.\+cpp\end{DoxyCompactItemize}

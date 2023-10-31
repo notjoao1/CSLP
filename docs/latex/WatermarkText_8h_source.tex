@@ -1,0 +1,38 @@
+\doxysection{Watermark\+Text.\+h}
+\hypertarget{WatermarkText_8h_source}{}\label{WatermarkText_8h_source}\index{src/WatermarkText.h@{src/WatermarkText.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ JPe\_D\ on\ 9/27/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ GTD\_VC\_WATERMARKTEXT\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ GTD\_VC\_WATERMARKTEXT\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Effect.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{enum}\ TextColor\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ BLACK\ =\ 0,}
+\DoxyCodeLine{00017\ \ \ \ \ WHITE\ =\ 255}
+\DoxyCodeLine{00018\ \};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classWatermarkText}{WatermarkText}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classEffect}{Effect}}\ \{}
+\DoxyCodeLine{00025\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{string}\ text;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00030\ \ \ \ \ TextColor\ color;}
+\DoxyCodeLine{00031\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{classWatermarkText}{WatermarkText}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ text,\ TextColor\ color);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classWatermarkText_a8e0934d07136da59036c2d7c2acac314}{apply}}(\mbox{\hyperlink{classFrame}{Frame}}*\ frame)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00047\ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//GTD\_VC\_WATERMARKTEXT\_H}}
+
+\end{DoxyCode}

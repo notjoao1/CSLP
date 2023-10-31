@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['watermarkimage_28',['WatermarkImage',['../classWatermarkImage.html',1,'']]],
-  ['watermarktext_29',['WatermarkText',['../classWatermarkText.html',1,'']]]
+  ['watermarkimage_0',['WatermarkImage',['../classWatermarkImage.html',1,'']]],
+  ['watermarktext_1',['WatermarkText',['../classWatermarkText.html',1,'']]]
 ];

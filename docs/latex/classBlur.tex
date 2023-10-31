@@ -1,0 +1,70 @@
+\doxysection{Blur Class Reference}
+\hypertarget{classBlur}{}\label{classBlur}\index{Blur@{Blur}}
+
+
+Class that wraps around filter to apply a specific filter kernel that produces a \doxylink{classBlur}{Blur} on a frame.  
+
+
+
+
+{\ttfamily \#include $<$Blur.\+h$>$}
+
+
+
+Inheritance diagram for Blur\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=124pt]{classBlur__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Blur\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=124pt]{classBlur__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classBlur_a8662d98d6e52841270fc4e42c1a7dd52}\label{classBlur_a8662d98d6e52841270fc4e42c1a7dd52} 
+{\bfseries Blur} ()
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{classBlur}{Blur} class. Also creates an instance of \doxylink{classFilter}{Filter} with a specific kernel that is created by Blur\+::create\+Blur\+Kernel() \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classBlur_aab80dd1a9ce6ef4b039833f55ca23b94}{apply}} (\mbox{\hyperlink{classFrame}{Frame}} \texorpdfstring{$\ast$}{*}frame) override
+\begin{DoxyCompactList}\small\item\em Applies blur filter kernel to image. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that wraps around filter to apply a specific filter kernel that produces a \doxylink{classBlur}{Blur} on a frame. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classBlur_aab80dd1a9ce6ef4b039833f55ca23b94}\label{classBlur_aab80dd1a9ce6ef4b039833f55ca23b94} 
+\index{Blur@{Blur}!apply@{apply}}
+\index{apply@{apply}!Blur@{Blur}}
+\doxysubsubsection{\texorpdfstring{apply()}{apply()}}
+{\footnotesize\ttfamily void Blur\+::apply (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classFrame}{Frame}} \texorpdfstring{$\ast$}{*}}]{frame }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Applies blur filter kernel to image. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & The input frame in which the blur is applied. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classEffect_ae2b1b00e90b01774ccc4c4a2f3b33ae4}{Effect}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/Blur.\+h\item 
+src/Blur.\+cpp\end{DoxyCompactItemize}

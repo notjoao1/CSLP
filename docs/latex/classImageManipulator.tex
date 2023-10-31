@@ -1,17 +1,56 @@
-\hypertarget{classImageManipulator}{}\doxysection{Image\+Manipulator Class Reference}
-\label{classImageManipulator}\index{ImageManipulator@{ImageManipulator}}
-\doxysubsection*{Public Member Functions}
+\doxysection{Image\+Manipulator Class Reference}
+\hypertarget{classImageManipulator}{}\label{classImageManipulator}\index{ImageManipulator@{ImageManipulator}}
+\doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classImageManipulator_a324231179c86da52f294cc677fe61f1b}\label{classImageManipulator_a324231179c86da52f294cc677fe61f1b}} 
-Mat {\bfseries Read\+Image} (string file\+\_\+name)
-\item 
-\mbox{\Hypertarget{classImageManipulator_a5c3428904abbdc5e66bdd3d850dc7514}\label{classImageManipulator_a5c3428904abbdc5e66bdd3d850dc7514}} 
-bool {\bfseries Write\+Image} (string file\+\_\+name, Mat image)
-\end{DoxyCompactItemize}
+Mat \mbox{\hyperlink{classImageManipulator_a324231179c86da52f294cc677fe61f1b}{Read\+Image}} (string file\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Reads Image from file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classImageManipulator_a5c3428904abbdc5e66bdd3d850dc7514}{Write\+Image}} (string file\+\_\+name, Mat image)
+\begin{DoxyCompactList}\small\item\em Writes Image to file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classImageManipulator_a324231179c86da52f294cc677fe61f1b}\label{classImageManipulator_a324231179c86da52f294cc677fe61f1b} 
+\index{ImageManipulator@{ImageManipulator}!ReadImage@{ReadImage}}
+\index{ReadImage@{ReadImage}!ImageManipulator@{ImageManipulator}}
+\doxysubsubsection{\texorpdfstring{ReadImage()}{ReadImage()}}
+{\footnotesize\ttfamily Mat Image\+Manipulator\+::\+Read\+Image (\begin{DoxyParamCaption}\item[{string}]{file\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Reads Image from file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+\_\+name} & String defining the path to the to be written file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix read from file. 
+\end{DoxyReturn}
+\Hypertarget{classImageManipulator_a5c3428904abbdc5e66bdd3d850dc7514}\label{classImageManipulator_a5c3428904abbdc5e66bdd3d850dc7514} 
+\index{ImageManipulator@{ImageManipulator}!WriteImage@{WriteImage}}
+\index{WriteImage@{WriteImage}!ImageManipulator@{ImageManipulator}}
+\doxysubsubsection{\texorpdfstring{WriteImage()}{WriteImage()}}
+{\footnotesize\ttfamily bool Image\+Manipulator\+::\+Write\+Image (\begin{DoxyParamCaption}\item[{string}]{file\+\_\+name,  }\item[{Mat}]{image }\end{DoxyParamCaption})}
+
+
+
+Writes Image to file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em image} & Image contained in a Open\+CV Matrix object. \\
+\hline
+{\em file\+\_\+name} & String defining the path to the to be written file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if write has been successful. False otherwise. 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-Image\+Manipulator.\+h\item 
-Image\+Manipulator.\+cpp\end{DoxyCompactItemize}
+src/Image\+Manipulator.\+h\item 
+src/Image\+Manipulator.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,45 @@
+\doxysection{Bit\+Stream\+Write.\+h}
+\hypertarget{BitStreamWrite_8h_source}{}\label{BitStreamWrite_8h_source}\index{src/BitStreamWrite.h@{src/BitStreamWrite.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ Kikom\ on\ 03/10/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ GTD\_VC\_BITSTREAMWRITE\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ GTD\_VC\_BITSTREAMWRITE\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vector"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}fstream"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classBitStreamWrite}{BitStreamWrite}}\{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ small\_buffer\ =\ 0;\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{int}\ small\_buffer\_pointer\ =\ -\/1;\ }
+\DoxyCodeLine{00018\ \ \ \ \ std::vector<unsigned\ long\ long>\ big\_buffer;\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ big\_buffer\_max\_size\ =\ 4096*256;\ }
+\DoxyCodeLine{00020\ \ \ \ \ std::fstream\ file;\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ refresh\_small\_buffer()\ ;}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ should\_refresh\_small\_buffer(\textcolor{keywordtype}{int}\ n)\ \textcolor{keyword}{const}\ ;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ refresh\_big\_buffer()\ ;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ should\_refresh\_big\_buffer()\ ;}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classBitStreamWrite_af05f2d0d603599b16e3e9b34960db19e}{BitStreamWrite}}(\textcolor{keyword}{const}\ std::string\&\ filename)\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ this-\/>file.open(filename,\ std::ios::binary\ |\ std::ios::out);}
+\DoxyCodeLine{00052\ \ \ \ \ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classBitStreamWrite_a780b207be6db9e55bd75b7c74e988406}{close}}();}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classBitStreamWrite_a7c26ebc82570c3550514c7634f5c6090}{write\_bit}}(\textcolor{keywordtype}{bool}\ b);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classBitStreamWrite_a598bbc6d3929926192bc11a8c0719d40}{write}}(\textcolor{keywordtype}{int}\ n,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ bits);}
+\DoxyCodeLine{00071\ \};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//GTD\_VC\_BITSTREAMWRITE\_H}}
+\DoxyCodeLine{00075\ }
+
+\end{DoxyCode}

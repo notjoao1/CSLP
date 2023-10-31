@@ -1,35 +1,204 @@
-\hypertarget{classGolombCode}{}\doxysection{Golomb\+Code Class Reference}
-\label{classGolombCode}\index{GolombCode@{GolombCode}}
-\doxysubsection*{Static Public Member Functions}
+\doxysection{Golomb\+Code Class Reference}
+\hypertarget{classGolombCode}{}\label{classGolombCode}\index{GolombCode@{GolombCode}}
+
+
+A class for encoding and decoding Golomb codes.  
+
+
+
+
+{\ttfamily \#include $<$Golomb\+Code.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classGolombCode_ad758b9fcd0c694cde6fae3f5961690ea}\label{classGolombCode_ad758b9fcd0c694cde6fae3f5961690ea}} 
-static std\+::vector$<$ bool $>$ {\bfseries encode} (int num, int m)
-\item 
-\mbox{\Hypertarget{classGolombCode_abcd5bbec9e1de0e64a0af25f057b7263}\label{classGolombCode_abcd5bbec9e1de0e64a0af25f057b7263}} 
-static int {\bfseries decode\+\_\+one} (int m, std\+::vector$<$ bool $>$ stream)
-\item 
-\mbox{\Hypertarget{classGolombCode_a1b598e166038949947a89744e5ca2810}\label{classGolombCode_a1b598e166038949947a89744e5ca2810}} 
-static std\+::vector$<$ int $>$ {\bfseries decode} (int m, const std\+::vector$<$ bool $>$ \&stream, int n)
-\item 
-\mbox{\Hypertarget{classGolombCode_aee717bd0d887b4a016690ad65fb59c4d}\label{classGolombCode_aee717bd0d887b4a016690ad65fb59c4d}} 
-static int {\bfseries decode\+From64bits} (unsigned long long i, int m)
-\item 
-\mbox{\Hypertarget{classGolombCode_a3c2c8de86df9dae184520682c1b4da7b}\label{classGolombCode_a3c2c8de86df9dae184520682c1b4da7b}} 
-static void {\bfseries encode} (int i, int m, \mbox{\hyperlink{classBitStreamWrite}{Bit\+Stream\+Write}} \&stream)
-\item 
-\mbox{\Hypertarget{classGolombCode_aa0d2b60e6e521e95fd2e2506e4a792fc}\label{classGolombCode_aa0d2b60e6e521e95fd2e2506e4a792fc}} 
-static void {\bfseries encode} (std\+::vector$<$ int $>$ num\+\_\+array, int m, \mbox{\hyperlink{classBitStreamWrite}{Bit\+Stream\+Write}} \&stream)
-\item 
-\mbox{\Hypertarget{classGolombCode_a23c20d6d22ae753cdd23e25f879be22a}\label{classGolombCode_a23c20d6d22ae753cdd23e25f879be22a}} 
-static int {\bfseries decode\+\_\+one} (int m, \mbox{\hyperlink{classBitStreamRead}{Bit\+Stream\+Read}} \&stream)
-\item 
-\mbox{\Hypertarget{classGolombCode_aa0fdc50e94c7a5d77b674a2247e085fd}\label{classGolombCode_aa0fdc50e94c7a5d77b674a2247e085fd}} 
-static std\+::vector$<$ int $>$ {\bfseries decode} (int m, \mbox{\hyperlink{classBitStreamRead}{Bit\+Stream\+Read}} \&b, int n)
-\end{DoxyCompactItemize}
+static std\+::vector$<$ bool $>$ \mbox{\hyperlink{classGolombCode_ad758b9fcd0c694cde6fae3f5961690ea}{encode}} (int num, int m)
+\begin{DoxyCompactList}\small\item\em Encodes an integer into a Golomb code with a specified parameter. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{classGolombCode_abcd5bbec9e1de0e64a0af25f057b7263}{decode\+\_\+one}} (int m, std\+::vector$<$ bool $>$ stream)
+\begin{DoxyCompactList}\small\item\em Decodes one integer from a Golomb-\/encoded bit stream using a specified parameter. \end{DoxyCompactList}\item 
+static std\+::vector$<$ int $>$ \mbox{\hyperlink{classGolombCode_a1b598e166038949947a89744e5ca2810}{decode}} (int m, const std\+::vector$<$ bool $>$ \&stream, int n)
+\begin{DoxyCompactList}\small\item\em Decodes a sequence of integers from a Golomb-\/encoded bit stream using a specified parameter. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{classGolombCode_aee717bd0d887b4a016690ad65fb59c4d}{decode\+From64bits}} (unsigned long long i, int m)
+\begin{DoxyCompactList}\small\item\em Decodes an integer from a 64-\/bit value using a specified parameter. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{classGolombCode_a3c2c8de86df9dae184520682c1b4da7b}{encode}} (int i, int m, \mbox{\hyperlink{classBitStreamWrite}{Bit\+Stream\+Write}} \&stream)
+\begin{DoxyCompactList}\small\item\em Encodes an integer into a Golomb code with a specified parameter and writes it to a \doxylink{classBitStreamWrite}{Bit\+Stream\+Write} object. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{classGolombCode_aa0d2b60e6e521e95fd2e2506e4a792fc}{encode}} (std\+::vector$<$ int $>$ num\+\_\+array, int m, \mbox{\hyperlink{classBitStreamWrite}{Bit\+Stream\+Write}} \&stream)
+\begin{DoxyCompactList}\small\item\em Encodes a vector of integers into Golomb codes with a specified parameter and writes them to a \doxylink{classBitStreamWrite}{Bit\+Stream\+Write} object. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{classGolombCode_a23c20d6d22ae753cdd23e25f879be22a}{decode\+\_\+one}} (int m, \mbox{\hyperlink{classBitStreamRead}{Bit\+Stream\+Read}} \&stream)
+\begin{DoxyCompactList}\small\item\em Decodes one integer from a Golomb-\/encoded bit stream using a specified parameter from a \doxylink{classBitStreamRead}{Bit\+Stream\+Read} object. \end{DoxyCompactList}\item 
+static std\+::vector$<$ int $>$ \mbox{\hyperlink{classGolombCode_aa0fdc50e94c7a5d77b674a2247e085fd}{decode}} (int m, \mbox{\hyperlink{classBitStreamRead}{Bit\+Stream\+Read}} \&b, int n)
+\begin{DoxyCompactList}\small\item\em Decodes a sequence of integers from a Golomb-\/encoded bit stream using a specified parameter from a \doxylink{classBitStreamRead}{Bit\+Stream\+Read} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class for encoding and decoding Golomb codes. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classGolombCode_aa0fdc50e94c7a5d77b674a2247e085fd}\label{classGolombCode_aa0fdc50e94c7a5d77b674a2247e085fd} 
+\index{GolombCode@{GolombCode}!decode@{decode}}
+\index{decode@{decode}!GolombCode@{GolombCode}}
+\doxysubsubsection{\texorpdfstring{decode()}{decode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Golomb\+Code\+::decode (\begin{DoxyParamCaption}\item[{int}]{m,  }\item[{\mbox{\hyperlink{classBitStreamRead}{Bit\+Stream\+Read}} \&}]{b,  }\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Decodes a sequence of integers from a Golomb-\/encoded bit stream using a specified parameter from a \doxylink{classBitStreamRead}{Bit\+Stream\+Read} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & The parameter for Golomb coding. \\
+\hline
+{\em b} & The \doxylink{classBitStreamRead}{Bit\+Stream\+Read} object containing the Golomb-\/encoded bit stream. \\
+\hline
+{\em n} & The number of integers to decode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A vector of decoded integers. 
+\end{DoxyReturn}
+\Hypertarget{classGolombCode_a1b598e166038949947a89744e5ca2810}\label{classGolombCode_a1b598e166038949947a89744e5ca2810} 
+\index{GolombCode@{GolombCode}!decode@{decode}}
+\index{decode@{decode}!GolombCode@{GolombCode}}
+\doxysubsubsection{\texorpdfstring{decode()}{decode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Golomb\+Code\+::decode (\begin{DoxyParamCaption}\item[{int}]{m,  }\item[{const std\+::vector$<$ bool $>$ \&}]{stream,  }\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Decodes a sequence of integers from a Golomb-\/encoded bit stream using a specified parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & The parameter for Golomb coding. \\
+\hline
+{\em stream} & The Golomb-\/encoded bit stream. \\
+\hline
+{\em n} & The number of integers to decode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A vector of decoded integers. 
+\end{DoxyReturn}
+\Hypertarget{classGolombCode_a23c20d6d22ae753cdd23e25f879be22a}\label{classGolombCode_a23c20d6d22ae753cdd23e25f879be22a} 
+\index{GolombCode@{GolombCode}!decode\_one@{decode\_one}}
+\index{decode\_one@{decode\_one}!GolombCode@{GolombCode}}
+\doxysubsubsection{\texorpdfstring{decode\_one()}{decode\_one()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily int Golomb\+Code\+::decode\+\_\+one (\begin{DoxyParamCaption}\item[{int}]{m,  }\item[{\mbox{\hyperlink{classBitStreamRead}{Bit\+Stream\+Read}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Decodes one integer from a Golomb-\/encoded bit stream using a specified parameter from a \doxylink{classBitStreamRead}{Bit\+Stream\+Read} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & The parameter for Golomb coding. \\
+\hline
+{\em stream} & The \doxylink{classBitStreamRead}{Bit\+Stream\+Read} object containing the Golomb-\/encoded bit stream. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The decoded integer. 
+\end{DoxyReturn}
+\Hypertarget{classGolombCode_abcd5bbec9e1de0e64a0af25f057b7263}\label{classGolombCode_abcd5bbec9e1de0e64a0af25f057b7263} 
+\index{GolombCode@{GolombCode}!decode\_one@{decode\_one}}
+\index{decode\_one@{decode\_one}!GolombCode@{GolombCode}}
+\doxysubsubsection{\texorpdfstring{decode\_one()}{decode\_one()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily int Golomb\+Code\+::decode\+\_\+one (\begin{DoxyParamCaption}\item[{int}]{m,  }\item[{std\+::vector$<$ bool $>$}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Decodes one integer from a Golomb-\/encoded bit stream using a specified parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em m} & The parameter for Golomb coding. \\
+\hline
+{\em stream} & The Golomb-\/encoded bit stream. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The decoded integer. 
+\end{DoxyReturn}
+\Hypertarget{classGolombCode_aee717bd0d887b4a016690ad65fb59c4d}\label{classGolombCode_aee717bd0d887b4a016690ad65fb59c4d} 
+\index{GolombCode@{GolombCode}!decodeFrom64bits@{decodeFrom64bits}}
+\index{decodeFrom64bits@{decodeFrom64bits}!GolombCode@{GolombCode}}
+\doxysubsubsection{\texorpdfstring{decodeFrom64bits()}{decodeFrom64bits()}}
+{\footnotesize\ttfamily int Golomb\+Code\+::decode\+From64bits (\begin{DoxyParamCaption}\item[{unsigned long long}]{i,  }\item[{int}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Decodes an integer from a 64-\/bit value using a specified parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & The 64-\/bit value to be decoded. \\
+\hline
+{\em m} & The parameter for Golomb coding. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The decoded integer. 
+\end{DoxyReturn}
+\Hypertarget{classGolombCode_a3c2c8de86df9dae184520682c1b4da7b}\label{classGolombCode_a3c2c8de86df9dae184520682c1b4da7b} 
+\index{GolombCode@{GolombCode}!encode@{encode}}
+\index{encode@{encode}!GolombCode@{GolombCode}}
+\doxysubsubsection{\texorpdfstring{encode()}{encode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Golomb\+Code\+::encode (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{int}]{m,  }\item[{\mbox{\hyperlink{classBitStreamWrite}{Bit\+Stream\+Write}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Encodes an integer into a Golomb code with a specified parameter and writes it to a \doxylink{classBitStreamWrite}{Bit\+Stream\+Write} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & The integer to be encoded. \\
+\hline
+{\em m} & The parameter for Golomb coding. \\
+\hline
+{\em stream} & The \doxylink{classBitStreamWrite}{Bit\+Stream\+Write} object for writing the encoded Golomb code. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classGolombCode_ad758b9fcd0c694cde6fae3f5961690ea}\label{classGolombCode_ad758b9fcd0c694cde6fae3f5961690ea} 
+\index{GolombCode@{GolombCode}!encode@{encode}}
+\index{encode@{encode}!GolombCode@{GolombCode}}
+\doxysubsubsection{\texorpdfstring{encode()}{encode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily std\+::vector$<$ bool $>$ Golomb\+Code\+::encode (\begin{DoxyParamCaption}\item[{int}]{num,  }\item[{int}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Encodes an integer into a Golomb code with a specified parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em num} & The integer to be encoded. \\
+\hline
+{\em m} & The parameter for Golomb coding. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A vector of booleans(bits) representing the encoded Golomb code. 
+\end{DoxyReturn}
+\Hypertarget{classGolombCode_aa0d2b60e6e521e95fd2e2506e4a792fc}\label{classGolombCode_aa0d2b60e6e521e95fd2e2506e4a792fc} 
+\index{GolombCode@{GolombCode}!encode@{encode}}
+\index{encode@{encode}!GolombCode@{GolombCode}}
+\doxysubsubsection{\texorpdfstring{encode()}{encode()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Golomb\+Code\+::encode (\begin{DoxyParamCaption}\item[{std\+::vector$<$ int $>$}]{num\+\_\+array,  }\item[{int}]{m,  }\item[{\mbox{\hyperlink{classBitStreamWrite}{Bit\+Stream\+Write}} \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Encodes a vector of integers into Golomb codes with a specified parameter and writes them to a \doxylink{classBitStreamWrite}{Bit\+Stream\+Write} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+\_\+array} & The vector of integers to be encoded. \\
+\hline
+{\em m} & The parameter for Golomb coding. \\
+\hline
+{\em stream} & The \doxylink{classBitStreamWrite}{Bit\+Stream\+Write} object for writing the encoded Golomb codes. \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-Golomb\+Code.\+h\item 
-Golomb\+Code.\+cpp\end{DoxyCompactItemize}
+src/Golomb\+Code.\+h\item 
+src/Golomb\+Code.\+cpp\end{DoxyCompactItemize}

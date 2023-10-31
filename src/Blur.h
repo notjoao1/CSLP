@@ -29,7 +29,6 @@ public:
     /**
       * @brief Applies blur filter kernel to image.
       * @param frame The input frame in which the blur is applied.
-      * @return New frame after applying blur to input frame.
       */
     void apply(Frame* frame) override;
 };
