@@ -47,7 +47,7 @@ public:
      * @brief Constructor for the BitStreamWrite class.
      * @param filename The name of the file to write to.
      */
-    explicit BitStreamWrite(const std::string& filename) {
+     BitStreamWrite(const std::string& filename) {
         this->file.open(filename, std::ios::binary | std::ios::out);
     }
 
