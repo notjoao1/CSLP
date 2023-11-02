@@ -4,29 +4,8 @@
 
 #include "VideoManipulator.h"
 
-bool VideoManipulator::fromFile(string filename){
-
-    VideoCapture cap;
-    int apiID = cv::CAP_ANY;
-    cap.open(filename, apiID);
-    if (!cap.isOpened()) {
-        cerr << "ERROR! Unable to open file\n";
-    }
-
-    this->source = filename;
-}
-
 void VideoManipulator::play(){
     Mat frame;
-    VideoCapture cap;
-
-    int apiID = cv::CAP_ANY;
-
-    if(this->source.empty()){
-        cerr << "Please open a file\n";
-        return;
-    }
-    cap.open(this->source, apiID);
 
     // get frame rate of video
     double fps = cap.get(CAP_PROP_FPS);
@@ -48,4 +27,13 @@ void VideoManipulator::play(){
         if (waitKey((int) 1000/fps) >= 0)
             break;
     }
+}
+
+VideoManipulator::VideoManipulator(const string& filename) : cap(filename){
+}
+
+Mat VideoManipulator::getNextFrame() {
+    Mat frame;
+    cap >> frame;
+    return frame;
 }

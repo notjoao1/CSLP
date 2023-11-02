@@ -19,18 +19,20 @@ using namespace cv;
 class VideoManipulator {
 private:
     /**< Path for source video. */
-    string source;
+    VideoCapture cap;
 public:
     /**
-      * @brief Read video from video file.
+      * @brief Constructor for VideoManipulator class.
       * @param filename Path to the source video.
       */
-    bool fromFile(string filename);
+    explicit VideoManipulator(const string& filename);
 
     /**
       * @brief Play video using OpenCV VideoCapture class. Will play with original framerate.
       */
     void play();
+
+    Mat getNextFrame();
 };
 
 
