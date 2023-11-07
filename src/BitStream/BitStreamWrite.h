@@ -6,6 +6,8 @@
 #define GTD_VC_BITSTREAMWRITE_H
 #include "vector"
 #include "fstream"
+#include "string"
+
 
 /**
  * @class BitStreamWrite
@@ -16,7 +18,7 @@ private:
     unsigned long long small_buffer = 0; /**< Small buffer to store bits temporarily. */
     int small_buffer_pointer = -1; /**< Pointer to the current position in the small buffer. */
     std::vector<unsigned long long> big_buffer; /**< Vector to store a large buffer of bits. */
-    const long big_buffer_max_size = 4096; /**< Maximum size of the big buffer. */
+    const long big_buffer_max_size = 65536; /**< Maximum size of the big buffer. */
     std::fstream file; /**< File stream for writing. */
 
     /**
@@ -68,6 +70,12 @@ public:
      * @param bits The bits to be written.
      */
     void write(int n, unsigned long long bits);
+
+    /**
+     * @brief Write a string to bitStream.
+     * @param s The string to write.
+     */
+    void write(const std::string& s);
 };
 
 

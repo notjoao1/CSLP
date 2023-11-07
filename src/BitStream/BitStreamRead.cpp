@@ -94,3 +94,13 @@ void BitStreamRead::back_front(int n) {
     this->small_buffer_pointer+=n;
 }
 
+std::string BitStreamRead::read_string(){
+    std::string str;
+    char c = read(8);
+    while( c != '\0' ){
+        str += c ;
+        c = read(8);
+    }
+    return str;
+}
+

@@ -6,6 +6,7 @@
 #define GTD_VC_BITSTREAMREAD_H
 #include "vector"
 #include "fstream"
+#include "string"
 
 /**
  * @class BitStreamRead
@@ -16,7 +17,7 @@ private:
     unsigned long long small_buffer = 0; /**< Small buffer to store bits temporarily. */
     int small_buffer_pointer = -1; /**< Pointer to the current position in the small buffer. */
     std::vector<unsigned long long> big_buffer; /**< Vector to store a large buffer of bits. */
-    const long big_buffer_max_size = 4096; /**< Maximum size of the big buffer. */
+    const long big_buffer_max_size = 65536; /**< Maximum size of the big buffer. */
     long big_buffer_pointer = big_buffer_max_size - 1; /**< Pointer to the current position in the big buffer. */
     std::fstream file; /**< File stream for reading the bits. */
 
@@ -77,6 +78,12 @@ public:
      * @param n The number of bits to move the pointer back. n shouldn't be bigger than 64.
      */
     void back_front(int n);
+
+    /**
+     * @brief Read a string from bitStream. Stops when it finds \0
+     * @param n size of string.
+     */
+    std::string read_string();
 };
 
 #endif //GTD_VC_BITSTREAMREAD_H

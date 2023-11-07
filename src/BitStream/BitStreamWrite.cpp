@@ -65,3 +65,9 @@ void BitStreamWrite::close() {
     refresh_big_buffer();
     this->file.close();
 }
+
+void BitStreamWrite::write(const std::string& s) {
+    for(char it : s) {
+        write(8,it);
+    }
+}
