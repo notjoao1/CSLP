@@ -45,7 +45,7 @@ void Encoder::encodeChannel(const Mat& channel) {
             a = channel.at<uchar>(row, col - 1);
             b = channel.at<uchar>(row - 1, col);
             c = channel.at<uchar>(row - 1, col - 1);
-            p = JPEG_LS(a, b, c, channel.at<uchar>(row, col));
+            p = JPEG_LS(a, b, c);
             r = int(channel.at<uchar>(row, col)) - int(p);
             encodeValue(r);
         }
@@ -70,7 +70,7 @@ void Encoder::encode() {
 }
 
 // TODO: nao sei se é suposto ter isto como static
-static unsigned char JPEG_LS(unsigned char a, unsigned char b, unsigned char c, unsigned char x) {
+static unsigned char JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {
     unsigned char maximum = max(a,b);
     unsigned char minimum = min(a,b);
     if(c >= maximum)
