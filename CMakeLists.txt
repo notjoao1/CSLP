@@ -10,7 +10,6 @@ add_executable(GTD-VC src/Representation/ImageManipulator.cpp
         src/Storage/Channels.cpp
         src/Effects/Effect.h
         src/Storage/Frame.cpp
-        src/Color/ColorSpace.cpp
         src/Effects/WatermarkImage.cpp
         src/Effects/WatermarkText.cpp
         src/Effects/Grayscale.cpp
@@ -19,13 +18,14 @@ add_executable(GTD-VC src/Representation/ImageManipulator.cpp
         src/BitStream/BitStreamRead.cpp
         src/BitStream/BitStream.cpp
         src/Effects/Histogram.cpp
-        src/Color/Colors.h
         src/Effects/Histogram.cpp
         src/Effects/Threshold.cpp
         src/Effects/Blur.cpp
         src/Effects/BlurGaussian.cpp
         src/Codec.cpp
         src/Codec.h
+        src/Encoder.cpp
+        src/Encoder.h
 )
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})

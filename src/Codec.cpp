@@ -8,6 +8,9 @@
 
 // TODO: meter o input_file no
 Codec::Codec(const std::string& input_file, const std::string& output_file) : v(), stream(output_file) {
+    Codec::readStream=BitStreamWrite(output_file);
+    Codec::writeStream=BitStreamRead(input_file);
+
 }
 
 void Codec::encodeVideo() {
@@ -18,6 +21,13 @@ void Codec::decodeVideo() {
 
 }
 
+void Codec::encodeFrame() {
+
+}
+
+void Codec::decodeFrame() {
+
+}
 void Codec::encodeChannel() {
 
 }

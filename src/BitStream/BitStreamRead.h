@@ -51,7 +51,7 @@ public:
      * @brief Constructor for the BitStreamRead class.
      * @param filename The name of the file to be read.
      */
-    explicit BitStreamRead(const std::string &filename) {
+     BitStreamRead(const std::string &filename) {
         this->file.open(filename, std::ios::binary | std::ios::in);
     }
 
