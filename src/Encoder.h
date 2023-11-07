@@ -24,7 +24,9 @@ private:
 public:
     Encoder(const std::string& input_file, const std::string& output_file);
     void encode();
-
+    void encodeFrame(Mat f);
+    void encodeChannel(Mat c);
+    void encodeValue(int v);
 };
 
 
