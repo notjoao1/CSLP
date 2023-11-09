@@ -21,7 +21,6 @@ using namespace cv;
 class Effect;
 class Frame {
 private:
-
     Channels channels;
     vector<Effect*>effects;
 public:

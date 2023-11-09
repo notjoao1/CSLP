@@ -26,6 +26,7 @@ add_executable(GTD-VC src/Representation/ImageManipulator.cpp
         src/Codec.h
         src/Encoder.cpp
         src/Encoder.h
+        src/Encoding/GolombCode.cpp
 )
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})

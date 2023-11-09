@@ -4,6 +4,7 @@
 
 #include "GolombCode.h"
 #include <iostream>
+#include <cmath>
 
 #define LOG2(X) ((unsigned) (8*sizeof (unsigned long long) - __builtin_clzll((X)) - 1))
 
@@ -84,6 +85,12 @@ int GolombCode::decodeFrom64bits(unsigned long long i, int m) {
 }
 
 void GolombCode::encode(int n, int m, BitStreamWrite &stream) {
+
+    if ( m < 0)
+        m = -m*2-1;
+    else
+        m = 2 * m;
+
     int q = n / m;
     int r = n-q*m;
 
@@ -98,7 +105,6 @@ void GolombCode::encode(int n, int m, BitStreamWrite &stream) {
 
     if ( r - (1 << (b+1)) + m < 0  ){
         stream.write(b,r);
-
     }
     else {
         stream.write(b+1,r + (1 << (b+1)) - m);
@@ -112,6 +118,11 @@ void GolombCode::encode(std::vector<int> v, int m, BitStreamWrite &b) {
 
 int GolombCode::decode_one(int m, BitStreamRead &stream) {
     int q = 0;
+
+    if( m % 2 == 1)
+        m = -(m+1)/2;
+    else
+        m = m / 2 ;
 
     auto i = stream.read(64);
     while(i == 0xFFFFFFFFFFFFFFFF){
@@ -155,6 +166,18 @@ std::vector<int> GolombCode::decode(int m,BitStreamRead &b, int n) {
     return res;
 }
 
+int GolombCode::estimate(const Mat &m) {
+
+    int c = 0;
+    for(int i = 0; i < m.rows; i++)
+        for (int j = 0; j < m.cols; j++)
+            if( channels.at<uchar>(i, j) == 0 )
+                c++;
+
+    float d = c / ( m.rows * m.cols );
+    int m = -1 / math::log2(d);
+    return m;
+}
 
 
 

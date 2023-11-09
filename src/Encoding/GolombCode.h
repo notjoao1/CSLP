@@ -8,7 +8,6 @@
 #include <vector>
 #include "../BitStream/BitStreamRead.h"
 #include "../BitStream/BitStreamWrite.h"
-
 /**
  * @class GolombCode
  * @brief A class for encoding and decoding Golomb codes.
@@ -82,6 +81,12 @@ public:
      * @return A vector of decoded integers.
      */
     static std::vector<int> decode(int m, BitStreamRead &b, int n);
+
+
+    /**
+     *
+     */
+    static int estimate( const Mat& m );
 };
 
 #endif //GTD_VC_GOLOMBCODE_H
