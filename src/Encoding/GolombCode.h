@@ -6,6 +6,7 @@
 #define GTD_VC_GOLOMBCODE_H
 
 #include <vector>
+#include "opencv2/imgproc.hpp"
 #include "../BitStream/BitStreamRead.h"
 #include "../BitStream/BitStreamWrite.h"
 /**
@@ -86,7 +87,7 @@ public:
     /**
      *
      */
-    static int estimate( const Mat& m );
+    static int estimate( const cv::Mat& m );
 };
 
 #endif //GTD_VC_GOLOMBCODE_H

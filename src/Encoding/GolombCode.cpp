@@ -166,17 +166,17 @@ std::vector<int> GolombCode::decode(int m,BitStreamRead &b, int n) {
     return res;
 }
 
-int GolombCode::estimate(const Mat &m) {
+int GolombCode::estimate(const cv::Mat &m) {
 
     int c = 0;
     for(int i = 0; i < m.rows; i++)
         for (int j = 0; j < m.cols; j++)
-            if( channels.at<uchar>(i, j) == 0 )
+            if( m.at<uchar>(i, j) == 0 )
                 c++;
 
-    float d = c / ( m.rows * m.cols );
-    int m = -1 / math::log2(d);
-    return m;
+    float d = float(c) / float( m.rows * m.cols );
+    int m_param = -1 / log2f(d);
+    return m_param;
 }
 
 
