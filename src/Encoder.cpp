@@ -12,9 +12,9 @@ Encoder::Encoder(const string &input_file, const string &output_file) : video(in
 // TODO: falta o "video_format"
 // TODO: mudar para string, depois quando se encontra um \0, é fixe para ler
 void Encoder::generate_headers(const Size& frame_size) {
-    stream_out.write(16, frame_size.width); // 2 bytes
-    stream_out.write(16, frame_size.height); // 2 bytes
-    stream_out.write(8, m); // 1 byte, parametro 'm'
+    stream_out.write(to_string(frame_size.width));
+    stream_out.write(to_string(frame_size.height)); // 2 bytes
+    stream_out.write(to_string(m)); // 1 byte, parametro 'm'
 }
 
 // Receives multi-channel Mat
