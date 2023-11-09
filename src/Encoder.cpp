@@ -6,15 +6,13 @@
 #include <vector>
 
 Encoder::Encoder(const string &input_file, const string &output_file) : video(input_file), stream_out(output_file) {
-    m = 3; // TODO: deixei um valor estático por agora, so para testes
+    m = 3; // initialize 'm'
 }
 
 // TODO: falta o "video_format"
-// TODO: mudar para string, depois quando se encontra um \0, é fixe para ler
 void Encoder::generate_headers(const Size& frame_size) {
     stream_out.write(to_string(frame_size.width));
     stream_out.write(to_string(frame_size.height)); // 2 bytes
-    stream_out.write(to_string(m)); // 1 byte, parametro 'm'
 }
 
 // Receives multi-channel Mat
@@ -22,6 +20,8 @@ void Encoder::encodeFrame(const Mat& f) {
     std::vector<Mat> channels;
     split(f, channels);
     for (int i = 0; i < f.channels(); ++i) {
+        //this->m = GolombCode::estimate(channels[i]);
+        stream_out.write(to_string(m));
         encodeChannel(channels[i]);
     }
 }
@@ -53,24 +53,27 @@ void Encoder::encodeChannel(const Mat& channel) {
 }
 
 void Encoder::encodeValue(int v) {
-    golomb.encode(v, this->m);
+    GolombCode::encode(v, this->m, this->stream_out);
 }
 
-// TODO: talvez dividir em várias funções (encodeFrame, encodeChannel, encodeValue)
 void Encoder::encode() {
-    Mat curr_frame, curr_channel, channels[3];
+    Mat curr_frame;
     curr_frame = video.getNextFrame();
     generate_headers(curr_frame.size());
+    cout << "encoding video..." << endl;
+
 
     // frame loop
+    int counter = 0; // testing stuff
     while (!curr_frame.empty()) {
+        cout << "current_frame: " << counter << endl;
         encodeFrame(curr_frame);
         curr_frame = video.getNextFrame();
+        counter++;
     }
 }
 
-// TODO: nao sei se é suposto ter isto como static
-static unsigned char JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {
+unsigned char Encoder::JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {
     unsigned char maximum = max(a,b);
     unsigned char minimum = min(a,b);
     if(c >= maximum)

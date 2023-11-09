@@ -18,15 +18,15 @@ private:
     BitStreamWrite stream_out;
     GolombCode golomb;
     int m; // golomb parameter TODO: ver isto depois
-
+    void encodeFrame(const Mat& f);
+    void encodeChannel(const Mat& c);
+    void encodeValue(int v);
     void generate_headers(const Size& frame_size);
     static unsigned char JPEG_LS(unsigned char a,unsigned char b,unsigned char c);
 public:
     Encoder(const std::string& input_file, const std::string& output_file);
     void encode();
-    void encodeFrame(const Mat& f);
-    void encodeChannel(const Mat& c);
-    void encodeValue(int v);
+
 };
 
 
