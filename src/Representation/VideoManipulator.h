@@ -33,6 +33,8 @@ public:
     void play();
 
     Mat getNextFrame();
+    //TODO: add support to write video to file
+
 };
 
 

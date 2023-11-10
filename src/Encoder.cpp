@@ -49,7 +49,6 @@ void Encoder::encodeChannel(const Mat& channel) {
             r = int(channel.at<uchar>(row, col)) - int(p);
             encodeValue(r);
         }
-
 }
 
 void Encoder::encodeValue(int v) {

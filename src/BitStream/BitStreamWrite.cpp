@@ -70,4 +70,5 @@ void BitStreamWrite::write(const std::string& s) {
     for(char it : s) {
         write(8,it);
     }
+    write(8,'\0');
 }

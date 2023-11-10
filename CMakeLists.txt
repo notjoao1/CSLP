@@ -10,10 +10,16 @@ add_executable(GTD-VC src/Representation/ImageManipulator.cpp
         src/BitStream/BitStreamWrite.cpp
         src/BitStream/BitStreamRead.cpp
         src/BitStream/BitStream.cpp
+        src/Decoder.cpp
+        src/Decoder.h
         src/Encoder.cpp
         src/Encoder.h
         src/Encoding/GolombCode.cpp
         tests/Deliverable4Tests/EncodingVideo.cpp
+        tests/Deliverable4Tests/DecodingVideo.cpp
+
+
+
 )
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})
