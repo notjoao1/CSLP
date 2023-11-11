@@ -56,7 +56,7 @@ public:
      * @param m The parameter for Golomb coding.
      * @param stream The BitStreamWrite object for writing the encoded Golomb code.
      */
-    static void encode(int i, int m, BitStreamWrite &stream);
+    static void encode(unsigned int i, int m, BitStreamWrite &stream);
 
     /**
      * @brief Encodes a vector of integers into Golomb codes with a specified parameter and writes them to a BitStreamWrite object.
@@ -64,7 +64,7 @@ public:
      * @param m The parameter for Golomb coding.
      * @param stream The BitStreamWrite object for writing the encoded Golomb codes.
      */
-    static void encode(std::vector<int> num_array, int m, BitStreamWrite &stream);
+    static void encode(std::vector<unsigned int> num_array, int m, BitStreamWrite &stream);
 
     /**
      * @brief Decodes one integer from a Golomb-encoded bit stream using a specified parameter from a BitStreamRead object.
@@ -72,7 +72,7 @@ public:
      * @param stream The BitStreamRead object containing the Golomb-encoded bit stream.
      * @return The decoded integer.
      */
-    static int decode_one(int m, BitStreamRead &stream);
+    static unsigned int decode_one(int m, BitStreamRead &stream);
 
     /**
      * @brief Decodes a sequence of integers from a Golomb-encoded bit stream using a specified parameter from a BitStreamRead object.
@@ -81,13 +81,25 @@ public:
      * @param n The number of integers to decode.
      * @return A vector of decoded integers.
      */
-    static std::vector<int> decode(int m, BitStreamRead &b, int n);
+    static std::vector<unsigned int> decode(int m, BitStreamRead &b, int n);
 
 
     /**
      *
      */
     static int estimate( const cv::Mat& m );
+
+    /**
+     *
+     */
+     static unsigned int mapIntToUInt(int n);
+
+     /**
+      *
+      */
+     static int mapUIntToInt(unsigned int n);
+
+    static int estimate(const unsigned int* m, int siz);
 };
 
 #endif //GTD_VC_GOLOMBCODE_H

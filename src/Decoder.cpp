@@ -73,7 +73,7 @@ Mat Decoder::decodeChannel() {
 }
 
 int Decoder::decodeValue() {
-    return GolombCode::decode_one(m,stream_in);
+    return GolombCode::mapUIntToInt( GolombCode::decode_one(m,stream_in) );
 }
 
 unsigned char Decoder::JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {
