@@ -4,8 +4,10 @@
 
 #include "../../src/Encoder.h"
 
-int main2() {
-    Encoder e("/home/tiago/Transferências/ducks_take_off_444_720p50.y4m", "/home/tiago/CLionProjects/GTD-VC/tests/Deliverable4Tests/encoded_videoencoded_video.gtd");
+int main(int argc, char* argv[]) {
+    if(argc < 3)
+        return 1;
+    Encoder e(argv[1], argv[2]);
     e.encode();
     return 0;
 }

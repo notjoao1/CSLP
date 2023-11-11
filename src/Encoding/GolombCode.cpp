@@ -86,17 +86,20 @@ int GolombCode::decodeFrom64bits(unsigned long long i, int m) {
 }
 
 void GolombCode::encode(unsigned int n, int m, BitStreamWrite &stream) {
-    int q = n / m;
-    int r = n-q*m;
+
+    unsigned int q = n / m;
+    unsigned int r = n-q*m;
 
     while(q >= 64){
         stream.write(64,0xFFFFFFFFFFFFFFFF);
         q-=64;
     }
 
-    stream.write(q+1,0xFFFFFFFFFFFFFFFE);
+    stream.write((int) q+1,0xFFFFFFFFFFFFFFFE);
 
     int b = LOG2(m);
+
+    //std::cout << " [m]" << " - " << m << " [n]" << " - " << n << " [q]" << " - " << n / m << " [r]" << " - " << r << " [b]" << " - " << b << std::endl;
 
     if ( r - (1 << (b+1)) + m < 0  ){
         stream.write(b,r);

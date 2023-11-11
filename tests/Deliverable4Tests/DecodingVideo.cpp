@@ -4,7 +4,7 @@
 
 #include "../../src/Decoder.h"
 
-int main() {
+int main2() {
     Decoder d("/home/tiago/CLionProjects/GTD-VC/tests/Deliverable4Tests/encoded_videoencoded_video.gtd");
     d.decode();
     return 0;

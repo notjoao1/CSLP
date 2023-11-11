@@ -40,7 +40,7 @@ void Encoder::encodeChannel(const Mat& channel) {
     unsigned char a, b, c, p;
 
     #pragma omp parallel for
-    for (int row = 1; row < channel.rows; row++)
+    for (int row = 1; row < channel.rows; row++){
         for (int col = 1; col < channel.cols; col++) {
             a = channel.at<uchar>(row, col - 1);
             b = channel.at<uchar>(row - 1, col);
@@ -49,9 +49,10 @@ void Encoder::encodeChannel(const Mat& channel) {
             r = int(channel.at<uchar>(row, col)) - int(p);
             temp[(row-1)*(channel.cols-1)+col-1] = GolombCode::mapIntToUInt(r);
         }
+    }
 
     this->m = GolombCode::estimate(temp, (channel.rows-1)*(channel.cols-1));
-    cout << this->m << endl;
+    //cout << this->m << endl;
     stream_out.write(to_string(m));
 
     for (int i = 0; i < (channel.rows-1)*(channel.cols-1); i++)
@@ -68,15 +69,16 @@ void Encoder::encode() {
     generate_headers(curr_frame.size());
     cout << "encoding video..." << endl;
 
-
     // frame loop
     int counter = 0; // testing stuff
     while (!curr_frame.empty()) {
-        cout << "current_frame: " << counter << endl;
+        cout << "current_frame: " << counter << '\r' << std::flush;
         encodeFrame(curr_frame);
         curr_frame = video.getNextFrame();
         counter++;
     }
+    cout << endl;
+    this->stream_out.close();
 }
 
 unsigned char Encoder::JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {
