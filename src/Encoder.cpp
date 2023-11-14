@@ -55,8 +55,9 @@ void Encoder::encodeChannel(const Mat& channel) {
     //cout << this->m << endl;
     stream_out.write(to_string(m));
 
-    for (int i = 0; i < (channel.rows-1)*(channel.cols-1); i++)
+    for (int i = 0; i < (channel.rows-1)*(channel.cols-1); i++) {
         encodeValue( temp[i] );
+    }
 }
 
 void Encoder::encodeValue(unsigned int v) {

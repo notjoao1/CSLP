@@ -82,7 +82,7 @@ int GolombCode::decodeFrom64bits(unsigned long long i, int m) {
     i<<= q+1;
     auto r = (i >> (64-b));
     i <<= b;
-    return q*m +( (r < (1<<(b+1)) - m) ? r: (r<<1) + (i>>63) - (1<<(b+1)) + m );
+    return q*m +( int(r < (1<<(b+1)) - m) ? r: (r<<1) + (i>>63) - (1<<(b+1)) + m );
 }
 
 void GolombCode::encode(unsigned int n, int m, BitStreamWrite &stream) {
@@ -101,7 +101,7 @@ void GolombCode::encode(unsigned int n, int m, BitStreamWrite &stream) {
 
     //std::cout << " [m]" << " - " << m << " [n]" << " - " << n << " [q]" << " - " << n / m << " [r]" << " - " << r << " [b]" << " - " << b << std::endl;
 
-    if ( r - (1 << (b+1)) + m < 0  ){
+    if ( int(r - (1 << (b+1)) + m) < 0  ){
         stream.write(b,r);
     }
     else {
@@ -137,7 +137,7 @@ unsigned int GolombCode::decode_one(int m, BitStreamRead &stream) {
 
     auto r = (i >> (64-b));
     i <<= b;
-    if(r < (1<<(b+1)) - m){
+    if(int(r < (1<<(b+1)) - m)){
         if(push)
             stream.back_front(63-temp-b);
         else
