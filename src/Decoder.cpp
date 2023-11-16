@@ -10,8 +10,8 @@ Decoder::Decoder(const string &input_file):stream_in(input_file) {
 }
 
 void Decoder::read_headers() {
-    rows=stoi(stream_in.read_string());
     cols=stoi(stream_in.read_string());
+    rows=stoi(stream_in.read_string());
     //TODO: read of ColorSpace and check if need to read m once or per frame
 }
 
@@ -22,13 +22,13 @@ vector<Mat> Decoder::decode(){
 
     Mat curr_frame;
     curr_frame = decodeFrame();
+    imshow("First Frame",curr_frame);
+    waitKey(0);
     // frame loop
     int counter = 0; // testing stuff
     while (!curr_frame.empty()) {
         cout << "current_frame: " << counter << endl;
-        imshow("Current Frame",curr_frame);
-        waitKey(0);
-        video.at(0)=curr_frame;
+        video.push_back(curr_frame);
         curr_frame = decodeFrame();
         counter++;
     }
@@ -37,27 +37,30 @@ vector<Mat> Decoder::decode(){
 
 Mat Decoder::decodeFrame() {
     Mat frame;
-    std::vector<Mat> channels;
+    Mat channels[3];
     for (int i = 0; i < 3; ++i) {
-        int tempM= stoi(stream_in.read_string()); //temp m TODO: check if necessary
+        m = stoi(stream_in.read_string());
         channels[i]=decodeChannel();
     }
-    merge(channels,frame);
+    merge(channels, 3, frame);
+    return frame;
 
 }
 
 Mat Decoder::decodeChannel() {
-    Mat res= Mat::zeros(rows, cols, uchar());
+    Mat res= Mat::zeros(rows, cols, CV_8UC1);
     int r; // tem de ser int, pois pode ser negativo
     unsigned char a, b, c, p;
 
     // decode first row and first column directly
     for (int col = 0; col < cols; col++) {
-        res.at<uchar>(1,col)=uchar(decodeValue());
+        res.at<uchar>(0,col)=uchar(GolombCode::decode_one(m, stream_in));
     }
 
+    std::cout << "rows : " << rows << std::endl;
     for (int row = 1; row < rows; row++) {
-        res.at<uchar>(row,1)=uchar(decodeValue());
+        res.at<uchar>(row,0)=uchar(GolombCode::decode_one(m, stream_in));
+
     }
 
     for (int row = 1; row < rows; row++)
