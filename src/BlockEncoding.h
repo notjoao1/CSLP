@@ -22,7 +22,7 @@ private:
     BitStreamWrite stream_out;
     GolombCode golomb;
     int m; // golomb parameter TODO: ver isto depois
-    void encodeInterFrame(const Mat& f);
+    void encodeInterFrame(const Mat& f, const Mat& p);
     void encodeIntraFrame(const Mat& f);
     void encodeChannel(const Mat& c);
     void encodeValue(unsigned int v);
