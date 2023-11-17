@@ -35,22 +35,49 @@ void BlockEncoding::encodeChannel(const Mat &c) {
 }
 
 void BlockEncoding::encodeValue(unsigned int v) {
-
+    GolombCode::encode(v, this->m, this->stream_out);
 }
 
 void BlockEncoding::generate_headers(const Size &frame_size) {
     stream_out.write(to_string(frame_size.width));
     stream_out.write(to_string(frame_size.height));
-    stream_out.write(to_string(frame_size.height));
-    stream_out.write(to_string(frame_size.height));
+    stream_out.write(to_string(block_size));
+    stream_out.write(to_string(search_area));
+    stream_out.write(to_string(keyframe_period));
 }
 
+// TODO: usar 'm' para cada channel?
 void BlockEncoding::encodeIntraFrame(const Mat &f) {
+    vector<Mat> channels;
+    split(f, channels);
+    for (auto channel : channels) {
+        for (int col = 0; col < channel.cols; ++col) {
+            encodeValue(channel.at<uchar>(0, col));
+        }
 
+        for (int row = 1; row < channel.rows; row++) {
+            encodeValue(channel.at<uchar>(row, 0));
+        }
+
+        int r; // tem de ser int, pois pode ser negativo
+        unsigned char a, b, c, p;
+
+        for (int row = 1; row < channel.rows; row++)
+            for (int col = 1; col < channel.cols; col++) {
+                a = channel.at<uchar>(row, col - 1);
+                b = channel.at<uchar>(row - 1, col);
+                c = channel.at<uchar>(row - 1, col - 1);
+                p = JPEG_LS(a, b, c);
+                r = int(channel.at<uchar>(row, col)) - int(p);
+                encodeValue(GolombCode::mapIntToUInt(r));
+            }
+    }
 }
 
-void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
 
+// f - current frame; p - previous frame
+void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
+    std::cout << "Encoding interframe" << std::endl;
 }
 
 Mat BlockEncoding::getBlock(const Mat &original_frame, int x, int y) {
@@ -60,3 +87,13 @@ Mat BlockEncoding::getBlock(const Mat &original_frame, int x, int y) {
     return block;
 }
 
+unsigned char BlockEncoding::JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {
+    unsigned char maximum = max(a,b);
+    unsigned char minimum = min(a,b);
+    if(c >= maximum)
+        return minimum;
+    else if (c <= minimum)
+        return maximum;
+    else
+        return a + b - c;
+}

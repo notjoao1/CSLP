@@ -28,6 +28,8 @@ private:
     void encodeValue(unsigned int v);
     void generate_headers(const Size& frame_size);
     Mat getBlock(const Mat& original_frame, int row, int col);
+    static unsigned char JPEG_LS(unsigned char a,unsigned char b,unsigned char c);
+
 };
 
 
