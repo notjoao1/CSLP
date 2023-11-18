@@ -30,9 +30,6 @@ void BlockEncoding::encode() {
     }
 }
 
-void BlockEncoding::encodeChannel(const Mat &c) {
-
-}
 
 void BlockEncoding::encodeValue(unsigned int v) {
     GolombCode::encode(v, this->m, this->stream_out);
@@ -46,7 +43,7 @@ void BlockEncoding::generate_headers(const Size &frame_size) {
     stream_out.write(to_string(keyframe_period));
 }
 
-// TODO: usar 'm' para cada channel?
+// TODO: estimar 'm' para cada channel?
 void BlockEncoding::encodeIntraFrame(const Mat &f) {
     vector<Mat> channels;
     split(f, channels);
@@ -75,14 +72,37 @@ void BlockEncoding::encodeIntraFrame(const Mat &f) {
 }
 
 
+// TODO: adicionar padding para ter frames divisiveis pelo block_size!!!!!
 // f - current frame; p - previous frame
 void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
     std::cout << "Encoding interframe" << std::endl;
+    vector<Mat> curr_channels, prev_channels;
+    split(f, curr_channels);
+    split(p, prev_channels);
+
+    // iterate through channels, both frames have same number
+    for (int i = 0; i < f.channels(); ++i) {
+        encodeInterframeChannel(curr_channels.at(i), prev_channels.at(i));
+    }
+
 }
 
-Mat BlockEncoding::getBlock(const Mat &original_frame, int x, int y) {
+
+void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel) {
+    Mat curr_block;
+    std::cout << "Full current channel: \n" << c_channel << std::endl;
+    for (int i = 0; i < c_channel.rows / block_size; ++i) {
+        for (int j = 0; j < c_channel.cols / block_size; ++j) {
+            curr_block = getBlock(c_channel, i * block_size, j * block_size);
+            searchBestBlock(curr_block, p_channel, )
+        }
+    }
+}
+
+Mat BlockEncoding::getBlock(const Mat &original_frame, int row, int col) const {
     // create region of interest for block
-    Rect roi(x, y, block_size, block_size);
+    // columns - x-axis; rows - y-axis
+    Rect roi(col, row, block_size, block_size);
     Mat block = original_frame(roi);
     return block;
 }
@@ -96,4 +116,37 @@ unsigned char BlockEncoding::JPEG_LS(unsigned char a, unsigned char b, unsigned 
         return maximum;
     else
         return a + b - c;
+}
+
+std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat &prev, const Mat &orig_block, int x, int y) {
+    int x_start, x_end, y_start, y_end; // loop boundaries
+
+    x_start = x - search_area;
+    if (x_start < 0) {
+        x_start = 0;
+    }
+
+    x_end = x + block_size + (search_area - 1);
+    if (x_end > prev.cols) {
+        x_end = prev.cols;
+    }
+
+    y_start = y - search_area;
+    if (y_start < 0) {
+        y_start = 0;
+    }
+
+    y_end = y + block_size + (search_area - 1);
+    if (y_end > prev.rows) {
+        y_end = prev.rows;
+    }
+
+
+    for (int i = x_start; i < x_end; ++i) {
+        for (int j = y_start; j < y_end; ++j) {
+
+        }
+    }
+
+    return {};
 }
