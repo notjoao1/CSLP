@@ -16,7 +16,7 @@ using namespace std;
 
 class Decoder {
 private:
-    BitStreamRead stream_in;
+    BitStreamRead* stream_in;
 
     GolombCode golomb;
     int m; // golomb parameter TODO: ver isto depois
@@ -28,7 +28,8 @@ private:
     int decodeValue();
     static unsigned char JPEG_LS(unsigned char a, unsigned char b, unsigned char c);
 public:
-    Decoder(const string &input_file);
+    Decoder(BitStreamRead* in);
+
     vector<Mat> decode();
 
 };
