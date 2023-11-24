@@ -30,7 +30,8 @@ private:
     void generate_headers(const Size& frame_size);
     Mat getBlock(const Mat& original_frame, int row, int col) const;
     // returns tuple with best matching block and (x,y) vector
-    std::tuple<Mat, int, int> searchBestBlock(const Mat& prev_frame, const Mat& curr_block, int x, int y, int rows, int cols);
+    /*std::tuple<Mat, int, int> searchBestBlock(const Mat& prev_frame, const Mat& curr_block, int x, int y, int rows, int cols);*/
+    std::tuple<Mat, int, int> searchBestBlock(const Mat& prev_frame, const Mat& curr_block, int y, int x, int rows, int cols , int step_size);
     static unsigned char JPEG_LS(unsigned char a,unsigned char b,unsigned char c);
 
     int calculateMAD(const Mat &block1, const Mat &block2) const;

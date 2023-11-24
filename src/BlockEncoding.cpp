@@ -4,6 +4,8 @@
 
 #include "BlockEncoding.h"
 
+
+
 BlockEncoding::BlockEncoding(const string &input_file, const string &output_file, int block_size, int search_area, int keyframe_period) : video(input_file), stream_out(output_file), block_size(block_size), search_area(search_area), keyframe_period(keyframe_period) {
     m = 3;
 }
@@ -39,6 +41,7 @@ void BlockEncoding::generate_headers(const Size &frame_size) {
     stream_out.write(to_string(frame_size.width));
     stream_out.write(to_string(frame_size.height));
     stream_out.write(to_string(keyframe_period));
+    stream_out.write(to_string(block_size));
 }
 
 // TODO: estimar 'm' para cada channel?
@@ -92,9 +95,17 @@ void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_c
     //std::cout << "Full current channel: \n" << c_channel << std::endl;
     for (int i = 0; i < rows / block_size - 1; ++i) {
         for (int j = 0; j < cols / block_size - 1; ++j) {
+            if (j == 12) {
+                std::cout << "FUCK!!!!!!!!" << std::endl;
+                std::cout << p_channel << std::endl;
+                imshow("previous channel", p_channel);
+                waitKey(0);
+            }
             curr_block = getBlock(c_channel, i * block_size, j * block_size);
-            auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i, j, rows, cols);
+            getBlock(p_channel, 8, 20);
+            auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i, j, rows, cols, 2);
             b_erro = curr_block - ref_block;
+
             encodeBlockDifference(b_erro);
         }
     }
@@ -103,6 +114,7 @@ void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_c
 Mat BlockEncoding::getBlock(const Mat &original_frame, int row, int col) const {
     // create region of interest for block
     // columns - x-axis; rows - y-axis
+
     Rect roi(col, row, block_size, block_size);
     Mat block = original_frame(roi);
     return block;
@@ -128,13 +140,14 @@ int BlockEncoding::calculateMAD(const Mat& block1, const Mat& block2) const {
         }
     }
 
-    cv::Mat diff;
-    cv::absdiff(block1, block2, diff);
+    //cv::Mat diff;
+    //cv::absdiff(block1, block2, diff);
     //std::cout << "MAD by OPENCV: " << cv::sum(diff)[0] / (block_size * block_size) << std::endl;
     //std::cout << "MAD by ME: " << mad / (block_size * block_size) << std::endl;
     return mad/(block_size * block_size);
 }
 
+/*
 std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, const Mat& curr_block, int b_row, int b_col, int rows, int cols) {
     // precompute boundaries
     int start_col = (b_col - search_area < 0) ? 0 : b_col - search_area;
@@ -168,6 +181,66 @@ std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, 
 
     return {ref_block, best_match_row, best_match_col};
 }
+*/
+
+static std::tuple<int, int> min_and_index_of( const int arr[] , int siz ) {
+
+    double min = arr[0];
+    int min_index = 0;
+
+    for(int i = 1 ; i < siz ; i++){
+        if( arr[i] < min ){
+            min = arr[i];
+            min_index = i;
+        }
+    }
+    return { min , min_index };
+}
+
+
+int LOCATIONS[9][2] = {{0, -1}, {-1, 0}, {1, 0}, {0, 1} , {1, -1}, {-1, 1}, {1, 1}, {-1, -1} ,{0,0}};
+
+std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, const Mat& curr_block, int y, int x, int rows, int cols , int step_size) {
+
+    int costs[9];
+
+    for (int i = 0; i < 9; ++i) {
+        costs[i] = INT_MAX;
+    }
+
+    for( int loc = 0 ; loc < 9 ; loc++ ){
+        int locy = y + LOCATIONS[loc][1]*step_size;
+        int locx = x + LOCATIONS[loc][0]*step_size;
+
+
+        if (locy < 0 || locy + block_size > rows ||
+            locx < 0 || locx + block_size > cols) {
+            continue;
+        }
+        //std::cerr << cv::sum(prev_frame) << "col: " << locx << "; row: " << locy << std::endl;
+        //std::flush(cerr);
+        costs[loc] = calculateMAD( curr_block , getBlock( prev_frame , locy , locx ) );
+    }
+
+
+    auto [ mincosts , index ] = min_and_index_of(costs,9);
+
+    int newy = y + LOCATIONS[index][1];
+    int newx = x + LOCATIONS[index][0];
+
+    if( step_size == 1){
+        return { getBlock( prev_frame , newy , newx ) , newy , newx };
+    }
+
+    if(index == 8){
+        step_size = step_size/2;
+    }
+    return searchBestBlock( prev_frame , curr_block , newy , newx , rows , cols , step_size );
+}
+
+
+
+
 
 // Writes golomb-encoded error values row by row
 void BlockEncoding::encodeBlockDifference(const Mat &block) {
