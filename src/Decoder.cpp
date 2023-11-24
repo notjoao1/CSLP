@@ -10,8 +10,8 @@ Decoder::Decoder(BitStreamRead* in) {
     stream_in=in;
 }
 void Decoder::read_headers() {
-    cols=stoi(stream_in.read_string());
-    rows=stoi(stream_in.read_string());
+    cols=stoi(stream_in->read_string());
+    rows=stoi(stream_in->read_string());
     //TODO: read of ColorSpace and check if need to read m once or per frame
 }
 
@@ -39,7 +39,7 @@ Mat Decoder::decodeFrame() {
     Mat frame;
     Mat channels[3];
     for (int i = 0; i < 3; ++i) {
-        m = stoi(stream_in.read_string());
+        m = stoi(stream_in->read_string());
         channels[i]=decodeChannel();
     }
     merge(channels, 3, frame);
@@ -54,12 +54,12 @@ Mat Decoder::decodeChannel() {
 
     // decode first row and first column directly
     for (int col = 0; col < cols; col++) {
-        res.at<uchar>(0,col)=uchar(GolombCode::decode_one(m, stream_in));
+        res.at<uchar>(0,col)=uchar(GolombCode::decode_one(m, *stream_in));
     }
 
     std::cout << "rows : " << rows << std::endl;
     for (int row = 1; row < rows; row++) {
-        res.at<uchar>(row,0)=uchar(GolombCode::decode_one(m, stream_in));
+        res.at<uchar>(row,0)=uchar(GolombCode::decode_one(m, *stream_in));
 
     }
 
@@ -76,7 +76,7 @@ Mat Decoder::decodeChannel() {
 }
 
 int Decoder::decodeValue() {
-    return GolombCode::mapUIntToInt( GolombCode::decode_one(m,stream_in) );
+    return GolombCode::mapUIntToInt( GolombCode::decode_one(m,*stream_in) );
 }
 
 unsigned char Decoder::JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {

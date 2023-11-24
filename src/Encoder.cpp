@@ -6,7 +6,7 @@
 #include <vector>
 using namespace std;
 
-Encoder::Encoder(VideoCapture* in, BitStreamWrite* out) {
+Encoder::Encoder(VideoManipulator* in, BitStreamWrite* out) {
     m = 3; // initialize 'm'
     video = in;
     stream_out = out;
@@ -14,8 +14,8 @@ Encoder::Encoder(VideoCapture* in, BitStreamWrite* out) {
 
 // TODO: falta o "video_format"
 void Encoder::generate_headers(const Size& frame_size) {
-    stream_out.write(to_string(frame_size.width));
-    stream_out.write(to_string(frame_size.height)); // 2 bytes
+    stream_out->write(to_string(frame_size.width));
+    stream_out->write(to_string(frame_size.height)); // 2 bytes
 }
 
 // Receives multi-channel Mat
@@ -24,7 +24,7 @@ void Encoder::encodeFrame(const Mat& f) {
     split(f, channels);
     for (int i = 0; i < f.channels(); ++i) {
         //this->m = GolombCode::estimate(channels[i]);
-        stream_out.write(to_string(m));
+        stream_out->write(to_string(m));
         encodeChannel(channels[i]);
     }
 }
@@ -56,12 +56,12 @@ void Encoder::encodeChannel(const Mat& channel) {
 }
 
 void Encoder::encodeValue(unsigned int v) {
-    GolombCode::encode(v, this->m, this->stream_out);
+    GolombCode::encode(v, this->m, *stream_out);
 }
 
 void Encoder::encode() {
     Mat curr_frame;
-    curr_frame = video.getNextFrame();
+    curr_frame = video->getNextFrame();
     generate_headers(curr_frame.size());
     cout << "encoding video..." << endl;
     imshow("first frame", curr_frame);
@@ -72,7 +72,7 @@ void Encoder::encode() {
     while (!curr_frame.empty()) {
         cout << "current_frame: " << counter << endl;
         encodeFrame(curr_frame);
-        curr_frame = video.getNextFrame();
+        curr_frame = video->getNextFrame();
         counter++;
     }
 }
