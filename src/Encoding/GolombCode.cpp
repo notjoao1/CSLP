@@ -3,7 +3,6 @@
 //
 
 #include "GolombCode.h"
-#include <cmath>
 #include <iostream>
 #include <cmath>
 
@@ -82,26 +81,24 @@ int GolombCode::decodeFrom64bits(unsigned long long i, int m) {
     i<<= q+1;
     auto r = (i >> (64-b));
     i <<= b;
-    return q*m +( int(r < (1<<(b+1)) - m) ? r: (r<<1) + (i>>63) - (1<<(b+1)) + m );
+    return q*m +( (r < (1<<(b+1)) - m) ? r: (r<<1) + (i>>63) - (1<<(b+1)) + m );
 }
 
-void GolombCode::encode(unsigned int n, int m, BitStreamWrite &stream) {
+void GolombCode::encode(int n, int m, BitStreamWrite &stream) {
 
-    unsigned int q = n / m;
-    unsigned int r = n-q*m;
+    int q = n / m;
+    int r = n-q*m;
 
     while(q >= 64){
         stream.write(64,0xFFFFFFFFFFFFFFFF);
         q-=64;
     }
 
-    stream.write((int) q+1,0xFFFFFFFFFFFFFFFE);
+    stream.write(q+1,0xFFFFFFFFFFFFFFFE);
 
     int b = LOG2(m);
 
-    //std::cout << " [m]" << " - " << m << " [n]" << " - " << n << " [q]" << " - " << n / m << " [r]" << " - " << r << " [b]" << " - " << b << std::endl;
-
-    if ( int(r - (1 << (b+1)) + m) < 0  ){
+    if ( r - (1 << (b+1)) + m < 0 ){
         stream.write(b,r);
     }
     else {
@@ -109,13 +106,14 @@ void GolombCode::encode(unsigned int n, int m, BitStreamWrite &stream) {
     }
 }
 
-void GolombCode::encode(std::vector<unsigned int> v, int m, BitStreamWrite &b) {
+void GolombCode::encode(std::vector<int> v, int m, BitStreamWrite &b) {
     for(auto i = v.begin() ; i < v.end() ; i++ )
         GolombCode::encode(*i,m,b);
 }
 
-unsigned int GolombCode::decode_one(int m, BitStreamRead &stream) {
+int GolombCode::decode_one(int m, BitStreamRead &stream) {
     int q = 0;
+
     auto i = stream.read(64);
     while(i == 0xFFFFFFFFFFFFFFFF){
         q+=64;
@@ -137,7 +135,7 @@ unsigned int GolombCode::decode_one(int m, BitStreamRead &stream) {
 
     auto r = (i >> (64-b));
     i <<= b;
-    if(int(r < (1<<(b+1)) - m)){
+    if(r < (1<<(b+1)) - m){
         if(push)
             stream.back_front(63-temp-b);
         else
@@ -150,8 +148,8 @@ unsigned int GolombCode::decode_one(int m, BitStreamRead &stream) {
     }
 }
 
-std::vector<unsigned int> GolombCode::decode(int m,BitStreamRead &b, int n) {
-    std::vector<unsigned int> res;
+std::vector<int> GolombCode::decode(int m,BitStreamRead &b, int n) {
+    std::vector<int> res;
     res.reserve(n);
     for(int i = 0; i < n ; i++)
         res.push_back(GolombCode::decode_one(m,b));
@@ -159,51 +157,34 @@ std::vector<unsigned int> GolombCode::decode(int m,BitStreamRead &b, int n) {
 }
 
 int GolombCode::estimate(const cv::Mat &m) {
+
     int c = 0;
     for(int i = 0; i < m.rows; i++)
-        for (int j = 0; j < m.cols; j++){
-            if( m.at<unsigned int>(i, j) == 0 )
+        for (int j = 0; j < m.cols; j++)
+            if( m.at<uchar>(i, j) == 0 )
                 c++;
-        }
 
     float d = float(c) / float( m.rows * m.cols );
-    int m_param = std::ceil( -1 / log2f(d) );
+    int m_param = -1 / log2f(d);
     return m_param;
 }
 
-int GolombCode::estimate(const unsigned int* m,int siz) {
-    //int hist[512];
-    //for(int & i : hist)
-    //    i =0;
-    int c = 0;
-    for(int i = 0; i < siz; i++){
-        if( m[i]== 0 )
-            c++;
-        //hist[m[i]]++;
-    }
-
-    //for(int i = 0 ; i < 512 ; i++){
-    //    std::cout << "[" << i << "]" << " - " << hist[i] << std::endl;
-    //}
-
-    float d = float(c) / float( siz );
-    //std::cout << "[d]" << " - " << d << std::endl;
-    int m_param = std::ceil( -1 / log2f(1-d) );
-    //std::cout << "[m]" << " - " << m_param << std::endl;
-    return m_param;
-}
-
-unsigned int GolombCode::mapIntToUInt(int n) {
+int GolombCode::mapIntToUInt(int n) {
     if ( n < 0)
         return -n*2-1;
     return 2 * n;
 }
 
-int GolombCode::mapUIntToInt(unsigned int n) {
+int GolombCode::mapUIntToInt( int n) {
     if( n % 2 == 1)
         return int(-(n+1))/2;
     return int(n)/2 ;
 }
+
+
+
+
+
 
 
 
