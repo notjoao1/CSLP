@@ -8,11 +8,13 @@
 #include "BitStream/BitStreamWrite.h"
 #include "Encoding/GolombCode.h"
 #include "opencv2/imgproc.hpp"
+#include "Representation/VideoManipulator.h"
+
 using namespace cv;
 
 class Encoder {
 private:
-    VideoCapture* video;
+    VideoManipulator* video;
     BitStreamWrite* stream_out;
     GolombCode golomb;
     int m; // golomb parameter TODO: ver isto depois
@@ -22,7 +24,7 @@ private:
     void generate_headers(const Size& frame_size);
     static unsigned char JPEG_LS(unsigned char a,unsigned char b,unsigned char c);
 public:
-    Encoder(VideoCapture* in, BitStreamWrite* out);
+    Encoder(VideoManipulator* in, BitStreamWrite* out);
 
     void encode();
 
