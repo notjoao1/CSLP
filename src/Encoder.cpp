@@ -7,15 +7,17 @@
 using namespace std;
 
 Encoder::Encoder(VideoManipulator* in, BitStreamWrite* out) {
-    m = 3; // initialize 'm'
-    video = in;
-    stream_out = out;
+    this->m = 3; // initialize 'm'
+    this->video = in;
+    this->stream_out = out;
 }
 
 // TODO: falta o "video_format"
 void Encoder::generate_headers(const Size& frame_size) {
     stream_out->write(to_string(frame_size.width));
     stream_out->write(to_string(frame_size.height)); // 2 bytes
+    stream_out->write(to_string(video->getFPS()));
+
 }
 
 // Receives multi-channel Mat

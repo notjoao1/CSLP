@@ -6,12 +6,14 @@
 
 
 Decoder::Decoder(BitStreamRead* in) {
-    m = 3; //initialize 'm'
-    stream_in=in;
+    this->m = 3; //initialize 'm'
+    this->stream_in=in;
 }
+
 void Decoder::read_headers() {
     cols=stoi(stream_in->read_string());
     rows=stoi(stream_in->read_string());
+    fps=stoi(stream_in->read_string());
     //TODO: read of ColorSpace and check if need to read m once or per frame
 }
 
@@ -79,6 +81,9 @@ int Decoder::decodeValue() {
     return GolombCode::mapUIntToInt( GolombCode::decode_one(m,*stream_in) );
 }
 
+int Decoder::getFPS() {
+    return this->fps;
+}
 unsigned char Decoder::JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {
     unsigned char maximum = max(a,b);
     unsigned char minimum = min(a,b);

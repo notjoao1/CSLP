@@ -20,6 +20,7 @@ class VideoManipulator {
 private:
     /**< Path for source video. */
     VideoCapture cap;
+    const string filename;
 public:
     /**
       * @brief Constructor for VideoManipulator class.
@@ -33,6 +34,9 @@ public:
     void play();
 
     Mat getNextFrame();
+    void writeHeader(int width, int height, int fps);
+    void writeFrame(const Mat* frame);
+    int getFPS();
     //TODO: add support to write video to file
 
 };

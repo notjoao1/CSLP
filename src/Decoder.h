@@ -22,14 +22,16 @@ private:
     int m; // golomb parameter TODO: ver isto depois
     int cols;
     int rows;
+    int fps;
+
+public:
     void read_headers();
     Mat decodeFrame();
     Mat decodeChannel();
     int decodeValue();
+    int getFPS();
     static unsigned char JPEG_LS(unsigned char a, unsigned char b, unsigned char c);
-public:
     Decoder(BitStreamRead* in);
-
     vector<Mat> decode();
 
 };
