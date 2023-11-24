@@ -3,6 +3,7 @@
 //
 
 #include "BlockEncoding.h"
+#include <cmath>
 
 
 
@@ -92,20 +93,15 @@ void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
 void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel) {
     Mat curr_block, b_erro; // b_erro é o erro entre duas matrizes
     int rows = c_channel.rows, cols = c_channel.cols;
-    //std::cout << "Full current channel: \n" << c_channel << std::endl;
+    std::cout << "Loops y: " << cols/block_size - 1 << std::endl;
     for (int i = 0; i < rows / block_size - 1; ++i) {
         for (int j = 0; j < cols / block_size - 1; ++j) {
-            if (j == 12) {
-                std::cout << "FUCK!!!!!!!!" << std::endl;
-                std::cout << p_channel << std::endl;
-                imshow("previous channel", p_channel);
-                waitKey(0);
-            }
             curr_block = getBlock(c_channel, i * block_size, j * block_size);
-            getBlock(p_channel, 8, 20);
-            auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i, j, rows, cols, 2);
+            if (j >= 318) {
+                std::cout << "cagalhao" << std::endl;
+            }
+            auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i * block_size, j * block_size, rows, cols, 2);
             b_erro = curr_block - ref_block;
-
             encodeBlockDifference(b_erro);
         }
     }
@@ -115,6 +111,9 @@ Mat BlockEncoding::getBlock(const Mat &original_frame, int row, int col) const {
     // create region of interest for block
     // columns - x-axis; rows - y-axis
 
+    if (col > 1272) {
+        std::cout << "Balast" << std::endl;
+    }
     Rect roi(col, row, block_size, block_size);
     Mat block = original_frame(roi);
     return block;
@@ -139,11 +138,6 @@ int BlockEncoding::calculateMAD(const Mat& block1, const Mat& block2) const {
             mad += std::abs(block1.at<uchar>(i, j) - block2.at<uchar>(i, j));
         }
     }
-
-    //cv::Mat diff;
-    //cv::absdiff(block1, block2, diff);
-    //std::cout << "MAD by OPENCV: " << cv::sum(diff)[0] / (block_size * block_size) << std::endl;
-    //std::cout << "MAD by ME: " << mad / (block_size * block_size) << std::endl;
     return mad/(block_size * block_size);
 }
 
@@ -198,44 +192,46 @@ static std::tuple<int, int> min_and_index_of( const int arr[] , int siz ) {
 }
 
 
-int LOCATIONS[9][2] = {{0, -1}, {-1, 0}, {1, 0}, {0, 1} , {1, -1}, {-1, 1}, {1, 1}, {-1, -1} ,{0,0}};
+int LOCATIONS[9][2] = {{0,0},{0, -1}, {-1, 0}, {1, 0}, {0, 1} , {1, -1}, {-1, 1}, {1, 1}, {-1, -1} };
 
 std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, const Mat& curr_block, int y, int x, int rows, int cols , int step_size) {
-
     int costs[9];
 
-    for (int i = 0; i < 9; ++i) {
-        costs[i] = INT_MAX;
-    }
+    int curx = x ;
+    int cury = y ;
 
-    for( int loc = 0 ; loc < 9 ; loc++ ){
-        int locy = y + LOCATIONS[loc][1]*step_size;
-        int locx = x + LOCATIONS[loc][0]*step_size;
-
-
-        if (locy < 0 || locy + block_size > rows ||
-            locx < 0 || locx + block_size > cols) {
-            continue;
+    while(step_size > 1){
+        for (int i = 0; i < 9; ++i) {
+            costs[i] = INT_MAX;
         }
-        //std::cerr << cv::sum(prev_frame) << "col: " << locx << "; row: " << locy << std::endl;
-        //std::flush(cerr);
-        costs[loc] = calculateMAD( curr_block , getBlock( prev_frame , locy , locx ) );
+
+        for( int loc = 0 ; loc < 9 ; loc++ ){
+            int locy = cury + LOCATIONS[loc][1]*step_size;
+            int locx = curx + LOCATIONS[loc][0]*step_size;
+
+
+            if (locy < 0 || locy + block_size - 1 > rows ||
+                locx < 0 || locx + block_size - 1 > cols ||
+                abs(locx - x) > search_area || abs(locy - y) > search_area) {
+                continue;
+            }
+
+            costs[loc] = calculateMAD( curr_block , getBlock( prev_frame , locy , locx ) );
+        }
+
+
+        auto [ mincosts , index ] = min_and_index_of(costs,9);
+
+        cury = y + LOCATIONS[index][1];
+        curx = x + LOCATIONS[index][0];
+
+        if(index == 0) {
+            step_size = step_size/2;
+        }
     }
 
+    return { getBlock( prev_frame , cury , curx ) , y - cury , x - curx };
 
-    auto [ mincosts , index ] = min_and_index_of(costs,9);
-
-    int newy = y + LOCATIONS[index][1];
-    int newx = x + LOCATIONS[index][0];
-
-    if( step_size == 1){
-        return { getBlock( prev_frame , newy , newx ) , newy , newx };
-    }
-
-    if(index == 8){
-        step_size = step_size/2;
-    }
-    return searchBestBlock( prev_frame , curr_block , newy , newx , rows , cols , step_size );
 }
 
 
