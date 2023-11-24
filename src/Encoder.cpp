@@ -4,9 +4,12 @@
 
 #include "Encoder.h"
 #include <vector>
+using namespace std;
 
-Encoder::Encoder(const string &input_file, const string &output_file) : video(input_file), stream_out(output_file) {
+Encoder::Encoder(VideoCapture* in, BitStreamWrite* out) {
     m = 3; // initialize 'm'
+    video = in;
+    stream_out = out;
 }
 
 // TODO: falta o "video_format"
@@ -84,3 +87,5 @@ unsigned char Encoder::JPEG_LS(unsigned char a, unsigned char b, unsigned char c
     else
         return a + b - c;
 }
+
+

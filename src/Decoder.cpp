@@ -5,10 +5,10 @@
 #include "Decoder.h"
 
 
-Decoder::Decoder(const string &input_file):stream_in(input_file) {
+Decoder::Decoder(BitStreamRead* in) {
     m = 3; //initialize 'm'
+    stream_in=in;
 }
-
 void Decoder::read_headers() {
     cols=stoi(stream_in.read_string());
     rows=stoi(stream_in.read_string());
