@@ -38,8 +38,6 @@ void BlockEncoding::encodeValue(unsigned int v) {
 void BlockEncoding::generate_headers(const Size &frame_size) {
     stream_out.write(to_string(frame_size.width));
     stream_out.write(to_string(frame_size.height));
-    stream_out.write(to_string(block_size));
-    stream_out.write(to_string(search_area));
     stream_out.write(to_string(keyframe_period));
 }
 
@@ -97,6 +95,7 @@ void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_c
             curr_block = getBlock(c_channel, i * block_size, j * block_size);
             auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i, j, rows, cols);
             b_erro = curr_block - ref_block;
+            encodeBlockDifference(b_erro);
         }
     }
 }
@@ -168,5 +167,14 @@ std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, 
     best_match_col = best_match_col - b_col;
 
     return {ref_block, best_match_row, best_match_col};
+}
+
+// Writes golomb-encoded error values row by row
+void BlockEncoding::encodeBlockDifference(const Mat &block) {
+    for (int i = 0; i < block.rows; ++i) {
+        for (int j = 0; j < block.cols; ++j) {
+            encodeValue(block.at<uchar>(i, j));
+        }
+    }
 }
 

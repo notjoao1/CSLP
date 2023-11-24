@@ -26,6 +26,7 @@ private:
     void encodeInterFrame(const Mat& f, const Mat& p);
     void encodeIntraFrame(const Mat& f);
     void encodeValue(unsigned int v);
+    void encodeBlockDifference(const Mat& block);
     void generate_headers(const Size& frame_size);
     Mat getBlock(const Mat& original_frame, int row, int col) const;
     // returns tuple with best matching block and (x,y) vector
