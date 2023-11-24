@@ -5,7 +5,7 @@
 #include "BlockEncoding.h"
 
 BlockEncoding::BlockEncoding(const string &input_file, const string &output_file, int block_size, int search_area, int keyframe_period) : video(input_file), stream_out(output_file), block_size(block_size), search_area(search_area), keyframe_period(keyframe_period) {
-    int m = 3;
+    m = 3;
 }
 
 void BlockEncoding::encode() {
@@ -72,7 +72,7 @@ void BlockEncoding::encodeIntraFrame(const Mat &f) {
 }
 
 
-// TODO: adicionar padding para ter frames divisiveis pelo block_size!!!!!
+// TODO: adicionar padding para ter frames divisiveis pelo block_size!!!!! meter valores de 0 padded
 // f - current frame; p - previous frame
 void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
     std::cout << "Encoding interframe" << std::endl;
@@ -89,12 +89,14 @@ void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
 
 
 void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel) {
-    Mat curr_block;
-    std::cout << "Full current channel: \n" << c_channel << std::endl;
-    for (int i = 0; i < c_channel.rows / block_size; ++i) {
-        for (int j = 0; j < c_channel.cols / block_size; ++j) {
+    Mat curr_block, b_erro; // b_erro é o erro entre duas matrizes
+    int rows = c_channel.rows, cols = c_channel.cols;
+    //std::cout << "Full current channel: \n" << c_channel << std::endl;
+    for (int i = 0; i < rows / block_size - 1; ++i) {
+        for (int j = 0; j < cols / block_size - 1; ++j) {
             curr_block = getBlock(c_channel, i * block_size, j * block_size);
-            searchBestBlock(curr_block, p_channel, )
+            auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i, j, rows, cols);
+            b_erro = curr_block - ref_block;
         }
     }
 }
@@ -118,35 +120,53 @@ unsigned char BlockEncoding::JPEG_LS(unsigned char a, unsigned char b, unsigned 
         return a + b - c;
 }
 
-std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat &prev, const Mat &orig_block, int x, int y) {
-    int x_start, x_end, y_start, y_end; // loop boundaries
-
-    x_start = x - search_area;
-    if (x_start < 0) {
-        x_start = 0;
-    }
-
-    x_end = x + block_size + (search_area - 1);
-    if (x_end > prev.cols) {
-        x_end = prev.cols;
-    }
-
-    y_start = y - search_area;
-    if (y_start < 0) {
-        y_start = 0;
-    }
-
-    y_end = y + block_size + (search_area - 1);
-    if (y_end > prev.rows) {
-        y_end = prev.rows;
-    }
-
-
-    for (int i = x_start; i < x_end; ++i) {
-        for (int j = y_start; j < y_end; ++j) {
-
+// Calculate mean absolute difference between 2 blocks
+int BlockEncoding::calculateMAD(const Mat& block1, const Mat& block2) const {
+    int mad = 0;
+    for (int i = 0; i < block_size; ++i) {
+        for (int j = 0; j < block_size; ++j) {
+            mad += std::abs(block1.at<uchar>(i, j) - block2.at<uchar>(i, j));
         }
     }
 
-    return {};
+    cv::Mat diff;
+    cv::absdiff(block1, block2, diff);
+    //std::cout << "MAD by OPENCV: " << cv::sum(diff)[0] / (block_size * block_size) << std::endl;
+    //std::cout << "MAD by ME: " << mad / (block_size * block_size) << std::endl;
+    return mad/(block_size * block_size);
 }
+
+std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, const Mat& curr_block, int b_row, int b_col, int rows, int cols) {
+    // precompute boundaries
+    int start_col = (b_col - search_area < 0) ? 0 : b_col - search_area;
+    int end_col = (b_col + block_size + search_area > cols) ? cols - block_size : b_col + search_area;
+
+    int start_row = (b_row - search_area < 0) ? 0 : b_row - search_area;
+    int end_row = (b_row + block_size + search_area > rows) ? rows - block_size : b_row + search_area;
+
+    int best_match_row = b_row;
+    int best_match_col = b_col;
+    int min_mad = INT_MAX;
+    Mat ref_block;
+
+    #pragma omp parallel for
+    for (int col = start_col; col < end_col; ++col) {
+        for (int row = start_row; row < end_row; ++row) {
+            ref_block = getBlock(prev_frame, row, col);
+            int mad = calculateMAD(curr_block, ref_block);
+            if (mad < min_mad) {
+                min_mad = mad;
+                best_match_row = col;
+                best_match_col = row;
+                if (min_mad == 0)  // found perfect match, no point searching more
+                    break;
+            }
+        }
+    }
+
+    best_match_row = best_match_row - b_row;
+    best_match_col = best_match_col - b_col;
+
+    return {ref_block, best_match_row, best_match_col};
+}
+

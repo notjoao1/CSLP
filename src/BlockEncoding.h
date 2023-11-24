@@ -14,7 +14,7 @@
 
 class BlockEncoding {
 public:
-    BlockEncoding(const std::string& input_file, const std::string& output_file, int block_size = 8, int search_area = 16, int keyframe_period = 10);
+    BlockEncoding(const std::string& input_file, const std::string& output_file, int block_size = 4, int search_area = 2, int keyframe_period = 10);
     void encode();
     void encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel);   // TODO: mudar pa private, está public para testing
 private:
@@ -29,9 +29,10 @@ private:
     void generate_headers(const Size& frame_size);
     Mat getBlock(const Mat& original_frame, int row, int col) const;
     // returns tuple with best matching block and (x,y) vector
-    std::tuple<Mat, int, int> searchBestBlock(const Mat& prev, const Mat& orig_block, int x, int y);
+    std::tuple<Mat, int, int> searchBestBlock(const Mat& prev_frame, const Mat& curr_block, int x, int y, int rows, int cols);
     static unsigned char JPEG_LS(unsigned char a,unsigned char b,unsigned char c);
 
+    int calculateMAD(const Mat &block1, const Mat &block2) const;
 };
 
 
