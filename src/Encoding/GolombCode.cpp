@@ -165,7 +165,7 @@ int GolombCode::estimate(const cv::Mat &m) {
                 c++;
 
     float d = float(c) / float( m.rows * m.cols );
-    int m_param = -1 / log2f(d);
+    int m_param = -1 / log2f(1 - d);
     return m_param;
 }
 

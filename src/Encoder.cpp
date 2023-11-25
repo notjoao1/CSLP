@@ -33,13 +33,17 @@ void Encoder::encodeFrame(const Mat& f) {
 
 // Receives single channel Mat
 void Encoder::encodeChannel(const Mat& channel) {
+    Mat estimate_mat = Mat::zeros(channel.cols - 1, channel.rows - 1, CV_8UC1);
     // encode first row and first column directly
     for (int col = 0; col < channel.cols; col++) {
+        //stream_out->write(8, channel.at<uchar>(0, col));
         encodeValue(channel.at<uchar>(0, col));
     }
 
     for (int row = 1; row < channel.rows; row++) {
+        //stream_out->write(8, channel.at<uchar>(row, 0));
         encodeValue(channel.at<uchar>(row, 0));
+
     }
 
     int r; // tem de ser int, pois pode ser negativo
@@ -52,7 +56,15 @@ void Encoder::encodeChannel(const Mat& channel) {
             c = channel.at<uchar>(row - 1, col - 1);
             p = JPEG_LS(a, b, c);
             r = int(channel.at<uchar>(row, col)) - int(p);
-            encodeValue(GolombCode::mapIntToUInt(r));
+            estimate_mat.at<uchar>(row, col) = GolombCode::mapIntToUInt(r);
+            //encodeValue(GolombCode::mapIntToUInt(r));
+        }
+
+    m = GolombCode::estimate(estimate_mat);
+
+    for (int row = 0; row < channel.rows; row++)
+        for (int col = 0; col < channel.cols; col++) {
+            encodeValue(estimate_mat.at<uchar>(row, col));
         }
 
 }
