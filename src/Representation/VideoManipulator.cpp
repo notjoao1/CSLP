@@ -78,3 +78,7 @@ Mat VideoManipulator::getNextFrame() {
 int VideoManipulator::getFPS(){
     return cap.get(CAP_PROP_FPS);
 }
+
+int VideoManipulator::getNumberOfFrames() {
+    return cap.get(CAP_PROP_FRAME_COUNT);
+}

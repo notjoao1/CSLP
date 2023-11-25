@@ -4,8 +4,9 @@
 
 #include "../../src/Decoder.h"
 
-int main2() {
-    Decoder d("/home/tiago/CLionProjects/GTD-VC/tests/Deliverable4Tests/encoded_videoencoded_video.gtd");
+int main(int argc, char* argv[]) {
+    BitStreamRead* in = new BitStreamRead("tests/Deliverable5Tests/ola.gtd");
+    Decoder d(in, "tests/Deliverable5Tests/testingabc.y4m");
     d.decode();
     return 0;
 }

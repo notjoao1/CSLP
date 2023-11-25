@@ -18,6 +18,7 @@ void Encoder::generate_headers(const Size& frame_size) {
     stream_out->write(to_string(frame_size.width));
     stream_out->write(to_string(frame_size.height));
     stream_out->write(to_string(video->getFPS()));
+    stream_out->write(to_string(video->getNumberOfFrames()));
 }
 
 // Receives multi-channel Mat

@@ -10,6 +10,7 @@
 #include "Encoding/GolombCode.h"
 #include "opencv2/opencv.hpp"
 #include <iostream>
+#include "Y4MWriter.h"
 
 using namespace cv;
 using namespace std;
@@ -17,8 +18,8 @@ using namespace std;
 class Decoder {
 private:
     BitStreamRead* stream_in;
-
     GolombCode golomb;
+    Y4MWriter output_vid;
     int m; // golomb parameter TODO: ver isto depois
     int cols;
     int rows;
@@ -29,10 +30,9 @@ public:
     Mat decodeFrame();
     Mat decodeChannel();
     int decodeValue();
-    int getFPS();
     static unsigned char JPEG_LS(unsigned char a, unsigned char b, unsigned char c);
-    Decoder(BitStreamRead* in);
-    vector<Mat> decode();
+    Decoder(BitStreamRead* in, const std::string& output_fname);
+    void decode();
 
 };
 

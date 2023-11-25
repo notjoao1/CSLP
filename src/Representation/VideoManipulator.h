@@ -39,6 +39,7 @@ public:
     int getFPS();
     //TODO: add support to write video to file
 
+    int getNumberOfFrames();
 };
 
 

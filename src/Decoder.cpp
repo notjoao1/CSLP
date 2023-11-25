@@ -5,36 +5,41 @@
 #include "Decoder.h"
 
 
-Decoder::Decoder(BitStreamRead* in) {
+Decoder::Decoder(BitStreamRead* in, const std::string& output_fname) : output_vid(output_fname) {
     this->m = 3; //initialize 'm'
     this->stream_in=in;
 }
 
+//TODO: read of ColorSpace
 void Decoder::read_headers() {
     cols=stoi(stream_in->read_string());
     rows=stoi(stream_in->read_string());
     fps=stoi(stream_in->read_string());
-    //TODO: read of ColorSpace and check if need to read m once or per frame
 }
 
-vector<Mat> Decoder::decode(){
-    vector<Mat> video;
+void Decoder::decode(){
     read_headers();
     cout << "decoding video..." << endl;
 
+    // write headers to output file
+    output_vid.writeHeader(cols, rows, fps);
+
+    // total frames to be read
+    int missing_frames = stoi(stream_in->read_string()); // read total number of frames
+
     Mat curr_frame;
+
+    // read first frame
     curr_frame = decodeFrame();
-    imshow("First Frame",curr_frame);
-    waitKey(0);
+    output_vid.writeFrame(&curr_frame);
+    missing_frames--;
     // frame loop
-    int counter = 0; // testing stuff
-    while (!curr_frame.empty()) {
-        cout << "current_frame: " << counter << endl;
-        video.push_back(curr_frame);
+    while (missing_frames > 0) {
         curr_frame = decodeFrame();
-        counter++;
+        output_vid.writeFrame(&curr_frame);
+        missing_frames--;
     }
-    return video;
+    output_vid.closeFile();
 }
 
 Mat Decoder::decodeFrame() {
@@ -80,9 +85,6 @@ int Decoder::decodeValue() {
     return GolombCode::mapUIntToInt( GolombCode::decode_one(m,*stream_in) );
 }
 
-int Decoder::getFPS() {
-    return this->fps;
-}
 unsigned char Decoder::JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {
     unsigned char maximum = max(a,b);
     unsigned char minimum = min(a,b);
