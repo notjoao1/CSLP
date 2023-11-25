@@ -87,7 +87,6 @@ public:
     /**
      *
      */
-    static int estimate( const cv::Mat& m );
 
     static int mapIntToUInt(int n);
 
@@ -96,6 +95,7 @@ public:
      */
     static int mapUIntToInt(int n);
 
+    static int estimate(const int *a, int cols, int rows);
 };
 
 
