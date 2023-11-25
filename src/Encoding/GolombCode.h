@@ -95,7 +95,7 @@ public:
      */
     static int mapUIntToInt(int n);
 
-    static int estimate(const int *a, int cols, int rows);
+    static int estimate(const unsigned int *a, int cols, int rows);
 };
 
 

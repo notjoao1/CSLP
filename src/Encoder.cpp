@@ -32,21 +32,9 @@ void Encoder::encodeFrame(const Mat& f) {
 // Receives single channel Mat
 void Encoder::encodeChannel(const Mat& channel) {
     // array that will be used to estimate 'm' parameter
-    int e[(channel.cols - 1)*(channel.rows - 1)];
+    unsigned int e[(channel.cols - 1)*(channel.rows - 1)];
 
-
-    // encode first row and first column directly
-    for (int col = 0; col < channel.cols; col++) {
-        //stream_out->write(8, channel.at<uchar>(0, col));
-        encodeValue(channel.at<uchar>(0, col));
-    }
-
-    for (int row = 1; row < channel.rows; row++) {
-        //stream_out->write(8, channel.at<uchar>(row, 0));
-        encodeValue(channel.at<uchar>(row, 0));
-
-    }
-
+    // Pre compute error values
     int r; // tem de ser int, pois pode ser negativo
     unsigned char a, b, c, p;
 
@@ -57,7 +45,7 @@ void Encoder::encodeChannel(const Mat& channel) {
             c = channel.at<uchar>(row - 1, col - 1);
             p = JPEG_LS(a, b, c);
             r = int(channel.at<uchar>(row, col)) - int(p);
-            e[(col-1) * (channel.rows-1) +  row-1] = GolombCode::mapIntToUInt(r);
+            e[(col - 1) + (row - 1) * (channel.cols - 1)] = GolombCode::mapIntToUInt(r);
         }
 
     // estimate 'm' based on values that will be encoded
@@ -65,6 +53,18 @@ void Encoder::encodeChannel(const Mat& channel) {
 
     // write 'm' and encoded channel values
     stream_out->write(to_string(m));
+
+    // encode first row and first column directly
+    for (int col = 0; col < channel.cols; col++) {
+        //stream_out->write(8, channel.at<uchar>(0, col));
+        stream_out->write(8, channel.at<uchar>(0, col));
+    }
+
+    for (int row = 1; row < channel.rows; row++) {
+        //stream_out->write(8, channel.at<uchar>(row, 0));
+        stream_out->write(8, channel.at<uchar>(row, 0));
+
+    }
     for (int i = 0; i < (channel.rows-1) * (channel.cols-1); i++)
         encodeValue( e[i] );
 

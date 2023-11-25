@@ -156,7 +156,7 @@ std::vector<int> GolombCode::decode(int m,BitStreamRead &b, int n) {
     return res;
 }
 
-int GolombCode::estimate(const int a[] , int cols , int rows ) {
+int GolombCode::estimate(const unsigned int a[] , int cols , int rows ) {
 
     long summ = 0;
 

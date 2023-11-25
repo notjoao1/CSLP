@@ -56,12 +56,11 @@ Mat Decoder::decodeChannel() {
 
     // decode first row and first column directly
     for (int col = 0; col < cols; col++) {
-        res.at<uchar>(0,col)=uchar(GolombCode::decode_one(m, *stream_in));
+        res.at<uchar>(0,col)=uchar(stream_in->read(8));
     }
 
-    std::cout << "rows : " << rows << std::endl;
     for (int row = 1; row < rows; row++) {
-        res.at<uchar>(row,0)=uchar(GolombCode::decode_one(m, *stream_in));
+        res.at<uchar>(row,0)=uchar(stream_in->read(8));
 
     }
 
