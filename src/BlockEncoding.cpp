@@ -16,7 +16,6 @@ void BlockEncoding::encode() {
     curr_frame = video.getNextFrame();
     generate_headers(curr_frame.size());
     cout << "encoding video with motion estimation..." << endl;
-
     // frame loop
     int frame_counter = 0;
     while (!curr_frame.empty()) {
@@ -43,6 +42,7 @@ void BlockEncoding::generate_headers(const Size &frame_size) {
     stream_out.write(to_string(frame_size.height));
     stream_out.write(to_string(keyframe_period));
     stream_out.write(to_string(block_size));
+    stream_out.write(to_string(video.getFPS()));
 }
 
 // TODO: estimar 'm' para cada channel?
@@ -50,6 +50,8 @@ void BlockEncoding::encodeIntraFrame(const Mat &f) {
     vector<Mat> channels;
     split(f, channels);
     for (auto channel : channels) {
+        stream_out.write(to_string(m));
+
         for (int col = 0; col < channel.cols; ++col) {
             encodeValue(channel.at<uchar>(0, col));
         }

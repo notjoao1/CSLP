@@ -10,6 +10,7 @@
 #include "BitStream/BitStreamWrite.h"
 #include "Encoding/GolombCode.h"
 #include "opencv2/imgproc.hpp"
+#include "Encoder.h"
 
 
 class BlockEncoding {
@@ -21,6 +22,7 @@ private:
     VideoManipulator video;
     BitStreamWrite stream_out;
     GolombCode golomb;
+    Encoder* e;
     int m; // golomb parameter
     void encodeInterFrame(const Mat& f, const Mat& p);
     void encodeIntraFrame(const Mat& f);
