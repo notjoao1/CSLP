@@ -86,7 +86,7 @@ void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
 
     // iterate through channels, both frames have same number
     for (int i = 0; i < f.channels(); ++i) {
-        encodeInterframeChannel(curr_channels.at(i), prev_channels.at(i));
+        encodeInterframeChannel(pad(curr_channels.at(i)), pad(prev_channels.at(i)));
     }
 
 }
@@ -243,5 +243,35 @@ void BlockEncoding::encodeBlockDifference(const Mat &block) {
             encodeValue(block.at<uchar>(i, j));
         }
     }
+}
+
+Mat BlockEncoding::pad(const Mat &frame) const {
+    int cols = frame.cols;
+    int rows = frame.rows;
+
+    if( cols % block_size == 0 && rows % block_size == 0 )
+        return frame;
+
+    cols = cols + cols % block_size;
+    rows = rows + rows % block_size;
+
+    Mat padded_mat = Mat::zeros(rows , cols, CV_8UC1);
+
+    cv::Rect roi(0, 0, frame.cols, frame.rows);
+    frame.copyTo(padded_mat(roi));
+
+    for(int i = 0 ; i < frame.cols ; i++){
+        for(int p = 0 ; p < cols % block_size ; p++){
+            padded_mat.at<uchar>( frame.rows + p , i ) = frame.at<uchar>( frame.rows -1 ,i );
+        }
+    }
+
+    for(int i = 0 ; i < rows ; i++){
+        for(int p = 0 ; p < rows % block_size ; p++){
+            padded_mat.at<uchar>( i , frame.cols + p ) = padded_mat.at<uchar>( i , frame.cols - 1 );
+        }
+    }
+
+    return padded_mat;
 }
 

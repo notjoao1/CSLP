@@ -22,7 +22,6 @@ private:
     VideoManipulator video;
     BitStreamWrite stream_out;
     GolombCode golomb;
-    Encoder* e;
     int m; // golomb parameter
     void encodeInterFrame(const Mat& f, const Mat& p);
     void encodeIntraFrame(const Mat& f);
@@ -34,7 +33,8 @@ private:
     /*std::tuple<Mat, int, int> searchBestBlock(const Mat& prev_frame, const Mat& curr_block, int x, int y, int rows, int cols);*/
     std::tuple<Mat, int, int> searchBestBlock(const Mat& prev_frame, const Mat& curr_block, int y, int x, int rows, int cols);
     static unsigned char JPEG_LS(unsigned char a,unsigned char b,unsigned char c);
-
+    // {padded_mat, new cols, new rows}
+    Mat pad(const Mat& frame) const;
     void encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel);
     int calculateMAD(const Mat &block1, const Mat &block2) const;
 };
