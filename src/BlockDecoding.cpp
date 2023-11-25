@@ -3,10 +3,11 @@
 //
 
 #include "BlockDecoding.h"
+#include <cmath>
 
-BlockDecoding::BlockDecoding(const string &input_file, const string &output_file) : stream_in(input_file), video(output_file){
+BlockDecoding::BlockDecoding(const string &input_file, const string &output_file) : stream_in(input_file){
     this->m = 3;
-    Decoder d(&stream_in);
+    Decoder d(&stream_in,output_file);
     decoder=&d;
 }
 
@@ -25,9 +26,9 @@ void BlockDecoding::decode() {
             cout << "current_frame (INTER_FRAME): " << frame_counter << endl;
         }
         if (frame_counter==0){
-            video.writeHeader(this->width,this->height,this->fps);
+            decoder->output_vid.writeHeader(this->width,this->height,this->fps);
         }
-        video.writeFrame(&curr_frame);
+        decoder->output_vid.writeFrame(&curr_frame);
         frame_counter++;
     }
 }
@@ -37,6 +38,7 @@ void BlockDecoding::read_headers() {
     this->height=stoi(stream_in.read_string());
     this->keyframe_period=stoi(stream_in.read_string());
     this->block_size=stoi(stream_in.read_string());
+    this->search_area=stoi(stream_in.read_string());
     this->fps=stoi(stream_in.read_string());
 }
 
@@ -74,11 +76,16 @@ Mat BlockDecoding::getBlock(const Mat *original_frame, int row, int col) const{
 Mat BlockDecoding::decodeInterframeChannel(Mat* p_channel) {
     Mat c_channel;
     Mat curr_block, b_erro; // b_erro é o erro entre duas matrizes
+    int desloc_row,desloc_col;
+    int bits_to_read = ceil(log2(search_area)) + 1;
+
     for (int i = 0; i < this->height / block_size - 1; ++i) {
         for (int j = 0; j < this->width / block_size - 1; ++j) {
+            desloc_row=stream_in.read(bits_to_read);
+            desloc_col=stream_in.read(bits_to_read);
             b_erro = decodeBlockDifference();
-            curr_block=getBlock(p_channel,i*block_size,j*block_size)+b_erro;
-            setBlock(&c_channel,&curr_block, i * block_size, j * block_size); //TODO: refactor to use vectors
+            curr_block=getBlock(p_channel,i*block_size+desloc_row,j*block_size+desloc_col)+b_erro;
+            setBlock(&c_channel,&curr_block, i * block_size, j * block_size);
         }
     }
     return c_channel;

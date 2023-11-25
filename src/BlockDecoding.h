@@ -21,9 +21,8 @@ private:
     Mat getBlock(const Mat *original_frame, int row, int col) const;
     void setBlock(const Mat *original_frame, Mat* block, int row, int col) const;
     Decoder* decoder;
-    int width, height,block_size,    keyframe_period,fps;
+    int width, height,block_size,search_area,keyframe_period,fps;
     BitStreamRead stream_in;
-    VideoManipulator video;
     GolombCode golomb;
     int m; // golomb parameter TODO: ver isto depois
     Mat decodeInterFrame(const Mat* previous_frame);

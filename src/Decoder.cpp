@@ -9,7 +9,6 @@ Decoder::Decoder(BitStreamRead* in, const std::string& output_fname) : output_vi
     this->m = 3; //initialize 'm'
     this->stream_in=in;
 }
-
 //TODO: read of ColorSpace
 void Decoder::read_headers() {
     cols=stoi(stream_in->read_string());

@@ -42,6 +42,7 @@ void BlockEncoding::generate_headers(const Size &frame_size) {
     stream_out.write(to_string(frame_size.height));
     stream_out.write(to_string(keyframe_period));
     stream_out.write(to_string(block_size));
+    stream_out.write(to_string(search_area));
     stream_out.write(to_string(video.getFPS()));
 }
 

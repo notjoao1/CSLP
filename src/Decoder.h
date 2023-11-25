@@ -19,13 +19,13 @@ class Decoder {
 private:
     BitStreamRead* stream_in;
     GolombCode golomb;
-    Y4MWriter output_vid;
     int m; // golomb parameter TODO: ver isto depois
     int cols;
     int rows;
     int fps;
 
 public:
+    Y4MWriter output_vid;
     void read_headers();
     Mat decodeFrame();
     Mat decodeChannel();
