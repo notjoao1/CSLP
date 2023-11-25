@@ -15,7 +15,7 @@ void BlockEncoding::encode() {
     Mat curr_frame, previous_frame;
     curr_frame = video.getNextFrame();
     generate_headers(curr_frame.size());
-    cout << "encoding video..." << endl;
+    cout << "encoding video with motion estimation..." << endl;
 
     // frame loop
     int frame_counter = 0;
@@ -93,15 +93,14 @@ void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
 void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel) {
     Mat curr_block, b_erro; // b_erro é o erro entre duas matrizes
     int rows = c_channel.rows, cols = c_channel.cols;
-    std::cout << "Loops y: " << cols/block_size - 1 << std::endl;
+    int bits_to_write = ceil(log2(search_area)) + 1;
     for (int i = 0; i < rows / block_size - 1; ++i) {
         for (int j = 0; j < cols / block_size - 1; ++j) {
             curr_block = getBlock(c_channel, i * block_size, j * block_size);
-            if (j >= 318) {
-                std::cout << "cagalhao" << std::endl;
-            }
             auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i * block_size, j * block_size, rows, cols, 2);
             b_erro = curr_block - ref_block;
+            stream_out.write(bits_to_write, desloc_row);
+            stream_out.write(bits_to_write, desloc_col);
             encodeBlockDifference(b_erro);
         }
     }
@@ -110,10 +109,6 @@ void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_c
 Mat BlockEncoding::getBlock(const Mat &original_frame, int row, int col) const {
     // create region of interest for block
     // columns - x-axis; rows - y-axis
-
-    if (col > 1272) {
-        std::cout << "Balast" << std::endl;
-    }
     Rect roi(col, row, block_size, block_size);
     Mat block = original_frame(roi);
     return block;
@@ -141,7 +136,7 @@ int BlockEncoding::calculateMAD(const Mat& block1, const Mat& block2) const {
     return mad/(block_size * block_size);
 }
 
-/*
+/* EXHAUSTIVE SEARCH
 std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, const Mat& curr_block, int b_row, int b_col, int rows, int cols) {
     // precompute boundaries
     int start_col = (b_col - search_area < 0) ? 0 : b_col - search_area;
@@ -205,6 +200,7 @@ std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, 
             costs[i] = INT_MAX;
         }
 
+        #pragma omp parallel for
         for( int loc = 0 ; loc < 9 ; loc++ ){
             int locy = cury + LOCATIONS[loc][1]*step_size;
             int locx = curx + LOCATIONS[loc][0]*step_size;
@@ -222,8 +218,8 @@ std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, 
 
         auto [ mincosts , index ] = min_and_index_of(costs,9);
 
-        cury = y + LOCATIONS[index][1];
-        curx = x + LOCATIONS[index][0];
+        cury = cury + LOCATIONS[index][1]*step_size;
+        curx = curx + LOCATIONS[index][0]*step_size;
 
         if(index == 0) {
             step_size = step_size/2;
@@ -233,7 +229,6 @@ std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, 
     return { getBlock( prev_frame , cury , curx ) , y - cury , x - curx };
 
 }
-
 
 
 
