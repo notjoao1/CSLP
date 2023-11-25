@@ -4,10 +4,11 @@
 
 #include "Encoder.h"
 #include <vector>
+
 using namespace std;
 
 Encoder::Encoder(VideoManipulator* in, BitStreamWrite* out) {
-    this->m = 3; // initialize 'm'
+    this->m = 12; // initialize 'm'
     this->video = in;
     this->stream_out = out;
 }
@@ -15,9 +16,8 @@ Encoder::Encoder(VideoManipulator* in, BitStreamWrite* out) {
 // TODO: falta o "video_format"
 void Encoder::generate_headers(const Size& frame_size) {
     stream_out->write(to_string(frame_size.width));
-    stream_out->write(to_string(frame_size.height)); // 2 bytes
+    stream_out->write(to_string(frame_size.height));
     stream_out->write(to_string(video->getFPS()));
-
 }
 
 // Receives multi-channel Mat
@@ -25,15 +25,16 @@ void Encoder::encodeFrame(const Mat& f) {
     std::vector<Mat> channels;
     split(f, channels);
     for (int i = 0; i < f.channels(); ++i) {
-        //this->m = GolombCode::estimate(channels[i]);
-        stream_out->write(to_string(m));
         encodeChannel(channels[i]);
     }
 }
 
 // Receives single channel Mat
 void Encoder::encodeChannel(const Mat& channel) {
-    Mat estimate_mat = Mat::zeros(channel.cols - 1, channel.rows - 1, CV_8UC1);
+    // array that will be used to estimate 'm' parameter
+    int e[(channel.cols - 1)*(channel.rows - 1)];
+
+
     // encode first row and first column directly
     for (int col = 0; col < channel.cols; col++) {
         //stream_out->write(8, channel.at<uchar>(0, col));
@@ -56,16 +57,16 @@ void Encoder::encodeChannel(const Mat& channel) {
             c = channel.at<uchar>(row - 1, col - 1);
             p = JPEG_LS(a, b, c);
             r = int(channel.at<uchar>(row, col)) - int(p);
-            estimate_mat.at<uchar>(row, col) = GolombCode::mapIntToUInt(r);
-            //encodeValue(GolombCode::mapIntToUInt(r));
+            e[(col-1) * (channel.rows-1) +  row-1] = GolombCode::mapIntToUInt(r);
         }
 
-    m = GolombCode::estimate(estimate_mat);
+    // estimate 'm' based on values that will be encoded
+    m = GolombCode::estimate(e,channel.cols - 1,channel.rows - 1);
 
-    for (int row = 0; row < channel.rows; row++)
-        for (int col = 0; col < channel.cols; col++) {
-            encodeValue(estimate_mat.at<uchar>(row, col));
-        }
+    // write 'm' and encoded channel values
+    stream_out->write(to_string(m));
+    for (int i = 0; i < (channel.rows-1) * (channel.cols-1); i++)
+        encodeValue( e[i] );
 
 }
 
@@ -78,8 +79,6 @@ void Encoder::encode() {
     curr_frame = video->getNextFrame();
     generate_headers(curr_frame.size());
     cout << "encoding video..." << endl;
-    imshow("first frame", curr_frame);
-    waitKey(0);
 
     // frame loop
     int counter = 0; // testing stuff
