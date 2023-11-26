@@ -1,0 +1,53 @@
+\doxysection{Block\+Encoding.\+h}
+\hypertarget{BlockEncoding_8h_source}{}\label{BlockEncoding_8h_source}\index{src/BlockEncoding.h@{src/BlockEncoding.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ GTD\_VC\_BLOCKENCODING\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ GTD\_VC\_BLOCKENCODING\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Representation/VideoManipulator.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}BitStream/BitStreamWrite.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Encoding/GolombCode.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}opencv2/imgproc.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Encoder.h"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classBlockEncoding}{BlockEncoding}}\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{classBlockEncoding}{BlockEncoding}}(\textcolor{keyword}{const}\ std::string\&\ input\_file,\ \textcolor{keyword}{const}\ std::string\&\ output\_file,\ \textcolor{keywordtype}{int}\ block\_size\ =\ 16,\ \textcolor{keywordtype}{int}\ search\_area\ =\ 2,\ \textcolor{keywordtype}{int}\ keyframe\_period\ =\ 10);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classBlockEncoding_af2c09f96f20beb874ceba1fbbca7fcf6}{encode}}();}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{int}\ block\_size,\ search\_area,\ keyframe\_period;\ }
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{classVideoManipulator}{VideoManipulator}}\ video;\ }
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{classBitStreamWrite}{BitStreamWrite}}\ stream\_out;\ }
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{classGolombCode}{GolombCode}}\ golomb;\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ m;\ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ encodeInterFrame(\textcolor{keyword}{const}\ Mat\&\ f,\ \textcolor{keyword}{const}\ Mat\&\ p);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ encodeIntraFrame(\textcolor{keyword}{const}\ Mat\&\ f);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ encodeValue(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ v);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ encodeBlockDifference(\textcolor{keyword}{const}\ Mat\&\ block);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ generate\_headers(\textcolor{keyword}{const}\ Size\&\ frame\_size);}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00077\ \ \ \ \ Mat\ getBlock(\textcolor{keyword}{const}\ Mat\&\ original\_frame,\ \textcolor{keywordtype}{int}\ row,\ \textcolor{keywordtype}{int}\ col)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00089\ \ \ \ \ std::tuple<Mat,\ int,\ int>\ searchBestBlock(\textcolor{keyword}{const}\ Mat\&\ prev\_frame,\ \textcolor{keyword}{const}\ Mat\&\ curr\_block,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols);}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ JPEG\_LS(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ a,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ b,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ c);}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00105\ \ \ \ \ Mat\ pad(\textcolor{keyword}{const}\ Mat\&\ frame)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{void}\ encodeInterframeChannel(\textcolor{keyword}{const}\ Mat\&\ c\_channel,\ \textcolor{keyword}{const}\ Mat\&\ p\_channel);}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{int}\ calculateMAD(\textcolor{keyword}{const}\ Mat\&\ block1,\ \textcolor{keyword}{const}\ Mat\&\ block2)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00121\ \};}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ GTD\_VC\_BLOCKENCODING\_H}}
+
+\end{DoxyCode}

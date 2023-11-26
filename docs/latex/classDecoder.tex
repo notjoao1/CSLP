@@ -1,0 +1,126 @@
+\doxysection{Decoder Class Reference}
+\hypertarget{classDecoder}{}\label{classDecoder}\index{Decoder@{Decoder}}
+
+
+Class for decoding ( only intra frame ).  
+
+
+
+
+{\ttfamily \#include $<$Decoder.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classDecoder_a17894cdf89ed82774879504cb16dd1c2}\label{classDecoder_a17894cdf89ed82774879504cb16dd1c2} 
+void {\bfseries read\+\_\+headers} ()
+\begin{DoxyCompactList}\small\item\em Reads and processes headers from the input stream. \end{DoxyCompactList}\item 
+Mat \mbox{\hyperlink{classDecoder_a85ab3b0661dbf6486f5289c332128f6a}{decode\+Frame}} ()
+\begin{DoxyCompactList}\small\item\em Decodes a single frame from the input stream. \end{DoxyCompactList}\item 
+Mat \mbox{\hyperlink{classDecoder_a1b6b267afe72ff934a72d849f89ae487}{decode\+Channel}} ()
+\begin{DoxyCompactList}\small\item\em Decodes a single channel from the input stream. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classDecoder_a6f473d625cc00e85ace6072e16a882ed}{decode\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Decodes a single value using Golomb decoding. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classDecoder_a174043f495ba00723e26287a89c3e5de}{Decoder}} (\mbox{\hyperlink{classBitStreamRead}{Bit\+Stream\+Read}} \texorpdfstring{$\ast$}{*}in, const std\+::string \&output\+\_\+fname)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{classDecoder}{Decoder} class. \end{DoxyCompactList}\item 
+\Hypertarget{classDecoder_aa7520e3f389df086943c33c7c678fbde}\label{classDecoder_aa7520e3f389df086943c33c7c678fbde} 
+void {\bfseries decode} ()
+\begin{DoxyCompactList}\small\item\em Main decoding function that decodes the entire video. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static unsigned char \mbox{\hyperlink{classDecoder_ac2293ed93a197df1995b2947d224aa31}{JPEG\+\_\+\+LS}} (unsigned char a, unsigned char b, unsigned char c)
+\begin{DoxyCompactList}\small\item\em Performs JPEG-\/\+LS decoding on three input bytes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class for decoding ( only intra frame ). 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classDecoder_a174043f495ba00723e26287a89c3e5de}\label{classDecoder_a174043f495ba00723e26287a89c3e5de} 
+\index{Decoder@{Decoder}!Decoder@{Decoder}}
+\index{Decoder@{Decoder}!Decoder@{Decoder}}
+\doxysubsubsection{\texorpdfstring{Decoder()}{Decoder()}}
+{\footnotesize\ttfamily Decoder\+::\+Decoder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classBitStreamRead}{Bit\+Stream\+Read}} \texorpdfstring{$\ast$}{*}}]{in,  }\item[{const std\+::string \&}]{output\+\_\+fname }\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{classDecoder}{Decoder} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & Pointer to the \doxylink{classBitStreamRead}{Bit\+Stream\+Read} instance for input stream. \\
+\hline
+{\em output\+\_\+fname} & The output file name for writing the decoded video. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classDecoder_a1b6b267afe72ff934a72d849f89ae487}\label{classDecoder_a1b6b267afe72ff934a72d849f89ae487} 
+\index{Decoder@{Decoder}!decodeChannel@{decodeChannel}}
+\index{decodeChannel@{decodeChannel}!Decoder@{Decoder}}
+\doxysubsubsection{\texorpdfstring{decodeChannel()}{decodeChannel()}}
+{\footnotesize\ttfamily Mat Decoder\+::decode\+Channel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Decodes a single channel from the input stream. 
+
+\begin{DoxyReturn}{Returns}
+The decoded channel. 
+\end{DoxyReturn}
+\Hypertarget{classDecoder_a85ab3b0661dbf6486f5289c332128f6a}\label{classDecoder_a85ab3b0661dbf6486f5289c332128f6a} 
+\index{Decoder@{Decoder}!decodeFrame@{decodeFrame}}
+\index{decodeFrame@{decodeFrame}!Decoder@{Decoder}}
+\doxysubsubsection{\texorpdfstring{decodeFrame()}{decodeFrame()}}
+{\footnotesize\ttfamily Mat Decoder\+::decode\+Frame (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Decodes a single frame from the input stream. 
+
+\begin{DoxyReturn}{Returns}
+The decoded frame. 
+\end{DoxyReturn}
+\Hypertarget{classDecoder_a6f473d625cc00e85ace6072e16a882ed}\label{classDecoder_a6f473d625cc00e85ace6072e16a882ed} 
+\index{Decoder@{Decoder}!decodeValue@{decodeValue}}
+\index{decodeValue@{decodeValue}!Decoder@{Decoder}}
+\doxysubsubsection{\texorpdfstring{decodeValue()}{decodeValue()}}
+{\footnotesize\ttfamily int Decoder\+::decode\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Decodes a single value using Golomb decoding. 
+
+\begin{DoxyReturn}{Returns}
+The decoded value. 
+\end{DoxyReturn}
+\Hypertarget{classDecoder_ac2293ed93a197df1995b2947d224aa31}\label{classDecoder_ac2293ed93a197df1995b2947d224aa31} 
+\index{Decoder@{Decoder}!JPEG\_LS@{JPEG\_LS}}
+\index{JPEG\_LS@{JPEG\_LS}!Decoder@{Decoder}}
+\doxysubsubsection{\texorpdfstring{JPEG\_LS()}{JPEG\_LS()}}
+{\footnotesize\ttfamily unsigned char Decoder\+::\+JPEG\+\_\+\+LS (\begin{DoxyParamCaption}\item[{unsigned char}]{a,  }\item[{unsigned char}]{b,  }\item[{unsigned char}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Performs JPEG-\/\+LS decoding on three input bytes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & First byte. \\
+\hline
+{\em b} & Second byte. \\
+\hline
+{\em c} & Third byte. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output value from JPEG-\/\+LS. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/Decoder.\+h\item 
+src/Decoder.\+cpp\end{DoxyCompactItemize}

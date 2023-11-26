@@ -1,0 +1,148 @@
+\doxysection{Encoder Class Reference}
+\hypertarget{classEncoder}{}\label{classEncoder}\index{Encoder@{Encoder}}
+
+
+Class for encoding video ( only intra frame ).  
+
+
+
+
+{\ttfamily \#include $<$Encoder.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classEncoder_a1f30f586bb0bd73db96358beaa4b5aba}{encode\+Frame}} (const Mat \&f)
+\begin{DoxyCompactList}\small\item\em Encodes a single frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEncoder_a2852b23c5acd11c491510091f3044367}{encode\+Channel}} (const Mat \&c)
+\begin{DoxyCompactList}\small\item\em Encodes a single channel of the input frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEncoder_ab5bb7d5950570c942333849b1195ce62}{encode\+Value}} (unsigned int v)
+\begin{DoxyCompactList}\small\item\em Encodes a single value using Golomb coding. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classEncoder_a0d1c904ce1ce3b2a9418876e59cb3730}{generate\+\_\+headers}} (const Size \&frame\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Generates headers. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classEncoder_ab9b459eda49ef51779c314be4f40b068}{Encoder}} (\mbox{\hyperlink{classVideoManipulator}{Video\+Manipulator}} \texorpdfstring{$\ast$}{*}in, \mbox{\hyperlink{classBitStreamWrite}{Bit\+Stream\+Write}} \texorpdfstring{$\ast$}{*}out)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{classEncoder}{Encoder} class. \end{DoxyCompactList}\item 
+\Hypertarget{classEncoder_a1d05ddef86db0b387d30a663185f6fba}\label{classEncoder_a1d05ddef86db0b387d30a663185f6fba} 
+void {\bfseries encode} ()
+\begin{DoxyCompactList}\small\item\em Main encoding function that encodes the entire video. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static unsigned char \mbox{\hyperlink{classEncoder_a42123e0fabc84b85fe854fd1c4902ced}{JPEG\+\_\+\+LS}} (unsigned char a, unsigned char b, unsigned char c)
+\begin{DoxyCompactList}\small\item\em Performs JPEG-\/\+LS encoding on three input bytes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class for encoding video ( only intra frame ). 
+
+Class for video encoding. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classEncoder_ab9b459eda49ef51779c314be4f40b068}\label{classEncoder_ab9b459eda49ef51779c314be4f40b068} 
+\index{Encoder@{Encoder}!Encoder@{Encoder}}
+\index{Encoder@{Encoder}!Encoder@{Encoder}}
+\doxysubsubsection{\texorpdfstring{Encoder()}{Encoder()}}
+{\footnotesize\ttfamily Encoder\+::\+Encoder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVideoManipulator}{Video\+Manipulator}} \texorpdfstring{$\ast$}{*}}]{in,  }\item[{\mbox{\hyperlink{classBitStreamWrite}{Bit\+Stream\+Write}} \texorpdfstring{$\ast$}{*}}]{out }\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{classEncoder}{Encoder} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & Pointer to the \doxylink{classVideoManipulator}{Video\+Manipulator} instance for input video. \\
+\hline
+{\em out} & Pointer to the \doxylink{classBitStreamWrite}{Bit\+Stream\+Write} instance for output stream. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classEncoder_a2852b23c5acd11c491510091f3044367}\label{classEncoder_a2852b23c5acd11c491510091f3044367} 
+\index{Encoder@{Encoder}!encodeChannel@{encodeChannel}}
+\index{encodeChannel@{encodeChannel}!Encoder@{Encoder}}
+\doxysubsubsection{\texorpdfstring{encodeChannel()}{encodeChannel()}}
+{\footnotesize\ttfamily void Encoder\+::encode\+Channel (\begin{DoxyParamCaption}\item[{const Mat \&}]{c }\end{DoxyParamCaption})}
+
+
+
+Encodes a single channel of the input frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The input channel to be encoded. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classEncoder_a1f30f586bb0bd73db96358beaa4b5aba}\label{classEncoder_a1f30f586bb0bd73db96358beaa4b5aba} 
+\index{Encoder@{Encoder}!encodeFrame@{encodeFrame}}
+\index{encodeFrame@{encodeFrame}!Encoder@{Encoder}}
+\doxysubsubsection{\texorpdfstring{encodeFrame()}{encodeFrame()}}
+{\footnotesize\ttfamily void Encoder\+::encode\+Frame (\begin{DoxyParamCaption}\item[{const Mat \&}]{f }\end{DoxyParamCaption})}
+
+
+
+Encodes a single frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em f} & The input frame to be encoded. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classEncoder_ab5bb7d5950570c942333849b1195ce62}\label{classEncoder_ab5bb7d5950570c942333849b1195ce62} 
+\index{Encoder@{Encoder}!encodeValue@{encodeValue}}
+\index{encodeValue@{encodeValue}!Encoder@{Encoder}}
+\doxysubsubsection{\texorpdfstring{encodeValue()}{encodeValue()}}
+{\footnotesize\ttfamily void Encoder\+::encode\+Value (\begin{DoxyParamCaption}\item[{unsigned int}]{v }\end{DoxyParamCaption})}
+
+
+
+Encodes a single value using Golomb coding. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & The value to be encoded. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classEncoder_a0d1c904ce1ce3b2a9418876e59cb3730}\label{classEncoder_a0d1c904ce1ce3b2a9418876e59cb3730} 
+\index{Encoder@{Encoder}!generate\_headers@{generate\_headers}}
+\index{generate\_headers@{generate\_headers}!Encoder@{Encoder}}
+\doxysubsubsection{\texorpdfstring{generate\_headers()}{generate\_headers()}}
+{\footnotesize\ttfamily void Encoder\+::generate\+\_\+headers (\begin{DoxyParamCaption}\item[{const Size \&}]{frame\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Generates headers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame\+\_\+size} & The size of the frames in the video. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classEncoder_a42123e0fabc84b85fe854fd1c4902ced}\label{classEncoder_a42123e0fabc84b85fe854fd1c4902ced} 
+\index{Encoder@{Encoder}!JPEG\_LS@{JPEG\_LS}}
+\index{JPEG\_LS@{JPEG\_LS}!Encoder@{Encoder}}
+\doxysubsubsection{\texorpdfstring{JPEG\_LS()}{JPEG\_LS()}}
+{\footnotesize\ttfamily unsigned char Encoder\+::\+JPEG\+\_\+\+LS (\begin{DoxyParamCaption}\item[{unsigned char}]{a,  }\item[{unsigned char}]{b,  }\item[{unsigned char}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Performs JPEG-\/\+LS encoding on three input bytes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & First byte. \\
+\hline
+{\em b} & Second byte. \\
+\hline
+{\em c} & Third byte. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output value from JPEG-\/\+LS. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/Encoder.\+h\item 
+src/Encoder.\+cpp\end{DoxyCompactItemize}
