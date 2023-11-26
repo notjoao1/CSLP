@@ -77,7 +77,6 @@ void BlockEncoding::encodeIntraFrame(const Mat &f) {
 }
 
 
-// TODO: adicionar padding para ter frames divisiveis pelo block_size!!!!! meter valores de 0 padded
 // f - current frame; p - previous frame
 void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
     std::cout << "Encoding interframe" << std::endl;
@@ -139,41 +138,6 @@ int BlockEncoding::calculateMAD(const Mat& block1, const Mat& block2) const {
     return mad/(block_size * block_size);
 }
 
-/* EXHAUSTIVE SEARCH
-std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, const Mat& curr_block, int b_row, int b_col, int rows, int cols) {
-    // precompute boundaries
-    int start_col = (b_col - search_area < 0) ? 0 : b_col - search_area;
-    int end_col = (b_col + block_size + search_area > cols) ? cols - block_size : b_col + search_area;
-
-    int start_row = (b_row - search_area < 0) ? 0 : b_row - search_area;
-    int end_row = (b_row + block_size + search_area > rows) ? rows - block_size : b_row + search_area;
-
-    int best_match_row = b_row;
-    int best_match_col = b_col;
-    int min_mad = INT_MAX;
-    Mat ref_block;
-
-    #pragma omp parallel for
-    for (int col = start_col; col < end_col; ++col) {
-        for (int row = start_row; row < end_row; ++row) {
-            ref_block = getBlock(prev_frame, row, col);
-            int mad = calculateMAD(curr_block, ref_block);
-            if (mad < min_mad) {
-                min_mad = mad;
-                best_match_row = col;
-                best_match_col = row;
-                if (min_mad == 0)  // found perfect match, no point searching more
-                    break;
-            }
-        }
-    }
-
-    best_match_row = best_match_row - b_row;
-    best_match_col = best_match_col - b_col;
-
-    return {ref_block, best_match_row, best_match_col};
-}
-*/
 
 static std::tuple<int, int> min_and_index_of( const int arr[] , int siz ) {
 
@@ -253,8 +217,8 @@ Mat BlockEncoding::pad(const Mat &frame) const {
     if( cols % block_size == 0 && rows % block_size == 0 )
         return frame;
 
-    cols = cols + cols % block_size;
-    rows = rows + rows % block_size;
+    cols = cols + block_size - cols % block_size;
+    rows = rows + block_size - rows % block_size;
 
     Mat padded_mat = Mat::zeros(rows , cols, CV_8UC1);
 
@@ -262,17 +226,18 @@ Mat BlockEncoding::pad(const Mat &frame) const {
     frame.copyTo(padded_mat(roi));
 
     for(int i = 0 ; i < frame.cols ; i++){
-        for(int p = 0 ; p < cols % block_size ; p++){
+        for(int p = 0 ; p < block_size - frame.cols % block_size ; p++){
             padded_mat.at<uchar>( frame.rows + p , i ) = frame.at<uchar>( frame.rows -1 ,i );
         }
     }
 
     for(int i = 0 ; i < rows ; i++){
-        for(int p = 0 ; p < rows % block_size ; p++){
+        for(int p = 0 ; p < block_size - frame.rows % block_size ; p++){
             padded_mat.at<uchar>( i , frame.cols + p ) = padded_mat.at<uchar>( i , frame.cols - 1 );
         }
     }
 
     return padded_mat;
 }
+
 
