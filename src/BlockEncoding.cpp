@@ -108,19 +108,20 @@ void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
 
 
 void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel) {
-    Mat curr_block, b_erro; // b_erro é o erro entre duas matrizes
+    Mat curr_block, b_erro; // b_erro - error between the two matrices
     int rows = c_channel.rows, cols = c_channel.cols;
     int bits_to_write = ceil(log2(search_area)) + 1;
     for (int i = 0; i < rows / block_size - 1; ++i) {
         curr_block = getBlock(c_channel, i * block_size, 0);
         auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i * block_size, 0, rows, cols);
         b_erro = curr_block - ref_block;
-        m = GolombCode::estimate(b_erro);
-        stream_out.write(to_string(m));
+        m = GolombCode::estimate(b_erro) % 256;
+        stream_out.write(8, m); // write char instead of string to save 1 byte per row of blocks
         stream_out.write(bits_to_write, desloc_row);
         stream_out.write(bits_to_write, desloc_col);
         encodeBlockDifference(b_erro);
 
+        // reuse the same estimated 'm' for the whole row
         for (int j = 0; j < cols / block_size - 1; ++j) {
             curr_block = getBlock(c_channel, i * block_size, j * block_size);
             auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i * block_size, j * block_size, rows, cols);
