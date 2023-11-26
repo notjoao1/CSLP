@@ -8,7 +8,7 @@
 
 
 BlockEncoding::BlockEncoding(const string &input_file, const string &output_file, int block_size, int search_area, int keyframe_period) : video(input_file), stream_out(output_file), block_size(block_size), search_area(search_area), keyframe_period(keyframe_period) {
-    m = 3;
+    m = 0;  // initialize 'm'
 }
 
 void BlockEncoding::encode() {
@@ -51,16 +51,9 @@ void BlockEncoding::encodeIntraFrame(const Mat &f) {
     vector<Mat> channels;
     split(f, channels);
     for (auto channel : channels) {
-        stream_out.write(to_string(m));
+        unsigned int e[(channel.cols - 1)*(channel.rows - 1)];
 
-        for (int col = 0; col < channel.cols; ++col) {
-            encodeValue(channel.at<uchar>(0, col));
-        }
-
-        for (int row = 1; row < channel.rows; row++) {
-            encodeValue(channel.at<uchar>(row, 0));
-        }
-
+        // Pre compute error values
         int r; // tem de ser int, pois pode ser negativo
         unsigned char a, b, c, p;
 
@@ -71,10 +64,32 @@ void BlockEncoding::encodeIntraFrame(const Mat &f) {
                 c = channel.at<uchar>(row - 1, col - 1);
                 p = JPEG_LS(a, b, c);
                 r = int(channel.at<uchar>(row, col)) - int(p);
-                encodeValue(GolombCode::mapIntToUInt(r));
+                e[(col - 1) + (row - 1) * (channel.cols - 1)] = GolombCode::mapIntToUInt(r);
             }
+
+        // estimate 'm' based on values that will be encoded
+        m = GolombCode::estimate(e,channel.cols - 1,channel.rows - 1);
+
+        // write 'm' and encoded channel values
+        stream_out.write(to_string(m));
+
+        // encode first row and first column directly
+        for (int col = 0; col < channel.cols; col++) {
+            //stream_out->write(8, channel.at<uchar>(0, col));
+            stream_out.write(8, channel.at<uchar>(0, col));
+        }
+
+        for (int row = 1; row < channel.rows; row++) {
+            //stream_out->write(8, channel.at<uchar>(row, 0));
+            stream_out.write(8, channel.at<uchar>(row, 0));
+
+        }
+        for (int i = 0; i < (channel.rows-1) * (channel.cols-1); i++)
+            encodeValue( e[i] );
     }
 }
+
+
 
 
 // f - current frame; p - previous frame
@@ -97,6 +112,15 @@ void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_c
     int rows = c_channel.rows, cols = c_channel.cols;
     int bits_to_write = ceil(log2(search_area)) + 1;
     for (int i = 0; i < rows / block_size - 1; ++i) {
+        curr_block = getBlock(c_channel, i * block_size, 0);
+        auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i * block_size, 0, rows, cols);
+        b_erro = curr_block - ref_block;
+        m = GolombCode::estimate(b_erro);
+        stream_out.write(to_string(m));
+        stream_out.write(bits_to_write, desloc_row);
+        stream_out.write(bits_to_write, desloc_col);
+        encodeBlockDifference(b_erro);
+
         for (int j = 0; j < cols / block_size - 1; ++j) {
             curr_block = getBlock(c_channel, i * block_size, j * block_size);
             auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i * block_size, j * block_size, rows, cols);
@@ -205,7 +229,7 @@ std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, 
 void BlockEncoding::encodeBlockDifference(const Mat &block) {
     for (int i = 0; i < block.rows; ++i) {
         for (int j = 0; j < block.cols; ++j) {
-            encodeValue(block.at<uchar>(i, j));
+            GolombCode::encode(block.at<uchar>(i, j), 3, this->stream_out);
         }
     }
 }

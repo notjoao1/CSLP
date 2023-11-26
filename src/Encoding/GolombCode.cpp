@@ -169,6 +169,29 @@ int GolombCode::estimate(const unsigned int a[] , int cols , int rows ) {
     return m_param;
 }
 
+int GolombCode::estimate(const cv::Mat& a) {
+
+    long summ = 0;
+
+    for (int i = 0; i < a.rows; i++){
+        for (int j = 0; j < a.cols; ++j) {
+            if(a.at<uchar>(i, j) == 0)
+                summ++;
+        }
+    }
+
+    double d =  double(summ) / double(a.rows * a.cols) ;
+    if (d >= 1) {
+        d = 1 - double(1)/(a.rows * a.cols);
+    } else if (d == 0) {
+        d = double(1)/(a.rows * a.cols);
+    }
+
+    int m_param = ceil( -1 / log2f(1-d) );
+    return m_param;
+}
+
+
 int GolombCode::mapIntToUInt(int n) {
     if ( n < 0)
         return -n*2-1;
