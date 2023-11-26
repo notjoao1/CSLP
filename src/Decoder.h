@@ -1,10 +1,5 @@
-//
-// Created by tiago on 07-11-2023.
-//
-
 #ifndef GTD_VC_DECODER_H
 #define GTD_VC_DECODER_H
-
 
 #include "BitStream/BitStreamRead.h"
 #include "Encoding/GolombCode.h"
@@ -15,28 +10,63 @@
 using namespace cv;
 using namespace std;
 
+/**
+ * @brief Class for decoding ( only intra frame ).
+ */
 class Decoder {
 private:
-    BitStreamRead* stream_in;
-    GolombCode golomb;
-    int m; // golomb parameter TODO: ver isto depois
-    int cols;
-    int rows;
-    int fps;
-
+    BitStreamRead* stream_in; /**< Pointer to the BitStreamRead instance for input stream. */
+    int m; /**< Golomb parameter. */
+    int cols; /**< Number of columns in the video frames. */
+    int rows; /**< Number of rows in the video frames. */
+    int fps; /**< Frames per second of the video. */
+    Y4MWriter output_vid; /**< Y4MWriter instance for writing the decoded video. */
 public:
-    Y4MWriter output_vid;
+
+    /**
+     * @brief Reads and processes headers from the input stream.
+     */
     void read_headers();
+
+    /**
+     * @brief Decodes a single frame from the input stream.
+     * @return The decoded frame.
+     */
     Mat decodeFrame();
+
+    /**
+     * @brief Decodes a single channel from the input stream.
+     * @return The decoded channel.
+     */
     Mat decodeChannel();
+
+    /**
+     * @brief Decodes a single value using Golomb decoding.
+     * @return The decoded value.
+     */
     int decodeValue();
+
+    /**
+     * @brief Performs JPEG-LS decoding on three input bytes.
+     * @param a First byte.
+     * @param b Second byte.
+     * @param c Third byte.
+     * @return The output value from JPEG-LS.
+     */
     static unsigned char JPEG_LS(unsigned char a, unsigned char b, unsigned char c);
+
+    /**
+     * @brief Constructor for the Decoder class.
+     * @param in Pointer to the BitStreamRead instance for input stream.
+     * @param output_fname The output file name for writing the decoded video.
+     */
     Decoder(BitStreamRead* in, const std::string& output_fname);
+
+    /**
+     * @brief Main decoding function that decodes the entire video.
+     */
     void decode();
 
 };
 
-
-
-
-#endif //GTD_VC_DECODER_H
+#endif // GTD_VC_DECODER_H
