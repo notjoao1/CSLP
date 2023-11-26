@@ -12,15 +12,15 @@ add_executable(GTD-VC src/Representation/ImageManipulator.cpp
         src/BitStream/BitStreamRead.cpp
         src/BitStream/BitStream.cpp
         src/Decoder.cpp
-        src/Decoder.h
         src/Encoder.cpp
-        src/Encoder.h
+        src/Y4MWriter.cpp
         src/Encoding/GolombCode.cpp
-        tests/Deliverable4Tests/EncodingVideo.cpp
-        tests/Deliverable4Tests/DecodingVideo.cpp
-        tests/Deliverable4Tests/BitStreamGolombPredictorTests.cpp
+        #tests/Deliverable4Tests/EncodingVideo.cpp
+        #tests/Deliverable4Tests/DecodingVideo.cpp
+        #tests/Deliverable5Tests/BlockEncodeVideo.cpp
+        tests/Deliverable5Tests/BlockDecodeVideo.cpp
         src/BlockDecoding.cpp
-
+        src/BlockEncoding.cpp
 
 )
 
