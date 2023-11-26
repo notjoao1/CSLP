@@ -37,7 +37,7 @@ void Y4MWriter::writeHeader(int width, int height, int fps) {
         return;
     }
     // Write Y4M header
-    outFile << "YUV4MPEG2 W" << width << " H" << height << " F" << fps << ":1 Ip A1:1 C420" << std::endl;
+    outFile << "YUV4MPEG2 W" << width << " H" << height << " F" << fps << ":1 Ip A1:1 C444" << std::endl;
 }
 
 void Y4MWriter::closeFile() {
