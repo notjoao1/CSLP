@@ -7,6 +7,7 @@
 int main (int argc, char* argv[]) {
     if (argc != 3) {
         std::cerr << "Please provide 2 parameters: <input_file> <output_file>" << std::endl;
+        return 1;
     }
     BlockDecoding bd(argv[1], argv[2]);
     bd.decode();

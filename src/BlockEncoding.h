@@ -22,7 +22,7 @@ public:
      * @param search_area Size of the search area for motion estimation.
      * @param keyframe_period Number of frames between intra frames.
      */
-    BlockEncoding(const std::string& input_file, const std::string& output_file, int block_size = 16, int search_area = 2, int keyframe_period = 10);
+    BlockEncoding(const std::string& input_file, const std::string& output_file, int block_size = 16, int search_area = 16, int keyframe_period = 64);
 
     /**
      * @brief Main function to perform video encoding.
