@@ -1,12 +1,25 @@
-//
-// Created by joao on 09/11/2023.
-//
-
 #include "../../src/Decoder.h"
 
+// Display usage information
+void displayUsage(const char* programName) {
+    std::cerr << "Usage: " << programName << " <input_file> <output_file>" << std::endl;
+}
+
 int main(int argc, char* argv[]) {
-    BitStreamRead* in = new BitStreamRead("tests/Deliverable5Tests/ola.gtd");
-    Decoder d(in, "tests/Deliverable5Tests/testingabc.y4m");
+    if (argc < 3) {
+        displayUsage(argv[0]);
+        return 1;
+    }
+
+    const char* inputFile = argv[1];
+    const char* outputFile = argv[2];
+
+    BitStreamRead* in = new BitStreamRead(inputFile);
+
+    Decoder d(in, outputFile);
     d.decode();
+
+    delete in;
+
     return 0;
 }
