@@ -23,7 +23,7 @@ void displayUsage() {
     std::cerr << "Optional arguments:" << std::endl;
     std::cerr << "  --block-size <block_size>      : Size of the block (default: 8)" << std::endl;
     std::cerr << "  --keyframe-period <keyframe_period> : Period of keyframes (default: 64)" << std::endl;
-    std::cerr << "  --search-area <search_area>    : Size of the search area (default: 16)" << std::endl;
+    std::cerr << "  --search-area <search_area>    : Size of the search area (default: 64)" << std::endl;
 }
 
 int main(int argc, char* argv[]) {
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     std::string output_file = getCmdOption(argv, argv + argc, "--output-file");
     // default values
     int block_size = 16;
-    int search_area = 16;
+    int search_area = 64;
     int keyframe_period = 64;
 
     // Check for command line options and update variables accordingly
