@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
     std::string input_file = getCmdOption(argv, argv + argc, "--input-file");
     std::string output_file = getCmdOption(argv, argv + argc, "--output-file");
     // default values
-    int block_size = 8;
+    int block_size = 16;
     int search_area = 16;
     int keyframe_period = 64;
 
