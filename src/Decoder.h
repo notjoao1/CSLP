@@ -20,9 +20,8 @@ private:
     int cols; /**< Number of columns in the video frames. */
     int rows; /**< Number of rows in the video frames. */
     int fps; /**< Frames per second of the video. */
-    Y4MWriter output_vid; /**< Y4MWriter instance for writing the decoded video. */
 public:
-
+    Y4MWriter output_vid; /**< Y4MWriter instance for writing the decoded video. */
     /**
      * @brief Reads and processes headers from the input stream.
      */

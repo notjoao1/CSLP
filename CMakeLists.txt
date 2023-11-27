@@ -17,8 +17,8 @@ add_executable(GTD-VC src/Representation/ImageManipulator.cpp
         src/Encoding/GolombCode.cpp
         #tests/Deliverable4Tests/EncodingVideo.cpp
         #tests/Deliverable4Tests/DecodingVideo.cpp
-        #tests/Deliverable5Tests/BlockEncodeVideo.cpp
-        tests/Deliverable5Tests/BlockDecodeVideo.cpp
+        tests/Deliverable5Tests/BlockEncodeVideo.cpp
+        #tests/Deliverable5Tests/BlockDecodeVideo.cpp
         src/BlockDecoding.cpp
         src/BlockEncoding.cpp
 
