@@ -5,10 +5,8 @@
 #include "BlockDecoding.h"
 #include <cmath>
 
-BlockDecoding::BlockDecoding(const string &input_file, const string &output_file) : stream_in(input_file){
+BlockDecoding::BlockDecoding(const string &input_file, const string &output_file) : stream_in(input_file) , output_vid(output_file) {
     this->m = 3;
-    Decoder d(&stream_in,output_file);
-    decoder=&d;
 }
 
 void BlockDecoding::decode() {
@@ -17,18 +15,18 @@ void BlockDecoding::decode() {
     cout << "decoding video..." << endl;
     // frame loop
     int frame_counter = 0;
-    while (!curr_frame.empty()) {
+    while (!curr_frame.empty() || frame_counter==0) {
         if (frame_counter % keyframe_period == 0) {
-            curr_frame=this->decoder->decodeFrame();
+            curr_frame=decodeFrame();
             cout << "current_frame (INTRA_FRAME): " << frame_counter << endl;
         } else {
             curr_frame=decodeInterFrame(&curr_frame);
             cout << "current_frame (INTER_FRAME): " << frame_counter << endl;
         }
         if (frame_counter==0){
-            decoder->output_vid.writeHeader(this->width,this->height,this->fps);
+            output_vid.writeHeader(this->width,this->height,this->fps);
         }
-        decoder->output_vid.writeFrame(&curr_frame);
+        output_vid.writeFrame(&curr_frame);
         frame_counter++;
     }
 }
@@ -42,7 +40,6 @@ void BlockDecoding::read_headers() {
     this->fps=stoi(stream_in.read_string());
 }
 
-// TODO: adicionar padding para ter frames divisiveis pelo block_size!!!!!
 // f - current frame; p - previous frame
 Mat BlockDecoding::decodeInterFrame(const Mat* p) {
     Mat res;
@@ -52,7 +49,7 @@ Mat BlockDecoding::decodeInterFrame(const Mat* p) {
 
     // iterate through channels, both frames have same number
     for (int i = 0; i < p->channels(); ++i) {
-        curr_channels.at(i)= decodeInterframeChannel(&prev_channels.at(i));
+        curr_channels.push_back(decodeInterframeChannel(&prev_channels.at(i)));
     }
     merge(curr_channels,res);
     return res;
@@ -74,15 +71,17 @@ Mat BlockDecoding::getBlock(const Mat *original_frame, int row, int col) const{
 }
 
 Mat BlockDecoding::decodeInterframeChannel(Mat* p_channel) {
-    Mat c_channel;
-    Mat curr_block, b_erro; // b_erro é o erro entre duas matrizes
+    Mat c_channel = Mat::zeros(height, width, CV_8UC1);
+    Mat curr_block, b_erro; // b_erro e o erro entre duas matrizes
     int desloc_row,desloc_col;
     int bits_to_read = ceil(log2(search_area)) + 1;
 
     for (int i = 0; i < this->height / block_size - 1; ++i) {
         for (int j = 0; j < this->width / block_size - 1; ++j) {
+            this->m = int(stream_in.read(8));
             desloc_row=stream_in.read(bits_to_read);
             desloc_col=stream_in.read(bits_to_read);
+
             b_erro = decodeBlockDifference();
             curr_block=getBlock(p_channel,i*block_size+desloc_row,j*block_size+desloc_col)+b_erro;
             setBlock(&c_channel,&curr_block, i * block_size, j * block_size);
@@ -92,11 +91,65 @@ Mat BlockDecoding::decodeInterframeChannel(Mat* p_channel) {
 }
 
 Mat BlockDecoding::decodeBlockDifference() {
-    Mat block;
-    for (int i = 0; i < this->height; ++i) {
-        for (int j = 0; j < this->width; ++j) {
-            block.at<uchar>(i,j)=this->decoder->decodeValue();
+    Mat block = Mat::zeros(block_size, block_size, CV_8UC1);
+    for (int i = 0; i < this->block_size; ++i) {
+        for (int j = 0; j < this->block_size; ++j) {
+            block.at<uchar>(i,j)=uchar(stream_in.read(8));
         }
     }
+    return block;
 }
 
+int BlockDecoding::decodeValue() {
+    return GolombCode::mapUIntToInt( GolombCode::decode_one(m,stream_in) );
+}
+
+Mat BlockDecoding::decodeFrame() {
+    Mat frame;
+    Mat channels[3];
+    for (int i = 0; i < 3; ++i) {
+        m = stoi(stream_in.read_string());
+        channels[i]=decodeChannel();
+    }
+    merge(channels, 3, frame);
+    return frame;
+
+}
+
+Mat BlockDecoding::decodeChannel() {
+    Mat res= Mat::zeros(height, width, CV_8UC1);
+    int r; // tem de ser int, pois pode ser negativo
+    unsigned char a, b, c, p;
+
+    // decode first row and first column directly
+    for (int col = 0; col < width; col++) {
+        res.at<uchar>(0,col)=uchar(stream_in.read(8));
+    }
+
+    for (int row = 1; row < height; row++) {
+        res.at<uchar>(row,0)=uchar(stream_in.read(8));
+
+    }
+
+    for (int row = 1; row < height; row++)
+        for (int col = 1; col < width; col++) {
+            r=decodeValue();
+            a = res.at<uchar>(row, col - 1);
+            b = res.at<uchar>(row - 1, col);
+            c = res.at<uchar>(row - 1, col - 1);
+            p = JPEG_LS(a, b, c);
+            res.at<uchar>(row,col)=uchar(r+int(p));
+        }
+    return res;
+}
+
+unsigned char BlockDecoding::JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {
+    unsigned char maximum = max(a,b);
+    unsigned char minimum = min(a,b);
+    if(c >= maximum)
+        return minimum;
+    else if (c <= minimum)
+        return maximum;
+    else
+        return a + b - c;
+}
