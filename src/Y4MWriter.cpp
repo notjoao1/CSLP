@@ -23,10 +23,14 @@ void Y4MWriter::writeFrame(const cv::Mat* frame) {
     // Write frame separator
     outFile << "FRAME" << std::endl;
 
+    vector<cv::Mat> channels; 
+    cv::split(realframe,channels);
+
     // Write Y4M frame
-    for (int i = 0; i < height; ++i) {
-        outFile.write(reinterpret_cast<const char*>(realframe.ptr(i)), width * 3); // YUV444 has 3 channels
-    }
+    outFile.write(reinterpret_cast<const char*>(channels[0].data), width * height);
+    outFile.write(reinterpret_cast<const char*>(channels[1].data), width * height);
+    outFile.write(reinterpret_cast<const char*>(channels[2].data), width * height);
+
 }
 
 
