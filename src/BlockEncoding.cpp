@@ -115,10 +115,12 @@ void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_c
             curr_block = getBlock(c_channel, i * block_size, j * block_size);
             auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i * block_size, j * block_size, rows, cols);
             b_erro = curr_block - ref_block;
-            m = GolombCode::estimate(b_erro) % 256;
-            stream_out.write(8, m);
-            stream_out.write(bits_to_write, desloc_row);
-            stream_out.write(bits_to_write, desloc_col);
+            //m = GolombCode::estimate(b_erro) % 256;
+            //stream_out.write(8, m); TODO: better estimate
+            stream_out.write_bit( ( desloc_row < 0 ) ? 1 : 0 );
+            stream_out.write(bits_to_write, ( desloc_row < 0 ) ? -desloc_row : desloc_row );
+            stream_out.write_bit( ( desloc_col < 0 ) ? 1 : 0 );
+            stream_out.write(bits_to_write, ( desloc_col < 0 ) ? -desloc_col : desloc_col);
             encodeBlockDifference(b_erro);
         }
     }
