@@ -44,6 +44,7 @@ void BlockEncoding::generate_headers(const Size &frame_size) {
     stream_out.write(to_string(block_size));
     stream_out.write(to_string(search_area));
     stream_out.write(to_string(video.getFPS()));
+    stream_out.write(to_string(video.getNumberOfFrames()));
 }
 
 void BlockEncoding::encodeIntraFrame(const Mat &f) {
@@ -109,19 +110,30 @@ void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
 void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel) {
     Mat curr_block, b_erro; // b_erro - error between the two matrices
     int rows = c_channel.rows, cols = c_channel.cols;
-    int bits_to_write = ceil(log2(search_area)) + 1;
-    for (int i = 0; i < rows / block_size - 1; ++i) {
-        for (int j = 0; j < cols / block_size - 1; ++j) {
+    int bits_to_write = ceil(log2(search_area));
+    int diff=0;
+    for (int i = 0; i < rows / block_size ; ++i) {
+        for (int j = 0; j < cols / block_size ; ++j) {
             curr_block = getBlock(c_channel, i * block_size, j * block_size);
             auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i * block_size, j * block_size, rows, cols);
-            b_erro = curr_block - ref_block;
-            //m = GolombCode::estimate(b_erro) % 256;
-            //stream_out.write(8, m); TODO: better estimate
+            
             stream_out.write_bit( ( desloc_row < 0 ) ? 1 : 0 );
             stream_out.write(bits_to_write, ( desloc_row < 0 ) ? -desloc_row : desloc_row );
             stream_out.write_bit( ( desloc_col < 0 ) ? 1 : 0 );
             stream_out.write(bits_to_write, ( desloc_col < 0 ) ? -desloc_col : desloc_col);
-            encodeBlockDifference(b_erro);
+            
+            // cout << i << " , " << j << " desloc: "<< desloc_col << " , " << desloc_row << endl;
+
+            for (int row=0; row<block_size; row++){
+                for(int col=0; col<block_size; col++){
+                    diff=int(curr_block.at<uchar>(row,col))- int(ref_block.at<uchar>(row,col));
+                    // stream_out.write_bit( (diff < 0) ? 1: 0);
+                    // GolombCode::encode(diff, 3, this->stream_out);
+                    // cout << GolombCode::mapIntToUInt(diff) << " , " ;
+                    GolombCode::encode( GolombCode::mapIntToUInt(diff) , 16 , stream_out );
+                }
+                // cout << endl;
+            }
         }
     }
 }
@@ -223,7 +235,8 @@ std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, 
 void BlockEncoding::encodeBlockDifference(const Mat &block) {
     for (int i = 0; i < block.rows; ++i) {
         for (int j = 0; j < block.cols; ++j) {
-            GolombCode::encode(block.at<uchar>(i, j), 3, this->stream_out);
+            stream_out.write_bit( ( block.at<int>(i,j) < 0 ) ? 1 : 0 );
+            GolombCode::encode(block.at<int>(i, j), 3, this->stream_out);
         }
     }
 }

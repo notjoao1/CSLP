@@ -12,23 +12,32 @@ BlockDecoding::BlockDecoding(const string &input_file, const string &output_file
 void BlockDecoding::decode() {
     Mat curr_frame, previous_frame;
     read_headers();
+    int remaining_frames = stoi(stream_in.read_string());
     cout << "decoding video..." << endl;
     // frame loop
     int frame_counter = 0;
-    while (!curr_frame.empty() || frame_counter==0) {
-        if (frame_counter % keyframe_period == 0) {
-            curr_frame=decodeFrame();
-            cout << "current_frame (INTRA_FRAME): " << frame_counter << endl;
-        } else {
-            curr_frame=decodeInterFrame(&curr_frame);
-            cout << "current_frame (INTER_FRAME): " << frame_counter << endl;
+    try {
+        while (remaining_frames != 0) {
+            if (frame_counter % keyframe_period == 0) {
+                curr_frame=decodeFrame();
+                cout << "current_frame (INTRA_FRAME): " << frame_counter << endl;
+            } else {
+                curr_frame=decodeInterFrame(&curr_frame);
+                cout << "current_frame (INTER_FRAME): " << frame_counter << endl;
+            }
+
+            if (frame_counter==0){
+                output_vid.writeHeader(this->width,this->height,this->fps);
+            }
+            output_vid.writeFrame(&curr_frame);
+
+            frame_counter++;
+            remaining_frames--;
         }
-        if (frame_counter==0){
-            output_vid.writeHeader(this->width,this->height,this->fps);
-        }
-        output_vid.writeFrame(&curr_frame);
-        frame_counter++;
+    } catch (Exception e) {
+
     }
+
 }
 
 void BlockDecoding::read_headers() {
@@ -52,6 +61,7 @@ Mat BlockDecoding::decodeInterFrame(const Mat* p) {
         curr_channels.push_back(decodeInterframeChannel(&prev_channels.at(i)));
     }
     merge(curr_channels,res);
+
     return res;
 }
 
@@ -72,21 +82,31 @@ Mat BlockDecoding::getBlock(const Mat *original_frame, int row, int col) const{
 
 Mat BlockDecoding::decodeInterframeChannel(Mat* p_channel) {
     Mat c_channel = Mat::zeros(height, width, CV_8UC1);
-    Mat curr_block, b_erro; // b_erro e o erro entre duas matrizes
+    Mat ref_block, cur_block = Mat::zeros( block_size , block_size , CV_8UC1 ); // b_erro e o erro entre duas matrizes
     int desloc_row,desloc_col;
     int bits_to_read = ceil(log2(search_area));
 
-    for (int i = 0; i < this->height / block_size - 1; ++i) {
-        for (int j = 0; j < this->width / block_size - 1; ++j) {
+    for (int i = 0; i < this->height / block_size ; ++i) {
+        for (int j = 0; j < this->width / block_size ; ++j) {
             // this->m = int(stream_in.read(8));
 
             desloc_row= (stream_in.read_bit()) ? -stream_in.read(bits_to_read) : stream_in.read(bits_to_read) ;
             desloc_col= (stream_in.read_bit()) ? -stream_in.read(bits_to_read) : stream_in.read(bits_to_read) ;
 
-            b_erro = decodeBlockDifference();
+            // cout << i << " , " << j << " desloc: "<< desloc_col << " , " << desloc_row << endl;
 
-            curr_block=getBlock(p_channel,i*block_size-desloc_row,j*block_size-desloc_col)+b_erro;
-            setBlock(&c_channel,&curr_block, i * block_size, j * block_size);
+            ref_block=getBlock(p_channel,i*block_size-desloc_row,j*block_size-desloc_col);
+            for (int row=0; row<block_size; row++){
+                for(int col=0; col<block_size; col++){
+                    int diff = GolombCode::decode_one(16,stream_in);
+                    diff = GolombCode::mapUIntToInt( diff );
+                    // int diff = (stream_in.read_bit()) ? -GolombCode::decode_one(3,stream_in) : GolombCode::decode_one(3,stream_in);
+                    // cout << diff << " , " ;
+                    cur_block.at<uchar>(row,col) = ref_block.at<uchar>(row,col) + diff;
+                }
+                // cout << endl;
+            }
+            setBlock(&c_channel,&cur_block, i * block_size, j * block_size);
         }
     }
     return c_channel;
@@ -94,11 +114,18 @@ Mat BlockDecoding::decodeInterframeChannel(Mat* p_channel) {
 
 Mat BlockDecoding::decodeBlockDifference() {
     Mat block = Mat::zeros(block_size, block_size, CV_8UC1);
-    for (int i = 0; i < this->block_size; ++i) {
-        for (int j = 0; j < this->block_size; ++j) {
-            block.at<uchar>(i,j)=uchar(GolombCode::decode_one(3,stream_in));
-        }
-    }
+    // for (int i = 0; i < this->block_size; ++i) {
+    //     for (int j = 0; j < this->block_size; ++j) {
+    //         for (int row=0; row<block_size; row++)
+    //             for(int col=0; col<block_size; col++){
+    //                 if(stream_in.read_bit()){
+    //                     block.at<uchar>(row,col)=GolombCode::decode_one(diff, 3, this->stream_out);
+    //                 }
+    //                 diff=int(curr_block.at<uchar>(row,col))- int(ref_block.at<uchar>(row,col));
+    //                 stream_out.write_bit(diff < 0 ? 0: 1);
+                    
+    //             }        }
+    // }
     return block;
 }
 
@@ -114,6 +141,7 @@ Mat BlockDecoding::decodeFrame() {
         channels[i]=decodeChannel();
     }
     merge(channels, 3, frame);
+
     return frame;
 
 }
