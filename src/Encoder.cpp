@@ -87,6 +87,7 @@ void Encoder::encode() {
         encodeFrame(curr_frame);
         counter++;
     }
+    stream_out->close();
 }
 
 unsigned char Encoder::JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {

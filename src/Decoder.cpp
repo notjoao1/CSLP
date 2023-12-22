@@ -41,6 +41,7 @@ void Decoder::decode(){
         missing_frames--;
     }
     output_vid.closeFile();
+    stream_in->close();
 }
 
 Mat Decoder::decodeFrame() {
