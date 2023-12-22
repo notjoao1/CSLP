@@ -53,7 +53,7 @@ private:
     void setBlock(const cv::Mat* original_frame, cv::Mat* block, int row, int col) const;
 
     Decoder* decoder; ///< A pointer to a Decoder object.
-    int width, height, block_size, search_area, keyframe_period, fps; ///< Video parameters.
+    int width, height, block_size, search_area, keyframe_period, fps_num, fps_denum; ///< Video parameters.
     BitStreamRead stream_in; ///< A BitStreamRead object for reading from a bitstream.
     int m; ///< Golomb parameter.
 

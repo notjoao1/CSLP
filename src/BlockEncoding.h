@@ -31,7 +31,7 @@ public:
 
 private:
     int block_size, search_area, keyframe_period; ///< Encoding parameters.
-    VideoManipulator video; ///< Video manipulation object.
+    Y4MReader input_video; ///< Y4M Parser to get input frames from.
     BitStreamWrite stream_out; ///< Bitstream writer for output.
     GolombCode golomb; ///< Golomb coding object.
     int m; ///< Golomb parameter.
@@ -62,10 +62,9 @@ private:
     void encodeBlockDifference(const Mat& block);
 
     /**
-     * @brief Generate headers for the encoded video.
-     * @param frame_size Dimensions of the video.
+     * @brief Generate headers for the encoded video based on input video headers.
      */
-    void generate_headers(const Size& frame_size);
+    void generate_headers();
 
     /**
      * @brief Extract a block from a given frame.

@@ -19,15 +19,15 @@ void BlockDecoding::decode() {
     try {
         while (remaining_frames != 0) {
             if (frame_counter % keyframe_period == 0) {
-                curr_frame=decodeFrame();
                 cout << "current_frame (INTRA_FRAME): " << frame_counter << endl;
+                curr_frame=decodeFrame();
             } else {
-                curr_frame=decodeInterFrame(&curr_frame);
                 cout << "current_frame (INTER_FRAME): " << frame_counter << endl;
+                curr_frame=decodeInterFrame(&curr_frame);
             }
 
             if (frame_counter==0){
-                output_vid.writeHeader(this->width,this->height,this->fps);
+                output_vid.writeHeader(this->width,this->height,this->fps_num, this->fps_denum);
             }
             output_vid.writeFrame(&curr_frame);
 
@@ -35,8 +35,9 @@ void BlockDecoding::decode() {
             remaining_frames--;
         }
     } catch (Exception e) {
-
+        std::cerr << e.what() << std::endl;
     }
+    stream_in.close();
 
 }
 
@@ -46,7 +47,8 @@ void BlockDecoding::read_headers() {
     this->keyframe_period=stoi(stream_in.read_string());
     this->block_size=stoi(stream_in.read_string());
     this->search_area=stoi(stream_in.read_string());
-    this->fps=stoi(stream_in.read_string());
+    this->fps_num=stoi(stream_in.read_string());
+    this->fps_denum=stoi(stream_in.read_string());
 }
 
 // f - current frame; p - previous frame
@@ -85,7 +87,6 @@ Mat BlockDecoding::decodeInterframeChannel(Mat* p_channel) {
     Mat ref_block, cur_block = Mat::zeros( block_size , block_size , CV_8UC1 ); // b_erro e o erro entre duas matrizes
     int desloc_row,desloc_col;
     int bits_to_read = ceil(log2(search_area));
-
     for (int i = 0; i < this->height / block_size ; ++i) {
         for (int j = 0; j < this->width / block_size ; ++j) {
             // this->m = int(stream_in.read(8));

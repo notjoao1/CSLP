@@ -7,29 +7,29 @@
 
 
 
-BlockEncoding::BlockEncoding(const string &input_file, const string &output_file, int block_size, int search_area, int keyframe_period) : video(input_file), stream_out(output_file), block_size(block_size), search_area(search_area), keyframe_period(keyframe_period) {
+BlockEncoding::BlockEncoding(const string &input_file, const string &output_file, int block_size, int search_area, int keyframe_period) : input_video(input_file), stream_out(output_file), block_size(block_size), search_area(search_area), keyframe_period(keyframe_period) {
     m = 0;  // initialize 'm'
 }
 
 void BlockEncoding::encode() {
-    Mat curr_frame, previous_frame;
-    curr_frame = video.getNextFrame();
-    generate_headers(curr_frame.size());
+    Mat curr_frame;
+    Mat previous_frame = Mat::zeros(720, 1280, CV_8UC1);
+    generate_headers();
     cout << "encoding video with motion estimation..." << endl;
     // frame loop
     int frame_counter = 0;
-    while (!curr_frame.empty()) {
+    while (input_video.nextFrame(curr_frame)) {
         if (frame_counter % keyframe_period == 0) {
-            encodeIntraFrame(curr_frame);
             cout << "current_frame (INTRA_FRAME): " << frame_counter << endl;
+            encodeIntraFrame(curr_frame);
         } else {
-            encodeInterFrame(curr_frame, previous_frame);
             cout << "current_frame (INTER_FRAME): " << frame_counter << endl;
+            encodeInterFrame(curr_frame, previous_frame);
         }
-        previous_frame = curr_frame.clone();
-        curr_frame = video.getNextFrame();
+        curr_frame.copyTo(previous_frame);
         frame_counter++;
     }
+    stream_out.close();
 }
 
 
@@ -37,14 +37,15 @@ void BlockEncoding::encodeValue(unsigned int v) {
     GolombCode::encode(v, this->m, this->stream_out);
 }
 
-void BlockEncoding::generate_headers(const Size &frame_size) {
-    stream_out.write(to_string(frame_size.width));
-    stream_out.write(to_string(frame_size.height));
+void BlockEncoding::generate_headers() {
+    stream_out.write(to_string(input_video.get_frame_width()));
+    stream_out.write(to_string(input_video.get_frame_height()));
     stream_out.write(to_string(keyframe_period));
     stream_out.write(to_string(block_size));
     stream_out.write(to_string(search_area));
-    stream_out.write(to_string(video.getFPS()));
-    stream_out.write(to_string(video.getNumberOfFrames()));
+    stream_out.write(to_string(input_video.get_fps_numerator()));
+    stream_out.write(to_string(input_video.get_fps_denominator()));
+    stream_out.write(to_string(input_video.get_number_of_frames()));
 }
 
 void BlockEncoding::encodeIntraFrame(const Mat &f) {
@@ -94,7 +95,6 @@ void BlockEncoding::encodeIntraFrame(const Mat &f) {
 
 // f - current frame; p - previous frame
 void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
-    std::cout << "Encoding interframe" << std::endl;
     vector<Mat> curr_channels, prev_channels;
     split(f, curr_channels);
     split(p, prev_channels);
