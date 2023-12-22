@@ -5,16 +5,16 @@
 #include "Encoding/GolombCode.h"
 #include "opencv2/imgproc.hpp"
 #include "Representation/VideoManipulator.h"
+#include "Y4MReader.h"
 
 /**
  * @brief Class for encoding video ( only intra frame ).
  */
 class Encoder {
 private:
-    VideoManipulator* video; /**< Pointer to the VideoManipulator instance to read video file. */
+    Y4MReader input_video;
     BitStreamWrite* stream_out; /**< Pointer to the BitStreamWrite instance for output stream. */
     int m; /**< Golomb parameter. */
-
 public:
     /**
      * @brief Encodes a single frame.
@@ -35,10 +35,9 @@ public:
     void encodeValue(unsigned int v);
 
     /**
-     * @brief Generates headers.
-     * @param frame_size The size of the frames in the video.
+     * @brief Generates headers based on Y4M input video headers.
      */
-    void generate_headers(const Size& frame_size);
+    void generate_headers();
 
     /**
      * @brief Performs JPEG-LS encoding on three input bytes.
@@ -54,7 +53,7 @@ public:
      * @param in Pointer to the VideoManipulator instance for input video.
      * @param out Pointer to the BitStreamWrite instance for output stream.
      */
-    Encoder(VideoManipulator* in, BitStreamWrite* out);
+    Encoder(const string& input_file, BitStreamWrite* out);
 
     /**
      * @brief Main encoding function that encodes the entire video.

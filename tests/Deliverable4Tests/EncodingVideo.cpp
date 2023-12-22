@@ -15,18 +15,14 @@ int main(int argc, char* argv[]) {
     const char* inputFile = argv[1];
     const char* outputFile = argv[2];
 
-    // Initialize VideoManipulator with the input file argument
-    VideoManipulator* v = new VideoManipulator(inputFile);
-
     // Initialize BitStreamWrite with the output file argument
     BitStreamWrite* stream = new BitStreamWrite(outputFile);
 
     // Create Encoder and encode
-    Encoder e(v, stream);
+    Encoder e(inputFile, stream);
     e.encode();
 
     // Free allocated memory
-    delete v;
     delete stream;
 
     return 0;

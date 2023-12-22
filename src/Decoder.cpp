@@ -9,11 +9,13 @@ Decoder::Decoder(BitStreamRead* in, const std::string& output_fname) : output_vi
     this->m = 3; //initialize 'm'
     this->stream_in=in;
 }
+
 //TODO: read of ColorSpace
 void Decoder::read_headers() {
     cols=stoi(stream_in->read_string());
     rows=stoi(stream_in->read_string());
-    fps=stoi(stream_in->read_string());
+    fps_num=stoi(stream_in->read_string());
+    fps_denominator = stoi(stream_in->read_string());
 }
 
 void Decoder::decode(){
@@ -21,7 +23,7 @@ void Decoder::decode(){
     cout << "decoding video..." << endl;
 
     // write headers to output file
-    output_vid.writeHeader(cols, rows, fps);
+    output_vid.writeHeader(cols, rows, fps_num, fps_denominator);
 
     // total frames to be read
     int missing_frames = stoi(stream_in->read_string()); // read total number of frames

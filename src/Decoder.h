@@ -19,7 +19,8 @@ private:
     int m; /**< Golomb parameter. */
     int cols; /**< Number of columns in the video frames. */
     int rows; /**< Number of rows in the video frames. */
-    int fps; /**< Frames per second of the video. */
+    int fps_num; /**< Frames per second numerator. */
+    int fps_denominator; /**< Frames per second denominator. */
 public:
     Y4MWriter output_vid; /**< Y4MWriter instance for writing the decoded video. */
     /**

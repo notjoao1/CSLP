@@ -7,18 +7,18 @@
 
 using namespace std;
 
-Encoder::Encoder(VideoManipulator* in, BitStreamWrite* out) {
+Encoder::Encoder(const string& input_file, BitStreamWrite* out) : input_video(input_file) {
     this->m = 12; // initialize 'm'
-    this->video = in;
     this->stream_out = out;
 }
 
 // TODO: falta o "video_format"
-void Encoder::generate_headers(const Size& frame_size) {
-    stream_out->write(to_string(frame_size.width));
-    stream_out->write(to_string(frame_size.height));
-    stream_out->write(to_string(video->getFPS()));
-    stream_out->write(to_string(video->getNumberOfFrames()));
+void Encoder::generate_headers() {
+    stream_out->write(to_string(input_video.get_frame_width()));
+    stream_out->write(to_string(input_video.get_frame_height()));
+    stream_out->write(to_string(input_video.get_fps_numerator()));
+    stream_out->write(to_string(input_video.get_fps_denominator()));
+    stream_out->write(to_string(input_video.get_number_of_frames()));
 }
 
 // Receives multi-channel Mat
@@ -76,17 +76,15 @@ void Encoder::encodeValue(unsigned int v) {
 }
 
 void Encoder::encode() {
-    Mat curr_frame;
-    curr_frame = video->getNextFrame();
-    generate_headers(curr_frame.size());
+    generate_headers();
     cout << "encoding video..." << endl;
 
+    Mat curr_frame;
     // frame loop
     int counter = 0; // testing stuff
-    while (!curr_frame.empty()) {
+    while (input_video.nextFrame(curr_frame)) {
         cout << "current_frame: " << counter << endl;
         encodeFrame(curr_frame);
-        curr_frame = video->getNextFrame();
         counter++;
     }
 }

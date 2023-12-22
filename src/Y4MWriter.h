@@ -26,9 +26,10 @@ public:
      * @brief Write the Y4M file header with video properties.
      * @param width Width of the video frames.
      * @param height Height of the video frames.
-     * @param fps Frames per second of the video.
+     * @param fps_num Frames per second numerator. Example: F50:1 -> numerator is 50 and denominator is 1.
+     * @param fps_denom Frames per seecond denominator.
      */
-    void writeHeader(int width, int height, int fps);
+    void writeHeader(int width, int height, int fps_num, int fps_denom);
 
     /**
      * @brief Write a single video frame to the Y4M file.
