@@ -16,26 +16,22 @@ void BlockDecoding::decode() {
     cout << "decoding video..." << endl;
     // frame loop
     int frame_counter = 0;
-    try {
-        while (remaining_frames != 0) {
-            if (frame_counter % keyframe_period == 0) {
-                cout << "current_frame (INTRA_FRAME): " << frame_counter << endl;
-                curr_frame=decodeFrame();
-            } else {
-                cout << "current_frame (INTER_FRAME): " << frame_counter << endl;
-                curr_frame=decodeInterFrame(&curr_frame);
-            }
-
-            if (frame_counter==0){
-                output_vid.writeHeader(this->width,this->height,this->fps_num, this->fps_denum);
-            }
-            output_vid.writeFrame(&curr_frame);
-
-            frame_counter++;
-            remaining_frames--;
+    while (remaining_frames != 0) {
+        if (frame_counter % keyframe_period == 0) {
+            cout << "current_frame (INTRA_FRAME): " << frame_counter << endl;
+            curr_frame=decodeFrame();
+        } else {
+            cout << "current_frame (INTER_FRAME): " << frame_counter << endl;
+            curr_frame=decodeInterFrame(&curr_frame);
         }
-    } catch (Exception e) {
-        std::cerr << e.what() << std::endl;
+
+        if (frame_counter==0){
+            output_vid.writeHeader(this->width,this->height,this->fps_num, this->fps_denum);
+        }
+        output_vid.writeFrame(&curr_frame);
+
+        frame_counter++;
+        remaining_frames--;
     }
     stream_in.close();
 
