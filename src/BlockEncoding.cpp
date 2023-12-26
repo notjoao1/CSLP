@@ -206,7 +206,7 @@ std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, 
 
             if (locy < 0 || locy + block_size - 1 > rows ||
                 locx < 0 || locx + block_size - 1 > cols ||
-                abs(locx - x) > search_area || abs(locy - y) > search_area) {
+                abs(locx - x) >= search_area || abs(locy - y) >= search_area) {
                 continue;
             }
 
