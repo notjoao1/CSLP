@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     BitStreamWrite* stream = new BitStreamWrite(outputFile);
 
     // Create Encoder and encode
-    Encoder e(inputFile, stream);
+    Encoder e(inputFile, stream, 1);
     e.encode();
 
     // Free allocated memory

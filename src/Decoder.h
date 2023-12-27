@@ -21,6 +21,7 @@ private:
     int rows; /**< Number of rows in the video frames. */
     int fps_num; /**< Frames per second numerator. */
     int fps_denominator; /**< Frames per second denominator. */
+    int quantization; /**< Quantization level for lossy encoding. If 0, video is lossless */
 public:
     Y4MWriter output_vid; /**< Y4MWriter instance for writing the decoded video. */
     /**

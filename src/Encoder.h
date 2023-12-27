@@ -15,6 +15,7 @@ private:
     Y4MReader input_video;
     BitStreamWrite* stream_out; /**< Pointer to the BitStreamWrite instance for output stream. */
     int m; /**< Golomb parameter. */
+    int quantization; /**< Quantization level. */
 public:
     /**
      * @brief Encodes a single frame.
@@ -52,8 +53,9 @@ public:
      * @brief Constructor for the Encoder class.
      * @param in Pointer to the VideoManipulator instance for input video.
      * @param out Pointer to the BitStreamWrite instance for output stream.
+     * @param quantization Level of quantization for lossy encoding.
      */
-    Encoder(const string& input_file, BitStreamWrite* out);
+    Encoder(const string& input_file, BitStreamWrite* out, int quantization = 0);
 
     /**
      * @brief Main encoding function that encodes the entire video.

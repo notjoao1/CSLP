@@ -165,6 +165,7 @@ int GolombCode::estimate(const unsigned int a[] , int cols , int rows ) {
     }
 
     auto d = double(rows * cols) / double(summ);
+    if (d >= 1) return 1;
     int m_param = ceil( -1 / log2f(1-d) );
     return m_param;
 }
