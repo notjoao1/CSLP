@@ -15,7 +15,7 @@ using namespace std;
  */
 class Decoder {
 private:
-    BitStreamRead* stream_in; /**< Pointer to the BitStreamRead instance for input stream. */
+    BitStreamRead stream_in; /**< Pointer to the BitStreamRead instance for input stream. */
     int m; /**< Golomb parameter. */
     int cols; /**< Number of columns in the video frames. */
     int rows; /**< Number of rows in the video frames. */
@@ -58,10 +58,10 @@ public:
 
     /**
      * @brief Constructor for the Decoder class.
-     * @param in Pointer to the BitStreamRead instance for input stream.
+     * @param input_fname The input file encoded using our encoder, should be in .gtd format.
      * @param output_fname The output file name for writing the decoded video.
      */
-    Decoder(BitStreamRead* in, const std::string& output_fname);
+    Decoder(const std::string& input_fname, const std::string& output_fname);
 
     /**
      * @brief Main decoding function that decodes the entire video.

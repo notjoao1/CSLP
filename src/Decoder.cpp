@@ -5,18 +5,17 @@
 #include "Decoder.h"
 
 
-Decoder::Decoder(BitStreamRead* in, const std::string& output_fname) : output_vid(output_fname) {
+Decoder::Decoder(const std::string& input_fname, const std::string& output_fname) : stream_in(input_fname),output_vid(output_fname) {
     this->m = 3; //initialize 'm'
-    this->stream_in=in;
 }
 
 //TODO: read of ColorSpace
 void Decoder::read_headers() {
-    cols=stoi(stream_in->read_string());
-    rows=stoi(stream_in->read_string());
-    fps_num=stoi(stream_in->read_string());
-    fps_denominator = stoi(stream_in->read_string());
-    quantization = stoi(stream_in->read_string());
+    cols=stoi(stream_in.read_string());
+    rows=stoi(stream_in.read_string());
+    fps_num=stoi(stream_in.read_string());
+    fps_denominator = stoi(stream_in.read_string());
+    quantization = stoi(stream_in.read_string());
 }
 
 void Decoder::decode(){
@@ -27,7 +26,7 @@ void Decoder::decode(){
     output_vid.writeHeader(cols, rows, fps_num, fps_denominator);
 
     // total frames to be read
-    int missing_frames = stoi(stream_in->read_string()); // read total number of frames
+    int missing_frames = stoi(stream_in.read_string()); // read total number of frames
 
     Mat curr_frame;
 
@@ -42,14 +41,14 @@ void Decoder::decode(){
         missing_frames--;
     }
     output_vid.closeFile();
-    stream_in->close();
+    stream_in.close();
 }
 
 Mat Decoder::decodeFrame() {
     Mat frame;
     Mat channels[3];
     for (int i = 0; i < 3; ++i) {
-        m = stoi(stream_in->read_string());
+        m = stoi(stream_in.read_string());
         channels[i]=decodeChannel();
     }
     merge(channels, 3, frame);
@@ -64,11 +63,11 @@ Mat Decoder::decodeChannel() {
 
     // decode first row and first column directly
     for (int col = 0; col < cols; col++) {
-        res.at<uchar>(0,col)=uchar(stream_in->read(8));
+        res.at<uchar>(0,col)=uchar(stream_in.read(8));
     }
 
     for (int row = 1; row < rows; row++) {
-        res.at<uchar>(row,0)=uchar(stream_in->read(8));
+        res.at<uchar>(row,0)=uchar(stream_in.read(8));
     }
 
     for (int row = 1; row < rows; row++)
@@ -85,7 +84,7 @@ Mat Decoder::decodeChannel() {
 }
 
 int Decoder::decodeValue() {
-    return GolombCode::mapUIntToInt( GolombCode::decode_one(m,*stream_in) );
+    return GolombCode::mapUIntToInt( GolombCode::decode_one(m,stream_in) );
 }
 
 unsigned char Decoder::JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {

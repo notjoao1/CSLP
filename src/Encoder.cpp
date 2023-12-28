@@ -7,19 +7,18 @@
 
 using namespace std;
 
-Encoder::Encoder(const string& input_file, BitStreamWrite* out, int quantization) : input_video(input_file), quantization(quantization) {
+Encoder::Encoder(const string& input_file, const string& output_file, int quantization) : input_video(input_file), stream_out(output_file) ,quantization(quantization) {
     this->m = 12; // initialize 'm'
-    this->stream_out = out;
 }
 
 // TODO: falta o "video_format"
 void Encoder::generate_headers() {
-    stream_out->write(to_string(input_video.get_frame_width()));
-    stream_out->write(to_string(input_video.get_frame_height()));
-    stream_out->write(to_string(input_video.get_fps_numerator()));
-    stream_out->write(to_string(input_video.get_fps_denominator()));
-    stream_out->write(to_string(quantization));
-    stream_out->write(to_string(input_video.get_number_of_frames()));
+    stream_out.write(to_string(input_video.get_frame_width()));
+    stream_out.write(to_string(input_video.get_frame_height()));
+    stream_out.write(to_string(input_video.get_fps_numerator()));
+    stream_out.write(to_string(input_video.get_fps_denominator()));
+    stream_out.write(to_string(quantization));
+    stream_out.write(to_string(input_video.get_number_of_frames()));
 }
 
 // Receives multi-channel Mat
@@ -60,15 +59,15 @@ void Encoder::encodeChannel(const Mat& channel) {
     m = GolombCode::estimate(e,channel.cols - 1,channel.rows - 1);
 
     // write 'm' and encoded channel values
-    stream_out->write(to_string(m));
+    stream_out.write(to_string(m));
 
     // encode first row and first column directly
     for (int col = 0; col < channel.cols; col++) {
-        stream_out->write(8, channel.at<uchar>(0, col));
+        stream_out.write(8, channel.at<uchar>(0, col));
     }
 
     for (int row = 1; row < channel.rows; row++) {
-        stream_out->write(8, channel.at<uchar>(row, 0));
+        stream_out.write(8, channel.at<uchar>(row, 0));
 
     }
     for (int i = 0; i < (channel.rows-1) * (channel.cols-1); i++) {
@@ -77,7 +76,7 @@ void Encoder::encodeChannel(const Mat& channel) {
 }
 
 void Encoder::encodeValue(unsigned int v) {
-    GolombCode::encode(v, this->m, *stream_out);
+    GolombCode::encode(v, this->m, stream_out);
 }
 
 void Encoder::encode() {
@@ -92,7 +91,7 @@ void Encoder::encode() {
         encodeFrame(curr_frame);
         counter++;
     }
-    stream_out->close();
+    stream_out.close();
 }
 
 unsigned char Encoder::JPEG_LS(unsigned char a, unsigned char b, unsigned char c) {

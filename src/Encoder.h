@@ -13,7 +13,7 @@
 class Encoder {
 private:
     Y4MReader input_video;
-    BitStreamWrite* stream_out; /**< Pointer to the BitStreamWrite instance for output stream. */
+    BitStreamWrite stream_out; /**< Pointer to the BitStreamWrite instance for output stream. */
     int m; /**< Golomb parameter. */
     int quantization; /**< Quantization level. */
 public:
@@ -51,11 +51,11 @@ public:
 
     /**
      * @brief Constructor for the Encoder class.
-     * @param in Pointer to the VideoManipulator instance for input video.
-     * @param out Pointer to the BitStreamWrite instance for output stream.
+     * @param input_file The input file name, should be a Y4M file 4:4:4.
+     * @param output_file The output file name.
      * @param quantization Level of quantization for lossy encoding.
      */
-    Encoder(const string& input_file, BitStreamWrite* out, int quantization = 0);
+    Encoder(const string& input_file, const string& output_file, int quantization = 0);
 
     /**
      * @brief Main encoding function that encodes the entire video.
