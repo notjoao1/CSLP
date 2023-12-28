@@ -15,15 +15,10 @@ int main(int argc, char* argv[]) {
     const char* inputFile = argv[1];
     const char* outputFile = argv[2];
 
-    // Initialize BitStreamWrite with the output file argument
-    BitStreamWrite* stream = new BitStreamWrite(outputFile);
-
     // Create Encoder and encode
-    Encoder e(inputFile, stream, 1);
+    Encoder e(inputFile, outputFile, 4);
     e.encode();
 
-    // Free allocated memory
-    delete stream;
 
     return 0;
 }
