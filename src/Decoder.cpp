@@ -49,10 +49,7 @@ Mat Decoder::decodeFrame() {
     Mat frame;
     Mat channels[3];
     for (int i = 0; i < 3; ++i) {
-        string abc = stream_in->read_string();
-        std::cout << "read from stream value - " << abc << std::endl;
-        m = stoi(abc);
-        std::cout << "m - " << m << std::endl;
+        m = stoi(stream_in->read_string());
         channels[i]=decodeChannel();
     }
     merge(channels, 3, frame);
@@ -72,7 +69,6 @@ Mat Decoder::decodeChannel() {
 
     for (int row = 1; row < rows; row++) {
         res.at<uchar>(row,0)=uchar(stream_in->read(8));
-
     }
 
     for (int row = 1; row < rows; row++)
@@ -84,9 +80,7 @@ Mat Decoder::decodeChannel() {
             p = JPEG_LS(a, b, c);
             res.at<uchar>(row,col)=uchar(r+int(p));
         }
-    std::cout << "whole channel sum " << sum(res) << std::endl;
-    imshow("whole channel", res);
-    waitKey(0);
+
     return res;
 }
 

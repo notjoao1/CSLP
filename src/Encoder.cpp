@@ -58,10 +58,6 @@ void Encoder::encodeChannel(const Mat& channel) {
 
     // estimate 'm' based on values that will be encoded
     m = GolombCode::estimate(e,channel.cols - 1,channel.rows - 1);
-    std::cout << "sum decoder values " << sum(decoder_values) << std::endl;
-    std::cout << "m value - " << m << std::endl;
-    imshow("decoder values", decoder_values);
-    waitKey(0);
 
     // write 'm' and encoded channel values
     stream_out->write(to_string(m));
@@ -75,10 +71,9 @@ void Encoder::encodeChannel(const Mat& channel) {
         stream_out->write(8, channel.at<uchar>(row, 0));
 
     }
-    for (int i = 0; i < (channel.rows-1) * (channel.cols-1); i++)
+    for (int i = 0; i < (channel.rows-1) * (channel.cols-1); i++) {
         encodeValue( e[i] );
-
-
+    }
 }
 
 void Encoder::encodeValue(unsigned int v) {
@@ -110,5 +105,4 @@ unsigned char Encoder::JPEG_LS(unsigned char a, unsigned char b, unsigned char c
     else
         return a + b - c;
 }
-
 
