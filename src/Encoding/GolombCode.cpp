@@ -124,6 +124,10 @@ int GolombCode::decode_one(int m, BitStreamRead &stream) {
 
     int b = LOG2(m);
 
+    if (b == 0) {
+        stream.back_front(63-temp);
+        return q;
+    }
     bool push = true;
     if(62-temp-b<0) {
         i = (i << (temp + b - 62)) | stream.read(temp + b - 62);
@@ -193,13 +197,13 @@ int GolombCode::estimate(const cv::Mat& a) {
 }
 
 
-int GolombCode::mapIntToUInt(int n) {
+unsigned int GolombCode::mapIntToUInt(int n) {
     if ( n < 0)
         return -n*2-1;
     return 2 * n;
 }
 
-int GolombCode::mapUIntToInt( int n) {
+int GolombCode::mapUIntToInt( unsigned int n) {
     if( n % 2 == 1)
         return int(-(n+1))/2;
     return int(n)/2 ;

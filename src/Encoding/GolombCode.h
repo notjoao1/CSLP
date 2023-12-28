@@ -88,12 +88,12 @@ public:
      *
      */
 
-    static int mapIntToUInt(int n);
+    static unsigned int mapIntToUInt(int n);
 
     /**
      *
      */
-    static int mapUIntToInt(int n);
+    static int mapUIntToInt(unsigned int n);
 
     static int estimate(const unsigned int *a, int cols, int rows);
 
