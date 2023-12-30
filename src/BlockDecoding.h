@@ -56,6 +56,7 @@ private:
     int width, height, block_size, search_area, keyframe_period, fps_num, fps_denum; ///< Video parameters.
     BitStreamRead stream_in; ///< A BitStreamRead object for reading from a bitstream.
     int m; ///< Golomb parameter.
+    int quantization; /**< Quantization level. */
 
     /**
      * @brief Decodes an interframe using the previous frame.
@@ -68,12 +69,6 @@ private:
      * @brief Reads headers necessary for the decoding process.
      */
     void read_headers();
-
-    /**
-     * @brief Decodes the difference between blocks.
-     * @return The decoded block difference.
-     */
-    cv::Mat decodeBlockDifference();
 
     /**
      * @brief Decodes a single value using Golomb decoding.

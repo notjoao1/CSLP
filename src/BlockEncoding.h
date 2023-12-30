@@ -21,8 +21,9 @@ public:
      * @param block_size Size of the encoding block for motion estimation.
      * @param search_area Size of the search area for motion estimation.
      * @param keyframe_period Number of frames between intra frames.
+     *
      */
-    BlockEncoding(const std::string& input_file, const std::string& output_file, int block_size = 16, int search_area = 16, int keyframe_period = 10);
+    BlockEncoding(const std::string& input_file, const std::string& output_file, int block_size = 16, int search_area = 16, int keyframe_period = 10, int quantization = 0);
 
     /**
      * @brief Main function to perform video encoding.
@@ -35,6 +36,7 @@ private:
     BitStreamWrite stream_out; ///< Bitstream writer for output.
     GolombCode golomb; ///< Golomb coding object.
     int m; ///< Golomb parameter.
+    int quantization; /**< Quantization level. */
 
     /**
      * @brief Encode an inter-frame (motion-compensated) video frame.

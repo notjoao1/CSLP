@@ -7,7 +7,7 @@
 
 
 
-BlockEncoding::BlockEncoding(const string &input_file, const string &output_file, int block_size, int search_area, int keyframe_period) : input_video(input_file), stream_out(output_file), block_size(block_size), search_area(search_area), keyframe_period(keyframe_period) {
+BlockEncoding::BlockEncoding(const string &input_file, const string &output_file, int block_size, int search_area, int keyframe_period, int quantization) : input_video(input_file), stream_out(output_file), block_size(block_size), search_area(search_area), keyframe_period(keyframe_period), quantization(quantization) {
     m = 0;  // initialize 'm'
 }
 
@@ -43,6 +43,7 @@ void BlockEncoding::generate_headers() {
     stream_out.write(to_string(keyframe_period));
     stream_out.write(to_string(block_size));
     stream_out.write(to_string(search_area));
+    stream_out.write(to_string(quantization));
     stream_out.write(to_string(input_video.get_fps_numerator()));
     stream_out.write(to_string(input_video.get_fps_denominator()));
     stream_out.write(to_string(input_video.get_number_of_frames()));
@@ -109,6 +110,7 @@ void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
 
 void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel) {
     Mat curr_block, b_erro; // b_erro - error between the two matrices
+    Mat decoder_values=Mat::zeros(block_size, block_size, CV_8UC1);
     int rows = c_channel.rows, cols = c_channel.cols;
     int bits_to_write = ceil(log2(search_area));
     int diff=0;
@@ -116,7 +118,7 @@ void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_c
         for (int j = 0; j < cols / block_size ; ++j) {
             curr_block = getBlock(c_channel, i * block_size, j * block_size);
             auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i * block_size, j * block_size, rows, cols);
-            
+            ref_block.copyTo(decoder_values);
             stream_out.write_bit( ( desloc_row < 0 ) ? 1 : 0 );
             stream_out.write(bits_to_write, ( desloc_row < 0 ) ? -desloc_row : desloc_row );
             stream_out.write_bit( ( desloc_col < 0 ) ? 1 : 0 );
@@ -126,11 +128,13 @@ void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_c
 
             for (int row=0; row<block_size; row++){
                 for(int col=0; col<block_size; col++){
-                    diff=int(curr_block.at<uchar>(row,col))- int(ref_block.at<uchar>(row,col));
+                    diff=int(decoder_values.at<uchar>(row,col))- int(ref_block.at<uchar>(row,col));
+                    decoder_values.at<uchar>(row, col) = ref_block.at<uchar>(row,col) + ((diff >> quantization) << quantization);
+
                     // stream_out.write_bit( (diff < 0) ? 1: 0);
                     // GolombCode::encode(diff, 3, this->stream_out);
                     // cout << GolombCode::mapIntToUInt(diff) << " , " ;
-                    GolombCode::encode( GolombCode::mapIntToUInt(diff) , 16 , stream_out );
+                    GolombCode::encode( GolombCode::mapIntToUInt(diff >> quantization) , 16 , stream_out );
                 }
                 // cout << endl;
             }

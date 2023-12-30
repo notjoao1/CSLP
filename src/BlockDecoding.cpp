@@ -43,6 +43,7 @@ void BlockDecoding::read_headers() {
     this->keyframe_period=stoi(stream_in.read_string());
     this->block_size=stoi(stream_in.read_string());
     this->search_area=stoi(stream_in.read_string());
+    this->quantization=stoi(stream_in.read_string());
     this->fps_num=stoi(stream_in.read_string());
     this->fps_denum=stoi(stream_in.read_string());
 }
@@ -96,7 +97,7 @@ Mat BlockDecoding::decodeInterframeChannel(Mat* p_channel) {
             for (int row=0; row<block_size; row++){
                 for(int col=0; col<block_size; col++){
                     int diff = GolombCode::decode_one(16,stream_in);
-                    diff = GolombCode::mapUIntToInt( diff );
+                    diff = GolombCode::mapUIntToInt( diff ) << quantization;
                     // int diff = (stream_in.read_bit()) ? -GolombCode::decode_one(3,stream_in) : GolombCode::decode_one(3,stream_in);
                     // cout << diff << " , " ;
                     cur_block.at<uchar>(row,col) = ref_block.at<uchar>(row,col) + diff;
@@ -107,23 +108,6 @@ Mat BlockDecoding::decodeInterframeChannel(Mat* p_channel) {
         }
     }
     return c_channel;
-}
-
-Mat BlockDecoding::decodeBlockDifference() {
-    Mat block = Mat::zeros(block_size, block_size, CV_8UC1);
-    // for (int i = 0; i < this->block_size; ++i) {
-    //     for (int j = 0; j < this->block_size; ++j) {
-    //         for (int row=0; row<block_size; row++)
-    //             for(int col=0; col<block_size; col++){
-    //                 if(stream_in.read_bit()){
-    //                     block.at<uchar>(row,col)=GolombCode::decode_one(diff, 3, this->stream_out);
-    //                 }
-    //                 diff=int(curr_block.at<uchar>(row,col))- int(ref_block.at<uchar>(row,col));
-    //                 stream_out.write_bit(diff < 0 ? 0: 1);
-                    
-    //             }        }
-    // }
-    return block;
 }
 
 int BlockDecoding::decodeValue() {
