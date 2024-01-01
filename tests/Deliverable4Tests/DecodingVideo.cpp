@@ -14,12 +14,9 @@ int main(int argc, char* argv[]) {
     const char* inputFile = argv[1];
     const char* outputFile = argv[2];
 
-    BitStreamRead* in = new BitStreamRead(inputFile);
 
-    Decoder d(in, outputFile);
+    Decoder d(inputFile, outputFile);
     d.decode();
-
-    delete in;
 
     return 0;
 }

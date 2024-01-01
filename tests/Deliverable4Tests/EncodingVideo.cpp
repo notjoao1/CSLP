@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     const char* outputFile = argv[2];
 
     // Create Encoder and encode
-    Encoder e(inputFile, outputFile, 4);
+    Encoder e(inputFile, outputFile, 0);
     e.encode();
 
 
