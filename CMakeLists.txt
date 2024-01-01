@@ -17,11 +17,18 @@ add_executable(GTD-VC src/Representation/ImageManipulator.cpp
         src/Encoding/GolombCode.cpp
         #tests/Deliverable4Tests/EncodingVideo.cpp
         #tests/Deliverable4Tests/DecodingVideo.cpp
-        tests/Deliverable5Tests/BlockEncodeVideo.cpp
+        #tests/Deliverable5Tests/BlockEncodeVideo.cpp
         #tests/Deliverable5Tests/BlockDecodeVideo.cpp
         src/BlockDecoding.cpp
         src/BlockEncoding.cpp
-
+        src/Y4MReader.cpp
+        src/Y4MReader.h
+        #tests/TestWrite.cpp
+        #tests/testgolomb.cpp
+        #tests/Y4MParserTests/Y4MParserTest.cpp
+        CLI.cpp
+        #tests/Deliverable5Tests/BlockEncodeDecodeFlow.cpp
+        #tests/Deliverable4Tests/EncodeDecodeFlow.cpp
 )
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})
