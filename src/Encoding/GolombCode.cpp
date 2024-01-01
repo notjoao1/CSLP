@@ -163,11 +163,11 @@ std::vector<int> GolombCode::decode(int m,BitStreamRead &b, int n) {
 int GolombCode::estimate(const unsigned int a[] , int cols , int rows ) {
 
     long summ = 0;
-
     for (int i = 0; i < rows*cols; i++){
         summ += a[i];
     }
 
+    if (summ == 0) return 0;
     auto d = double(rows * cols) / double(summ);
     if (d >= 1) return 1;
     int m_param = ceil( -1 / log2f(1-d) );
