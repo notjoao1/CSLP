@@ -49,7 +49,7 @@ private:
      * @brief Encode an intra-frame (keyframe) video frame.
      * @param f Current frame.
      */
-    void encodeIntraFrame(const Mat& f);
+    void encodeIntraFrame(Mat& f);
 
     /**
      * @brief Encode a single unsigned integer value using Golomb coding.
@@ -76,6 +76,16 @@ private:
      * @return Extracted block.
      */
     Mat getBlock(const Mat& original_frame, int row, int col) const;
+
+    /**
+     * @brief Sets a block in a frame.
+     * @param original_frame A pointer to the original video frame.
+     * @param block A pointer to an OpenCV Mat representing a block.
+     * @param row The row index specifying the block's position.
+     * @param col The column index specifying the block's position.
+     */
+    void setBlock(const cv::Mat* original_frame, cv::Mat* block, int row, int col) const;
+
 
     /**
      * @brief Search for the best-matching block in the previous frame. Uses Four Step Search Algorithm

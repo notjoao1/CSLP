@@ -51,7 +51,6 @@ void BlockDecoding::read_headers() {
 // f - current frame; p - previous frame
 Mat BlockDecoding::decodeInterFrame(const Mat* p) {
     Mat res;
-    std::cout << "Decoding interframe" << std::endl;
     vector<Mat> curr_channels, prev_channels;
     split(*p, prev_channels);
 
@@ -86,23 +85,21 @@ Mat BlockDecoding::decodeInterframeChannel(Mat* p_channel) {
     int bits_to_read = ceil(log2(search_area));
     for (int i = 0; i < this->height / block_size ; ++i) {
         for (int j = 0; j < this->width / block_size ; ++j) {
-            // this->m = int(stream_in.read(8));
-
+            this->m = int(stream_in.read(8));
             desloc_row= (stream_in.read_bit()) ? -stream_in.read(bits_to_read) : stream_in.read(bits_to_read) ;
             desloc_col= (stream_in.read_bit()) ? -stream_in.read(bits_to_read) : stream_in.read(bits_to_read) ;
 
-            // cout << i << " , " << j << " desloc: "<< desloc_col << " , " << desloc_row << endl;
-
             ref_block=getBlock(p_channel,i*block_size-desloc_row,j*block_size-desloc_col);
-            for (int row=0; row<block_size; row++){
-                for(int col=0; col<block_size; col++){
-                    int diff = GolombCode::decode_one(16,stream_in);
-                    diff = GolombCode::mapUIntToInt( diff ) << quantization;
-                    // int diff = (stream_in.read_bit()) ? -GolombCode::decode_one(3,stream_in) : GolombCode::decode_one(3,stream_in);
-                    // cout << diff << " , " ;
-                    cur_block.at<uchar>(row,col) = ref_block.at<uchar>(row,col) + diff;
+            if (m == 0) {
+                ref_block.copyTo(cur_block);
+            } else {
+                for (int row=0; row<block_size; row++){
+                    for(int col=0; col<block_size; col++){
+                        int diff = GolombCode::decode_one(m,stream_in);
+                        diff = GolombCode::mapUIntToInt( diff ) << quantization;
+                        cur_block.at<uchar>(row,col) = ref_block.at<uchar>(row,col) + diff;
+                    }
                 }
-                // cout << endl;
             }
             setBlock(&c_channel,&cur_block, i * block_size, j * block_size);
         }
@@ -144,7 +141,7 @@ Mat BlockDecoding::decodeChannel() {
 
     for (int row = 1; row < height; row++)
         for (int col = 1; col < width; col++) {
-            r=decodeValue();
+            r=decodeValue() << quantization;
             a = res.at<uchar>(row, col - 1);
             b = res.at<uchar>(row - 1, col);
             c = res.at<uchar>(row - 1, col - 1);

@@ -6,7 +6,6 @@
 #include <cmath>
 
 
-
 BlockEncoding::BlockEncoding(const string &input_file, const string &output_file, int block_size, int search_area, int keyframe_period, int quantization) : input_video(input_file), stream_out(output_file), block_size(block_size), search_area(search_area), keyframe_period(keyframe_period), quantization(quantization) {
     m = 0;  // initialize 'm'
 }
@@ -49,11 +48,19 @@ void BlockEncoding::generate_headers() {
     stream_out.write(to_string(input_video.get_number_of_frames()));
 }
 
-void BlockEncoding::encodeIntraFrame(const Mat &f) {
+void BlockEncoding::encodeIntraFrame(Mat &f) {
     vector<Mat> channels;
+    vector<Mat> decoder_channels;
     split(f, channels);
+
+    // current channel as seen by the decoder
     for (auto channel : channels) {
         unsigned int e[(channel.cols - 1)*(channel.rows - 1)];
+
+        // mat that will have values received in decoder, for lossy encoding
+        Mat decoder_values = Mat::zeros(channel.rows, channel.cols, CV_8UC1);
+
+        channel.copyTo(decoder_values);
 
         // Pre compute error values
         int r; // tem de ser int, pois pode ser negativo
@@ -61,12 +68,14 @@ void BlockEncoding::encodeIntraFrame(const Mat &f) {
 
         for (int row = 1; row < channel.rows; row++)
             for (int col = 1; col < channel.cols; col++) {
-                a = channel.at<uchar>(row, col - 1);
-                b = channel.at<uchar>(row - 1, col);
-                c = channel.at<uchar>(row - 1, col - 1);
+                a = decoder_values.at<uchar>(row, col - 1);
+                b = decoder_values.at<uchar>(row - 1, col);
+                c = decoder_values.at<uchar>(row - 1, col - 1);
                 p = JPEG_LS(a, b, c);
-                r = int(channel.at<uchar>(row, col)) - int(p);
-                e[(col - 1) + (row - 1) * (channel.cols - 1)] = GolombCode::mapIntToUInt(r);
+                r = int(decoder_values.at<uchar>(row, col)) - int(p);
+                // simulate decoder process
+                decoder_values.at<uchar>(row, col) = p + ((r >> quantization) << quantization);
+                e[(col - 1) + (row - 1) * (channel.cols - 1)] = GolombCode::mapIntToUInt(r >> quantization);
             }
 
         // estimate 'm' based on values that will be encoded
@@ -88,7 +97,11 @@ void BlockEncoding::encodeIntraFrame(const Mat &f) {
         }
         for (int i = 0; i < (channel.rows-1) * (channel.cols-1); i++)
             encodeValue( e[i] );
+
+        decoder_channels.push_back(decoder_values);
     }
+
+    merge(decoder_channels, f);
 }
 
 
@@ -105,41 +118,50 @@ void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
         encodeInterframeChannel(pad(curr_channels.at(i)), pad(prev_channels.at(i)));
     }
 
+    merge(curr_channels, f);
 }
 
 
 void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel) {
     Mat curr_block, b_erro; // b_erro - error between the two matrices
-    Mat decoder_values=Mat::zeros(block_size, block_size, CV_8UC1);
     int rows = c_channel.rows, cols = c_channel.cols;
     int bits_to_write = ceil(log2(search_area));
-    int diff=0;
+    int quantized_diff=0;
+    unsigned int m_array[rows / block_size * cols / block_size], diffs[block_size * block_size];
+
     for (int i = 0; i < rows / block_size ; ++i) {
         for (int j = 0; j < cols / block_size ; ++j) {
             curr_block = getBlock(c_channel, i * block_size, j * block_size);
             auto [ref_block, desloc_row, desloc_col] = searchBestBlock(p_channel, curr_block, i * block_size, j * block_size, rows, cols);
-            ref_block.copyTo(decoder_values);
+
+
+            for (int row=0; row<block_size; row++){
+                for(int col=0; col<block_size; col++){
+                    quantized_diff=(int(curr_block.at<uchar>(row,col))- int(ref_block.at<uchar>(row,col))) >> quantization;
+                    curr_block.at<uchar>(row, col) = ref_block.at<uchar>(row,col) + ((quantized_diff) << quantization);
+
+                    diffs[row * block_size + col] = GolombCode::mapIntToUInt(quantized_diff);
+                }
+
+            }
+            m = GolombCode::estimate(diffs, block_size, block_size);
+            stream_out.write(8, m);
             stream_out.write_bit( ( desloc_row < 0 ) ? 1 : 0 );
             stream_out.write(bits_to_write, ( desloc_row < 0 ) ? -desloc_row : desloc_row );
             stream_out.write_bit( ( desloc_col < 0 ) ? 1 : 0 );
             stream_out.write(bits_to_write, ( desloc_col < 0 ) ? -desloc_col : desloc_col);
-            
-            // cout << i << " , " << j << " desloc: "<< desloc_col << " , " << desloc_row << endl;
 
-            for (int row=0; row<block_size; row++){
-                for(int col=0; col<block_size; col++){
-                    diff=int(decoder_values.at<uchar>(row,col))- int(ref_block.at<uchar>(row,col));
-                    decoder_values.at<uchar>(row, col) = ref_block.at<uchar>(row,col) + ((diff >> quantization) << quantization);
 
-                    // stream_out.write_bit( (diff < 0) ? 1: 0);
-                    // GolombCode::encode(diff, 3, this->stream_out);
-                    // cout << GolombCode::mapIntToUInt(diff) << " , " ;
-                    GolombCode::encode( GolombCode::mapIntToUInt(diff >> quantization) , 16 , stream_out );
+            if (m != 0) {
+                for (int i = 0; i < block_size * block_size; i++) {
+                    encodeValue( diffs[i] );
                 }
-                // cout << endl;
             }
+
+            setBlock(&c_channel, &curr_block, i * block_size, j * block_size);
         }
     }
+
 }
 
 Mat BlockEncoding::getBlock(const Mat &original_frame, int row, int col) const {
@@ -273,6 +295,13 @@ Mat BlockEncoding::pad(const Mat &frame) const {
     }
 
     return padded_mat;
+}
+
+void BlockEncoding::setBlock(const cv::Mat *original_frame, cv::Mat *block, int row, int col) const {
+    // create region of interest for block
+    // columns - x-axis; rows - y-axis
+    Rect roi(col, row, block_size, block_size);
+    block->copyTo((*original_frame)(roi));
 }
 
 
