@@ -15,7 +15,9 @@ private:
     Y4MReader input_video;
     BitStreamWrite stream_out; /**< Pointer to the BitStreamWrite instance for output stream. */
     int m; /**< Golomb parameter. */
-    int quantization; /**< Quantization level. */
+    int quantizationY; /**< Quantization level for the Y luma channel. */
+    int quantizationU; /**< Quantization level for the U chroma channel. */
+    int quantizationV; /**< Quantization level for the V chroma channel. */
 public:
     /**
      * @brief Encodes a single frame.
@@ -27,7 +29,7 @@ public:
      * @brief Encodes a single channel of the input frame.
      * @param c The input channel to be encoded.
      */
-    void encodeChannel(const Mat& c);
+    void encodeChannel(const Mat& c, int quantization);
 
     /**
      * @brief Encodes a single value using Golomb coding.
@@ -53,9 +55,11 @@ public:
      * @brief Constructor for the Encoder class.
      * @param input_file The input file name, should be a Y4M file 4:4:4.
      * @param output_file The output file name.
-     * @param quantization Level of quantization for lossy encoding.
+     * @param quantizationY Level of quantization for the luma channel in lossy encoding.
+     * @param quantizationU Level of quantization for the luma channel in lossy encoding.
+     * @param quantizationV Level of quantization for the luma channel in lossy encoding.
      */
-    Encoder(const string& input_file, const string& output_file, int quantization = 0);
+    Encoder(const string& input_file, const string& output_file, int quantizationY = 0, int quantizationU = 0, int quantizationV = 0);
 
     /**
      * @brief Main encoding function that encodes the entire video.

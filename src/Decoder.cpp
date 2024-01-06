@@ -15,7 +15,9 @@ void Decoder::read_headers() {
     rows=stoi(stream_in.read_string());
     fps_num=stoi(stream_in.read_string());
     fps_denominator = stoi(stream_in.read_string());
-    quantization = stoi(stream_in.read_string());
+    quantizationY = stoi(stream_in.read_string());
+    quantizationU = stoi(stream_in.read_string());
+    quantizationV = stoi(stream_in.read_string());
 }
 
 void Decoder::decode(){
@@ -47,16 +49,17 @@ void Decoder::decode(){
 Mat Decoder::decodeFrame() {
     Mat frame;
     Mat channels[3];
+    vector<int> quantizations = { quantizationY, quantizationU, quantizationV };
     for (int i = 0; i < 3; ++i) {
         m = stoi(stream_in.read_string());
-        channels[i]=decodeChannel();
+        channels[i]=decodeChannel(quantizations[i]);
     }
     merge(channels, 3, frame);
     return frame;
 
 }
 
-Mat Decoder::decodeChannel() {
+Mat Decoder::decodeChannel(int quantization) {
     Mat res= Mat::zeros(rows, cols, CV_8UC1);
     int r; // tem de ser int, pois pode ser negativo
     unsigned char a, b, c, p;

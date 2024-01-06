@@ -21,7 +21,9 @@ private:
     int rows; /**< Number of rows in the video frames. */
     int fps_num; /**< Frames per second numerator. */
     int fps_denominator; /**< Frames per second denominator. */
-    int quantization; /**< Quantization level for lossy encoding. If 0, video is lossless */
+    int quantizationY; /**< Quantization level for luma channel for lossy encoding. */
+    int quantizationU; /**< Quantization level for U chroma channel for lossy encoding. */
+    int quantizationV; /**< Quantization level for V chroma channel for lossy encoding. */
 public:
     Y4MWriter output_vid; /**< Y4MWriter instance for writing the decoded video. */
     /**
@@ -39,7 +41,7 @@ public:
      * @brief Decodes a single channel from the input stream.
      * @return The decoded channel.
      */
-    Mat decodeChannel();
+    Mat decodeChannel(int quantization);
 
     /**
      * @brief Decodes a single value using Golomb decoding.

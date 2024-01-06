@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Encoder::Encoder(const string& input_file, const string& output_file, int quantization) : input_video(input_file), stream_out(output_file) ,quantization(quantization) {
+Encoder::Encoder(const string& input_file, const string& output_file, int quantizationY, int quantizationU, int quantizationV) : input_video(input_file), stream_out(output_file), quantizationY(quantizationY), quantizationU(quantizationU), quantizationV(quantizationV) {
     this->m = 12; // initialize 'm'
 }
 
@@ -17,21 +17,24 @@ void Encoder::generate_headers() {
     stream_out.write(to_string(input_video.get_frame_height()));
     stream_out.write(to_string(input_video.get_fps_numerator()));
     stream_out.write(to_string(input_video.get_fps_denominator()));
-    stream_out.write(to_string(quantization));
+    stream_out.write(to_string(quantizationY));
+    stream_out.write(to_string(quantizationU));
+    stream_out.write(to_string(quantizationV));
     stream_out.write(to_string(input_video.get_number_of_frames()));
 }
 
 // Receives multi-channel Mat
 void Encoder::encodeFrame(const Mat& f) {
+    std::vector<int> quantizations_vec = { quantizationY, quantizationU, quantizationV };
     std::vector<Mat> channels;
     split(f, channels);
     for (int i = 0; i < f.channels(); ++i) {
-        encodeChannel(channels[i]);
+        encodeChannel(channels[i], quantizations_vec[i]);
     }
 }
 
 // Receives single channel Mat
-void Encoder::encodeChannel(const Mat& channel) {
+void Encoder::encodeChannel(const Mat& channel, const int quantization) {
     // array that will be used to estimate 'm' parameter
     unsigned int e[(channel.cols - 1)*(channel.rows - 1)];
 
@@ -82,7 +85,6 @@ void Encoder::encodeValue(unsigned int v) {
 void Encoder::encode() {
     generate_headers();
     cout << "encoding video..." << endl;
-    std::cout << "quantization: " << quantization << std::endl;
     Mat curr_frame;
     // frame loop
     int counter = 0; // testing stuff
