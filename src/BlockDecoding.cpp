@@ -43,7 +43,9 @@ void BlockDecoding::read_headers() {
     this->keyframe_period=stoi(stream_in.read_string());
     this->block_size=stoi(stream_in.read_string());
     this->search_area=stoi(stream_in.read_string());
-    this->quantization=stoi(stream_in.read_string());
+    this->quantizationY=stoi(stream_in.read_string());
+    this->quantizationU=stoi(stream_in.read_string());
+    this->quantizationV=stoi(stream_in.read_string());
     this->fps_num=stoi(stream_in.read_string());
     this->fps_denum=stoi(stream_in.read_string());
 }
@@ -53,10 +55,11 @@ Mat BlockDecoding::decodeInterFrame(const Mat* p) {
     Mat res;
     vector<Mat> curr_channels, prev_channels;
     split(*p, prev_channels);
+    vector<int> quantizations = { quantizationY, quantizationU, quantizationV };
 
     // iterate through channels, both frames have same number
     for (int i = 0; i < p->channels(); ++i) {
-        curr_channels.push_back(decodeInterframeChannel(&prev_channels.at(i)));
+        curr_channels.push_back(decodeInterframeChannel(&prev_channels.at(i), quantizations[i]));
     }
     merge(curr_channels,res);
 
@@ -78,7 +81,7 @@ Mat BlockDecoding::getBlock(const Mat *original_frame, int row, int col) const{
     return block;
 }
 
-Mat BlockDecoding::decodeInterframeChannel(Mat* p_channel) {
+Mat BlockDecoding::decodeInterframeChannel(Mat* p_channel, int quantization) {
     Mat c_channel = Mat::zeros(height, width, CV_8UC1);
     Mat ref_block, cur_block = Mat::zeros( block_size , block_size , CV_8UC1 ); // b_erro e o erro entre duas matrizes
     int desloc_row,desloc_col;
@@ -114,9 +117,10 @@ int BlockDecoding::decodeValue() {
 Mat BlockDecoding::decodeFrame() {
     Mat frame;
     Mat channels[3];
+    vector<int> quantizations = { quantizationY, quantizationU, quantizationV };
     for (int i = 0; i < 3; ++i) {
         m = stoi(stream_in.read_string());
-        channels[i]=decodeChannel();
+        channels[i]=decodeChannel(quantizations[i]);
     }
     merge(channels, 3, frame);
 
@@ -124,7 +128,7 @@ Mat BlockDecoding::decodeFrame() {
 
 }
 
-Mat BlockDecoding::decodeChannel() {
+Mat BlockDecoding::decodeChannel(int quantization) {
     Mat res= Mat::zeros(height, width, CV_8UC1);
     int r; // tem de ser int, pois pode ser negativo
     unsigned char a, b, c, p;

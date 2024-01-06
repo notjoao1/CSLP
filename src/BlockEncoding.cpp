@@ -6,7 +6,7 @@
 #include <cmath>
 
 
-BlockEncoding::BlockEncoding(const string &input_file, const string &output_file, int block_size, int search_area, int keyframe_period, int quantization) : input_video(input_file), stream_out(output_file), block_size(block_size), search_area(search_area), keyframe_period(keyframe_period), quantization(quantization) {
+BlockEncoding::BlockEncoding(const string &input_file, const string &output_file, int block_size, int search_area, int keyframe_period, int quantizationY, int quantizationU, int quantizationV) : input_video(input_file), stream_out(output_file), block_size(block_size), search_area(search_area), keyframe_period(keyframe_period), quantizationY(quantizationY), quantizationU(quantizationU), quantizationV(quantizationV) {
     m = 0;  // initialize 'm'
 }
 
@@ -42,7 +42,9 @@ void BlockEncoding::generate_headers() {
     stream_out.write(to_string(keyframe_period));
     stream_out.write(to_string(block_size));
     stream_out.write(to_string(search_area));
-    stream_out.write(to_string(quantization));
+    stream_out.write(to_string(quantizationY));
+    stream_out.write(to_string(quantizationU));
+    stream_out.write(to_string(quantizationV));
     stream_out.write(to_string(input_video.get_fps_numerator()));
     stream_out.write(to_string(input_video.get_fps_denominator()));
     stream_out.write(to_string(input_video.get_number_of_frames()));
@@ -52,50 +54,50 @@ void BlockEncoding::encodeIntraFrame(Mat &f) {
     vector<Mat> channels;
     vector<Mat> decoder_channels;
     split(f, channels);
-
+    vector<int> quantizations = { quantizationY, quantizationU, quantizationV };
     // current channel as seen by the decoder
-    for (auto channel : channels) {
-        unsigned int e[(channel.cols - 1)*(channel.rows - 1)];
+    for (int n = 0; n < 3; n++) {
+        unsigned int e[(channels[n].cols - 1)*(channels[n].rows - 1)];
 
         // mat that will have values received in decoder, for lossy encoding
-        Mat decoder_values = Mat::zeros(channel.rows, channel.cols, CV_8UC1);
+        Mat decoder_values = Mat::zeros(channels[n].rows, channels[n].cols, CV_8UC1);
 
-        channel.copyTo(decoder_values);
+        channels[n].copyTo(decoder_values);
 
         // Pre compute error values
         int r; // tem de ser int, pois pode ser negativo
         unsigned char a, b, c, p;
 
-        for (int row = 1; row < channel.rows; row++)
-            for (int col = 1; col < channel.cols; col++) {
+        for (int row = 1; row < channels[n].rows; row++)
+            for (int col = 1; col < channels[n].cols; col++) {
                 a = decoder_values.at<uchar>(row, col - 1);
                 b = decoder_values.at<uchar>(row - 1, col);
                 c = decoder_values.at<uchar>(row - 1, col - 1);
                 p = JPEG_LS(a, b, c);
                 r = int(decoder_values.at<uchar>(row, col)) - int(p);
                 // simulate decoder process
-                decoder_values.at<uchar>(row, col) = p + ((r >> quantization) << quantization);
-                e[(col - 1) + (row - 1) * (channel.cols - 1)] = GolombCode::mapIntToUInt(r >> quantization);
+                decoder_values.at<uchar>(row, col) = p + ((r >> quantizations[n]) << quantizations[n]);
+                e[(col - 1) + (row - 1) * (channels[n].cols - 1)] = GolombCode::mapIntToUInt(r >> quantizations[n]);
             }
 
         // estimate 'm' based on values that will be encoded
-        m = GolombCode::estimate(e,channel.cols - 1,channel.rows - 1);
+        m = GolombCode::estimate(e,channels[n].cols - 1,channels[n].rows - 1);
 
         // write 'm' and encoded channel values
         stream_out.write(to_string(m));
 
         // encode first row and first column directly
-        for (int col = 0; col < channel.cols; col++) {
+        for (int col = 0; col < channels[n].cols; col++) {
             //stream_out->write(8, channel.at<uchar>(0, col));
-            stream_out.write(8, channel.at<uchar>(0, col));
+            stream_out.write(8, channels[n].at<uchar>(0, col));
         }
 
-        for (int row = 1; row < channel.rows; row++) {
+        for (int row = 1; row < channels[n].rows; row++) {
             //stream_out->write(8, channel.at<uchar>(row, 0));
-            stream_out.write(8, channel.at<uchar>(row, 0));
+            stream_out.write(8, channels[n].at<uchar>(row, 0));
 
         }
-        for (int i = 0; i < (channel.rows-1) * (channel.cols-1); i++)
+        for (int i = 0; i < (channels[n].rows-1) * (channels[n].cols-1); i++)
             encodeValue( e[i] );
 
         decoder_channels.push_back(decoder_values);
@@ -112,17 +114,17 @@ void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
     vector<Mat> curr_channels, prev_channels;
     split(f, curr_channels);
     split(p, prev_channels);
-
+    vector<int> quantizations = { quantizationY, quantizationU, quantizationV };
     // iterate through channels, both frames have same number
     for (int i = 0; i < f.channels(); ++i) {
-        encodeInterframeChannel(pad(curr_channels.at(i)), pad(prev_channels.at(i)));
+        encodeInterframeChannel(pad(curr_channels.at(i)), pad(prev_channels.at(i)), quantizations[i]);
     }
 
     merge(curr_channels, f);
 }
 
 
-void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel) {
+void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel, int quantization) {
     Mat curr_block, b_erro; // b_erro - error between the two matrices
     int rows = c_channel.rows, cols = c_channel.cols;
     int bits_to_write = ceil(log2(search_area));

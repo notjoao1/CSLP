@@ -30,9 +30,11 @@ private:
     /**
      * @brief Decodes an interframe channel.
      * @param p_channel A pointer to an OpenCV Mat representing a channel of a video frame.
+     * @param quantization Quantization used to (lossy) encode this channel. Same quantization
+     * level will be used to decode. May be 0, if channel was encoded lossless.
      * @return The decoded interframe channel.
      */
-    cv::Mat decodeInterframeChannel(cv::Mat* p_channel);
+    cv::Mat decodeInterframeChannel(cv::Mat* p_channel, int quantization);
 
     /**
      * @brief Retrieves a block from a frame.
@@ -56,7 +58,9 @@ private:
     int width, height, block_size, search_area, keyframe_period, fps_num, fps_denum; ///< Video parameters.
     BitStreamRead stream_in; ///< A BitStreamRead object for reading from a bitstream.
     int m; ///< Golomb parameter.
-    int quantization; /**< Quantization level. */
+    int quantizationY; /**< Quantization level for the luma channel. */
+    int quantizationU; /**< Quantization level for the U chroma channel. */
+    int quantizationV; /**< Quantization level for the V chroma channel. */
 
     /**
      * @brief Decodes an interframe using the previous frame.
@@ -84,9 +88,12 @@ private:
 
     /**
      * @brief Decodes a single channel from the input stream.
+     * @param quantization Quantization used to (lossy) encode this channel. Same quantization
+     * level will be used to decode. May be 0, if channel was encoded lossless.
+
      * @return The decoded channel.
      */
-    Mat decodeChannel();
+    Mat decodeChannel(int quantization);
 
     /**
      * @brief Performs JPEG-LS encoding on three input bytes.

@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Create BlockEncoding object with provided or default values
-    BlockEncoding be(input_file, output_file, block_size, search_area, keyframe_period, 4);
+    BlockEncoding be(input_file, output_file, block_size, search_area, keyframe_period, 5, 4, 4);
     be.encode();
 
     return 0;

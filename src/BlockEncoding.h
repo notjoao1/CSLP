@@ -23,7 +23,7 @@ public:
      * @param keyframe_period Number of frames between intra frames.
      *
      */
-    BlockEncoding(const std::string& input_file, const std::string& output_file, int block_size = 16, int search_area = 16, int keyframe_period = 10, int quantization = 0);
+    BlockEncoding(const std::string& input_file, const std::string& output_file, int block_size = 16, int search_area = 16, int keyframe_period = 10, int quantizationY = 0, int quantizationU = 0, int quantizationV = 0);
 
     /**
      * @brief Main function to perform video encoding.
@@ -36,7 +36,9 @@ private:
     BitStreamWrite stream_out; ///< Bitstream writer for output.
     GolombCode golomb; ///< Golomb coding object.
     int m; ///< Golomb parameter.
-    int quantization; /**< Quantization level. */
+    int quantizationY; /**< Quantization level for the luma channel. */
+    int quantizationU; /**< Quantization level for the U chroma channel. */
+    int quantizationV; /**< Quantization level for the V chroma channel. */
 
     /**
      * @brief Encode an inter-frame (motion-compensated) video frame.
@@ -120,7 +122,7 @@ private:
      * @param c_channel Current channel.
      * @param p_channel Previous channel for motion estimation.
      */
-    void encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel);
+    void encodeInterframeChannel(const Mat& c_channel, const Mat& p_channel, int quantization);
 
     /**
      * @brief Calculate the Mean Absolute Difference (MAD) between two image blocks.
