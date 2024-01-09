@@ -1,7 +1,5 @@
 #include "src/BlockEncoding.h"
 #include "src/BlockDecoding.h"
-#include "src/Encoder.h"
-#include "src/Decoder.h"
 #include <iostream>
 #include <string>
 #include <algorithm> // for std::find
@@ -169,10 +167,10 @@ int main(int argc, char* argv[]) {
         }
 
         // Create BlockEncoding object with provided or default values
-        Encoder en(input_file, output_file, quantY);
+        BlockEncoding en(input_file, output_file, block_size, search_area, keyframe_period, quantY, quantU, quantV);
         en.encode();
     } else {
-        Decoder de(input_file, output_file);
+        BlockDecoding de(input_file, output_file);
         de.decode();
     }
 
