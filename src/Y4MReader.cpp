@@ -8,7 +8,11 @@
 #include <filesystem>
 
 
-Y4MReader::Y4MReader(const string &input_file) : input_fd(input_file, ios::binary) {
+Y4MReader::Y4MReader(const string &input_file) {
+    char buffer[65536]; // bigger buffer for less writes/syscalls
+    this->input_fd = ifstream(input_file, std::ios::binary);
+    input_fd.rdbuf()->pubsetbuf(buffer, 65536);
+
     if (!input_fd.is_open()) {
         cerr << "Error opening file: " << input_file << endl;
         return;
