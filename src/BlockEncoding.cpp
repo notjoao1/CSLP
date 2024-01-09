@@ -11,8 +11,7 @@ BlockEncoding::BlockEncoding(const string &input_file, const string &output_file
 }
 
 void BlockEncoding::encode() {
-    Mat curr_frame;
-    Mat previous_frame = Mat::zeros(720, 1280, CV_8UC1);
+    Mat curr_frame, previous_frame;
     generate_headers();
     cout << "encoding video with motion estimation..." << endl;
     // frame loop
@@ -37,8 +36,12 @@ void BlockEncoding::encodeValue(unsigned int v) {
 }
 
 void BlockEncoding::generate_headers() {
-    stream_out.write(to_string(input_video.get_frame_width()));
-    stream_out.write(to_string(input_video.get_frame_height()));
+    int padded_width = input_video.get_frame_width() + ( block_size - input_video.get_frame_width() % block_size) % block_size;
+    int padded_height = input_video.get_frame_height() + ( block_size - input_video.get_frame_height() % block_size) % block_size;
+    stream_out.write(to_string(padded_width));
+    stream_out.write(to_string(padded_height));
+    stream_out.write(to_string(input_video.get_frame_width())); // original width
+    stream_out.write(to_string(input_video.get_frame_height())); // original height
     stream_out.write(to_string(keyframe_period));
     stream_out.write(to_string(block_size));
     stream_out.write(to_string(search_area));
@@ -55,21 +58,22 @@ void BlockEncoding::encodeIntraFrame(Mat &f) {
     vector<Mat> decoder_channels;
     split(f, channels);
     vector<int> quantizations = { quantizationY, quantizationU, quantizationV };
-    // current channel as seen by the decoder
+    Mat padded_channel;
     for (int n = 0; n < 3; n++) {
-        unsigned int e[(channels[n].cols - 1)*(channels[n].rows - 1)];
+        padded_channel  = pad(channels[n]);
+        unsigned int e[(padded_channel.cols - 1)*(padded_channel.rows - 1)];
 
         // mat that will have values received in decoder, for lossy encoding
-        Mat decoder_values = Mat::zeros(channels[n].rows, channels[n].cols, CV_8UC1);
+        Mat decoder_values = Mat::zeros(padded_channel.rows, padded_channel.cols, CV_8UC1);
 
-        channels[n].copyTo(decoder_values);
+        padded_channel.copyTo(decoder_values);
 
         // Pre compute error values
         int r; // tem de ser int, pois pode ser negativo
         unsigned char a, b, c, p;
 
-        for (int row = 1; row < channels[n].rows; row++)
-            for (int col = 1; col < channels[n].cols; col++) {
+        for (int row = 1; row < padded_channel.rows; row++)
+            for (int col = 1; col < padded_channel.cols; col++) {
                 a = decoder_values.at<uchar>(row, col - 1);
                 b = decoder_values.at<uchar>(row - 1, col);
                 c = decoder_values.at<uchar>(row - 1, col - 1);
@@ -77,29 +81,27 @@ void BlockEncoding::encodeIntraFrame(Mat &f) {
                 r = int(decoder_values.at<uchar>(row, col)) - int(p);
                 // simulate decoder process
                 decoder_values.at<uchar>(row, col) = p + ((r >> quantizations[n]) << quantizations[n]);
-                e[(col - 1) + (row - 1) * (channels[n].cols - 1)] = GolombCode::mapIntToUInt(r >> quantizations[n]);
+                e[(col - 1) + (row - 1) * (padded_channel.cols - 1)] = GolombCode::mapIntToUInt(r >> quantizations[n]);
             }
 
         // estimate 'm' based on values that will be encoded
-        m = GolombCode::estimate(e,channels[n].cols - 1,channels[n].rows - 1);
+        m = GolombCode::estimate(e,padded_channel.cols - 1,padded_channel.rows - 1);
 
         // write 'm' and encoded channel values
         stream_out.write(to_string(m));
+        //std::cout << "m " << m << std::endl;
 
         // encode first row and first column directly
-        for (int col = 0; col < channels[n].cols; col++) {
-            //stream_out->write(8, channel.at<uchar>(0, col));
-            stream_out.write(8, channels[n].at<uchar>(0, col));
+        for (int col = 0; col < padded_channel.cols; col++) {
+            stream_out.write(8, padded_channel.at<uchar>(0, col));
         }
 
-        for (int row = 1; row < channels[n].rows; row++) {
-            //stream_out->write(8, channel.at<uchar>(row, 0));
-            stream_out.write(8, channels[n].at<uchar>(row, 0));
+        for (int row = 1; row < padded_channel.rows; row++) {
+            stream_out.write(8, padded_channel.at<uchar>(row, 0));
 
         }
-        for (int i = 0; i < (channels[n].rows-1) * (channels[n].cols-1); i++)
+        for (int i = 0; i < (padded_channel.rows-1) * (padded_channel.cols-1); i++)
             encodeValue( e[i] );
-
         decoder_channels.push_back(decoder_values);
     }
 
@@ -129,7 +131,7 @@ void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_c
     int rows = c_channel.rows, cols = c_channel.cols;
     int bits_to_write = ceil(log2(search_area));
     int quantized_diff=0;
-    unsigned int m_array[rows / block_size * cols / block_size], diffs[block_size * block_size];
+    unsigned int diffs[block_size * block_size];
 
     for (int i = 0; i < rows / block_size ; ++i) {
         for (int j = 0; j < cols / block_size ; ++j) {
@@ -283,19 +285,6 @@ Mat BlockEncoding::pad(const Mat &frame) const {
 
     cv::Rect roi(0, 0, frame.cols, frame.rows);
     frame.copyTo(padded_mat(roi));
-
-    for(int i = 0 ; i < frame.cols ; i++){
-        for(int p = 0 ; p < block_size - frame.cols % block_size ; p++){
-            padded_mat.at<uchar>( frame.rows + p , i ) = frame.at<uchar>( frame.rows -1 ,i );
-        }
-    }
-
-    for(int i = 0 ; i < rows ; i++){
-        for(int p = 0 ; p < block_size - frame.rows % block_size ; p++){
-            padded_mat.at<uchar>( i , frame.cols + p ) = padded_mat.at<uchar>( i , frame.cols - 1 );
-        }
-    }
-
     return padded_mat;
 }
 

@@ -10,9 +10,10 @@ BlockDecoding::BlockDecoding(const string &input_file, const string &output_file
 }
 
 void BlockDecoding::decode() {
-    Mat curr_frame, previous_frame;
+    Mat curr_frame, unpadded_frame;
     read_headers();
     int remaining_frames = stoi(stream_in.read_string());
+    Rect roi;
     cout << "decoding video..." << endl;
     // frame loop
     int frame_counter = 0;
@@ -20,15 +21,23 @@ void BlockDecoding::decode() {
         if (frame_counter % keyframe_period == 0) {
             cout << "current_frame (INTRA_FRAME): " << frame_counter << endl;
             curr_frame=decodeFrame();
+
         } else {
             cout << "current_frame (INTER_FRAME): " << frame_counter << endl;
             curr_frame=decodeInterFrame(&curr_frame);
         }
+        if (real_width != width || real_height != height) {
+            roi = Rect(0, 0, real_width, real_height);
+            curr_frame(roi).copyTo(unpadded_frame);
+        } else {
+            curr_frame.copyTo(unpadded_frame);
+        }
+
 
         if (frame_counter==0){
-            output_vid.writeHeader(this->width,this->height,this->fps_num, this->fps_denum);
+            output_vid.writeHeader(this->real_width,this->real_height,this->fps_num, this->fps_denum);
         }
-        output_vid.writeFrame(&curr_frame);
+        output_vid.writeFrame(&unpadded_frame);
 
         frame_counter++;
         remaining_frames--;
@@ -40,6 +49,8 @@ void BlockDecoding::decode() {
 void BlockDecoding::read_headers() {
     this->width=stoi(stream_in.read_string());
     this->height=stoi(stream_in.read_string());
+    this->real_width=stoi(stream_in.read_string());
+    this->real_height=stoi(stream_in.read_string());
     this->keyframe_period=stoi(stream_in.read_string());
     this->block_size=stoi(stream_in.read_string());
     this->search_area=stoi(stream_in.read_string());
@@ -123,7 +134,6 @@ Mat BlockDecoding::decodeFrame() {
         channels[i]=decodeChannel(quantizations[i]);
     }
     merge(channels, 3, frame);
-
     return frame;
 
 }
@@ -140,7 +150,6 @@ Mat BlockDecoding::decodeChannel(int quantization) {
 
     for (int row = 1; row < height; row++) {
         res.at<uchar>(row,0)=uchar(stream_in.read(8));
-
     }
 
     for (int row = 1; row < height; row++)

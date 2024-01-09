@@ -16,12 +16,10 @@ class BitStreamRead {
 private:
     unsigned long long small_buffer = 0; /**< Small buffer to store bits temporarily. */
     int small_buffer_pointer = -1; /**< Pointer to the current position in the small buffer. */
-    std::vector<unsigned long long> big_buffer; /**< Vector to store a large buffer of bits. */
     const long big_buffer_max_size = 65536; /**< Maximum size of the big buffer. */
-    long big_buffer_pointer = big_buffer_max_size - 1; /**< Pointer to the current position in the big buffer. */
-    std::fstream file; /**< File stream for reading the bits. */
-
-    unsigned long long last_sb = 0; /**< Last small buffer value of the previous big buffer. */
+    std::ifstream file; /**< File stream for reading the bits. */
+    unsigned long long last_sb = 0; /**< Value of the previous small buffer. */
+    bool back_front_occured = false; /**< Boolean variable to denote if a back_front was called */
 
     /**
      * @brief Refreshes the small buffer by reading more bits from the big buffer.
@@ -35,24 +33,15 @@ private:
      */
     bool should_refresh_small_buffer(int n) const;
 
-    /**
-     * @brief Refreshes the big buffer by reading more bits from the file and putting them on big buffer.
-     */
-    void refresh_big_buffer();
-
-    /**
-     * @brief Checks whether the big buffer should be refreshed.
-     * @return A boolean indicating whether the big buffer should be refreshed.
-     */
-    bool should_refresh_big_buffer() const;
-
 public:
     /**
      * @brief Constructor for the BitStreamRead class.
      * @param filename The name of the file to be read.
      */
-     BitStreamRead(const std::string &filename) {
-        this->file.open(filename, std::ios::binary | std::ios::in);
+    BitStreamRead(const std::string &filename) {
+        char buffer[big_buffer_max_size];
+        this->file.open(filename, std::ios_base::binary | std::ios_base::in);
+        this->file.rdbuf()->pubsetbuf(buffer, big_buffer_max_size);
     }
 
     /**

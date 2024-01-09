@@ -61,6 +61,7 @@ private:
     int quantizationY; /**< Quantization level for the luma channel. */
     int quantizationU; /**< Quantization level for the U chroma channel. */
     int quantizationV; /**< Quantization level for the V chroma channel. */
+    int real_width, real_height; ///< Unpadded width/height
 
     /**
      * @brief Decodes an interframe using the previous frame.

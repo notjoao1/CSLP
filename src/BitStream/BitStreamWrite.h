@@ -17,9 +17,8 @@ class BitStreamWrite{
 private:
     unsigned long long small_buffer = 0; /**< Small buffer to store bits temporarily. */
     int small_buffer_pointer = -1; /**< Pointer to the current position in the small buffer. */
-    std::vector<unsigned long long> big_buffer; /**< Vector to store a large buffer of bits. */
     const long big_buffer_max_size = 65536; /**< Maximum size of the big buffer. */
-    std::fstream file; /**< File stream for writing. */
+    std::ofstream file; /**< File stream for writing. */
 
     /**
      * @brief Refreshes the small buffer by writing by appending it's contents to the big buffer.
@@ -33,24 +32,15 @@ private:
      */
     bool should_refresh_small_buffer(int n) const ;
 
-    /**
-     * @brief Refreshes the big buffer by writing its contents to the file.
-     */
-    void refresh_big_buffer() ;
-
-    /**
-     * @brief Checks whether the big buffer should be refreshed.
-     * @return A boolean indicating whether the big buffer should be refreshed.
-     */
-    bool should_refresh_big_buffer() ;
-
 public:
     /**
      * @brief Constructor for the BitStreamWrite class.
      * @param filename The name of the file to write to.
      */
      BitStreamWrite(const std::string& filename) {
-        this->file.open(filename, std::ios::binary | std::ios::out);
+         char buffer[big_buffer_max_size];
+         this->file.open(filename, std::ios::binary | std::ios::out);
+         this->file.rdbuf()->pubsetbuf(buffer, big_buffer_max_size);
     }
 
     /**

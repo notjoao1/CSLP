@@ -6,10 +6,16 @@
 #include "iostream"
 
 void BitStreamRead::refresh_small_buffer() {
-    if(should_refresh_big_buffer()){
-        refresh_big_buffer();
+    if (back_front_occured) {   // swap their values
+        unsigned long long aux = last_sb;
+        last_sb = small_buffer;
+        small_buffer = aux;
+        back_front_occured = false; // reset
+        small_buffer_pointer = 64;
+        return;
     }
-    this->small_buffer = this->big_buffer.at(++big_buffer_pointer);
+    last_sb = small_buffer;
+    this->file.read((char *) &this->small_buffer, 8);
     this->small_buffer_pointer = 64;
 }
 
@@ -17,33 +23,14 @@ bool BitStreamRead::should_refresh_small_buffer(int n) const {
     return this->small_buffer_pointer - n < 0;
 }
 
-void BitStreamRead::refresh_big_buffer() {
-    if(!this->big_buffer.empty())
-        this->last_sb = this->big_buffer.at(this->big_buffer_max_size-1);
-    this->big_buffer.clear();
-    char* temp[8 * this->big_buffer_max_size];
-    this->file.read( (char *) temp, 8 * this->big_buffer_max_size );
-    this->big_buffer.assign((unsigned long long*)temp,((unsigned long long*)temp) + this->big_buffer_max_size );
-    this->big_buffer_pointer=-1;
-}
-
-bool BitStreamRead::should_refresh_big_buffer() const {
-    return this->big_buffer_pointer+1 >= this->big_buffer_max_size;
-}
-
 bool BitStreamRead::read_bit() {
     if(should_refresh_small_buffer(1)) {
         refresh_small_buffer();
-        unsigned long long mask = 0x8000000000000000;
-        unsigned long long res = (this->small_buffer & mask) >> 63;
-        this->small_buffer_pointer--;
-        this->small_buffer<<=1;
-        return res;
     }
     unsigned long long mask = 0x8000000000000000;
-    unsigned long long res = (this->small_buffer & mask) >> 63;
+    mask >>= 64 - small_buffer_pointer;
+    unsigned long long res = (this->small_buffer & mask) >> (small_buffer_pointer - 1);
     this->small_buffer_pointer--;
-    this->small_buffer<<=1;
     return res;
 }
 
@@ -52,7 +39,8 @@ unsigned long long BitStreamRead::read(int n) {
         unsigned long long res=0;
         if(small_buffer_pointer>0){
             res = this->small_buffer;
-            res>>=64-n;
+            res<<=64-small_buffer_pointer;
+            res>>=(64-n);
             n-=this->small_buffer_pointer;
         }
         refresh_small_buffer();
@@ -60,16 +48,13 @@ unsigned long long BitStreamRead::read(int n) {
         mask2>>=(n-1);
         res =  res | ((this->small_buffer & mask2) >> (64-n));
         this->small_buffer_pointer-=n;
-        this->small_buffer<<=n;
         return res;
     }
     signed long long mask = 0x8000000000000000;
     mask>>=n-1;
-    unsigned long long res = (this->small_buffer & mask) >> (64-n);
+    auto ull_mask = static_cast<unsigned long long>(mask) >> (64 - small_buffer_pointer);
+    unsigned long long res = (this->small_buffer & ull_mask) >> (small_buffer_pointer - n);
     this->small_buffer_pointer-=n;
-    this->small_buffer<<=n;
-    if(n==64)
-        this->small_buffer=0;
     return res;
 
 }
@@ -81,16 +66,15 @@ void BitStreamRead::close() {
 
 void BitStreamRead::back_front(int n) {
     if(this->small_buffer_pointer+n>64){
-        if(big_buffer_pointer<1){
-            this->small_buffer= this->last_sb << (128-n-this->small_buffer_pointer);
-            this->big_buffer_pointer--;
-        }else{
-            this->small_buffer=this->big_buffer.at(--big_buffer_pointer)<< (128-n-this->small_buffer_pointer);
-        }
         this->small_buffer_pointer=n-64+this->small_buffer_pointer;
+        back_front_occured = true;
+        // swap the two values, the current small_buffer will become
+        // the old small_buffer
+        unsigned long long aux = last_sb;
+        last_sb = small_buffer;
+        small_buffer = aux;
         return;
     }
-    this->small_buffer= this->big_buffer.at(big_buffer_pointer) << (64-this->small_buffer_pointer-n);
     this->small_buffer_pointer+=n;
 }
 
@@ -103,4 +87,3 @@ std::string BitStreamRead::read_string(){
     }
     return str;
 }
-
