@@ -6,7 +6,7 @@
 #include <fstream>
 #include "Y4MWriter.h"
 
-Y4MWriter::Y4MWriter(const string &out_fname) : outFile(out_fname, std::ios::binary) {
+Y4MWriter::Y4MWriter(const string &out_fname) {
     char buffer[65536]; // bigger buffer for less writes/syscalls
     this->outFile = ofstream(out_fname, std::ios::binary);
     outFile.rdbuf()->pubsetbuf(buffer, 65536);
