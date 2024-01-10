@@ -276,8 +276,8 @@ Mat BlockEncoding::pad(const Mat &frame) const {
     if( cols % block_size == 0 && rows % block_size == 0 )
         return frame;
 
-    cols = cols + block_size - cols % block_size;
-    rows = rows + block_size - rows % block_size;
+    cols = cols + (block_size - cols % block_size) % block_size;
+    rows = rows + (block_size - rows % block_size) % block_size;
 
     Mat padded_mat = Mat::zeros(rows , cols, CV_8UC1);
 
