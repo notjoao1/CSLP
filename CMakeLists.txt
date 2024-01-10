@@ -19,7 +19,7 @@ add_executable(GTD-VC src/Representation/ImageManipulator.cpp
         src/BlockEncoding.cpp
         src/Y4MReader.cpp
         src/Y4MReader.h
-        CLI.cpp
+        src/CLI.cpp
 )
 
 target_link_libraries(GTD-VC ${OpenCV_LIBS})
