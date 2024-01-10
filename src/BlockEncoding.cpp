@@ -62,7 +62,6 @@ void BlockEncoding::encodeIntraFrame(Mat &f) {
     for (int n = 0; n < 3; n++) {
         padded_channel  = pad(channels[n]);
         unsigned int e[(padded_channel.cols - 1)*(padded_channel.rows - 1)];
-
         // mat that will have values received in decoder, for lossy encoding
         Mat decoder_values = Mat::zeros(padded_channel.rows, padded_channel.cols, CV_8UC1);
 
@@ -79,8 +78,10 @@ void BlockEncoding::encodeIntraFrame(Mat &f) {
                 c = decoder_values.at<uchar>(row - 1, col - 1);
                 p = JPEG_LS(a, b, c);
                 r = int(decoder_values.at<uchar>(row, col)) - int(p);
+
                 // simulate decoder process
-                decoder_values.at<uchar>(row, col) = p + ((r >> quantizations[n]) << quantizations[n]);
+                int reconstructed_val = p + ((r >> quantizations[n]) << quantizations[n]);
+                decoder_values.at<uchar>(row, col) = reconstructed_val < 0 ? 0 : reconstructed_val;
                 e[(col - 1) + (row - 1) * (padded_channel.cols - 1)] = GolombCode::mapIntToUInt(r >> quantizations[n]);
             }
 
@@ -89,7 +90,6 @@ void BlockEncoding::encodeIntraFrame(Mat &f) {
 
         // write 'm' and encoded channel values
         stream_out.write(to_string(m));
-        //std::cout << "m " << m << std::endl;
 
         // encode first row and first column directly
         for (int col = 0; col < padded_channel.cols; col++) {
@@ -104,7 +104,6 @@ void BlockEncoding::encodeIntraFrame(Mat &f) {
             encodeValue( e[i] );
         decoder_channels.push_back(decoder_values);
     }
-
     merge(decoder_channels, f);
 }
 
@@ -121,7 +120,6 @@ void BlockEncoding::encodeInterFrame(const Mat &f, const Mat &p) {
     for (int i = 0; i < f.channels(); ++i) {
         encodeInterframeChannel(pad(curr_channels.at(i)), pad(prev_channels.at(i)), quantizations[i]);
     }
-
     merge(curr_channels, f);
 }
 
@@ -142,9 +140,9 @@ void BlockEncoding::encodeInterframeChannel(const Mat& c_channel, const Mat& p_c
             for (int row=0; row<block_size; row++){
                 for(int col=0; col<block_size; col++){
                     quantized_diff=(int(curr_block.at<uchar>(row,col))- int(ref_block.at<uchar>(row,col))) >> quantization;
-                    curr_block.at<uchar>(row, col) = ref_block.at<uchar>(row,col) + ((quantized_diff) << quantization);
-
+                    int reconstructed_value = ref_block.at<uchar>(row,col) + ((quantized_diff) << quantization);
                     diffs[row * block_size + col] = GolombCode::mapIntToUInt(quantized_diff);
+                    curr_block.at<uchar>(row, col) = reconstructed_value < 0 ? 0 : reconstructed_value;
                 }
 
             }
@@ -234,8 +232,8 @@ std::tuple<Mat, int, int> BlockEncoding::searchBestBlock(const Mat& prev_frame, 
             int locx = curx + LOCATIONS[loc][0]*step_size;
 
 
-            if (locy < 0 || locy + block_size - 1 > rows ||
-                locx < 0 || locx + block_size - 1 > cols ||
+            if (locy < 0 || locy + block_size - 1 >= rows ||
+                locx < 0 || locx + block_size - 1 >= cols ||
                 abs(locx - x) >= search_area || abs(locy - y) >= search_area) {
                 continue;
             }

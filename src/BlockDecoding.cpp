@@ -32,8 +32,6 @@ void BlockDecoding::decode() {
         } else {
             curr_frame.copyTo(unpadded_frame);
         }
-
-
         if (frame_counter==0){
             output_vid.writeHeader(this->real_width,this->real_height,this->fps_num, this->fps_denum);
         }
@@ -111,7 +109,8 @@ Mat BlockDecoding::decodeInterframeChannel(Mat* p_channel, int quantization) {
                     for(int col=0; col<block_size; col++){
                         int diff = GolombCode::decode_one(m,stream_in);
                         diff = GolombCode::mapUIntToInt( diff ) << quantization;
-                        cur_block.at<uchar>(row,col) = ref_block.at<uchar>(row,col) + diff;
+                        int reconstructed_val = ref_block.at<uchar>(row,col) + diff;
+                        cur_block.at<uchar>(row,col) = reconstructed_val < 0 ? 0 : reconstructed_val;
                     }
                 }
             }
@@ -159,7 +158,8 @@ Mat BlockDecoding::decodeChannel(int quantization) {
             b = res.at<uchar>(row - 1, col);
             c = res.at<uchar>(row - 1, col - 1);
             p = JPEG_LS(a, b, c);
-            res.at<uchar>(row,col)=uchar(r+int(p));
+            int reconstructed_val = r + int(p);
+            res.at<uchar>(row,col)= reconstructed_val < 0 ? 0 : reconstructed_val;
         }
     return res;
 }
