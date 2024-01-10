@@ -20,7 +20,7 @@ We developed a command-line Codec that supports the features mentioned above. We
 
 Using the python tester, we runned *1472* configurations with relevant combinations of the parameters mencioned above, deep-testing the capabilities of our Codec, which allowed us to collect important data with relation to *Compression Ratio (CR)*, *Execution Time (Time)* and *Peak signal-to-noise ratio (PSNR)*.
 
-*!Disclaimer: One configuration corresponds to one encoding/statistic cycle of one video with a specific set of parameters: encoding -> decoding -> statistics (Time, CR, PSNR, ...). *
+*Disclaimer: One configuration corresponds to one encoding/statistic cycle of one video with a specific set of parameters: encoding -> decoding -> statistics (Time, CR, PSNR, ...).*
 
 ## Statistics
 
@@ -76,7 +76,9 @@ As we can see in the following 3 plots, independently off the quantization level
 
 ![7_CR_KP_WCOMP](https://github.com/notjoao1/GTD-VC/assets/97046574/2906b40d-9195-4998-b3bc-5faf1cf2f436)
 
-![8_PSNR_KP_WCOMP](https://github.com/notjoao1/GTD-VC/assets/97046574/747df7a1-de1b-4b0d-a213-1a47f63c5c49)
+![8_PSNR_KP_WCOMP](https://github.com/notjoao1/GTD-VC/assets/97046574/beb11414-d046-42c1-a1c8-9f0a935638f6)
+
+
 
 
 ### Ducks Take off 720p50 Motion compensated
@@ -105,12 +107,9 @@ DECODER:
 
 
 
-![9_PSNR_CR](https://github.com/notjoao1/GTD-VC/assets/97046574/a79d5005-2ccc-408d-970c-263ac537c06e)
+![9_PSNR_CR](https://github.com/notjoao1/GTD-VC/assets/97046574/8d28f5fa-f9ec-4d88-927e-8947c6532d3a)
 
-
-
-![10_PSNR_QUANTAVG](https://github.com/notjoao1/GTD-VC/assets/97046574/a7eae49c-71d8-49d8-823b-75a478633f89)
-
+![10_PSNR_QUANTAVG](https://github.com/notjoao1/GTD-VC/assets/97046574/d2b821d7-4e29-458a-9946-dfe0a7c4e1f3)
 
 ![11_TIME_CR](https://github.com/notjoao1/GTD-VC/assets/97046574/ee5e66d6-2c50-40ea-8e02-0682288dabc6)
 
