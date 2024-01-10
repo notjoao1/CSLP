@@ -90,39 +90,50 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;Encoding/GolombCode.h&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;opencv2/imgproc.hpp&quot;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;Decoder.h&quot;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classBlockDecoding.html">   14</a></span><span class="keyword">class </span><a class="code hl_class" href="classBlockDecoding.html">BlockDecoding</a> {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <a class="code hl_class" href="classBlockDecoding.html">BlockDecoding</a>(<span class="keyword">const</span> std::string&amp; input_file, <span class="keyword">const</span> std::string&amp; output_file);</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classBlockDecoding.html#a79bf692a3630d7ee010803c068f122a5">decode</a>();</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    cv::Mat decodeInterframeChannel(cv::Mat* p_channel);</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    cv::Mat getBlock(<span class="keyword">const</span> cv::Mat* original_frame, <span class="keywordtype">int</span> row, <span class="keywordtype">int</span> col) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordtype">void</span> setBlock(<span class="keyword">const</span> cv::Mat* original_frame, cv::Mat* block, <span class="keywordtype">int</span> row, <span class="keywordtype">int</span> col) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <a class="code hl_class" href="classDecoder.html">Decoder</a>* decoder; </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordtype">int</span> width, height, block_size, search_area, keyframe_period, fps; </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <a class="code hl_class" href="classBitStreamRead.html">BitStreamRead</a> stream_in; </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordtype">int</span> m; </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    cv::Mat decodeInterFrame(<span class="keyword">const</span> cv::Mat* previous_frame);</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;Y4MWriter.h&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classBlockDecoding.html">   15</a></span><span class="keyword">class </span><a class="code hl_class" href="classBlockDecoding.html">BlockDecoding</a> {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <a class="code hl_class" href="classBlockDecoding.html">BlockDecoding</a>(<span class="keyword">const</span> std::string&amp; input_file, <span class="keyword">const</span> std::string&amp; output_file);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classBlockDecoding.html#a79bf692a3630d7ee010803c068f122a5">decode</a>();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_class" href="classY4MWriter.html">Y4MWriter</a> output_vid;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    cv::Mat decodeInterframeChannel(cv::Mat* p_channel, <span class="keywordtype">int</span> quantization);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    cv::Mat getBlock(<span class="keyword">const</span> cv::Mat* original_frame, <span class="keywordtype">int</span> row, <span class="keywordtype">int</span> col) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordtype">void</span> setBlock(<span class="keyword">const</span> cv::Mat* original_frame, cv::Mat* block, <span class="keywordtype">int</span> row, <span class="keywordtype">int</span> col) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <a class="code hl_class" href="classDecoder.html">Decoder</a>* decoder; </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordtype">int</span> width, height, block_size, search_area, keyframe_period, fps_num, fps_denum; </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    BitStreamRead stream_in; </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordtype">int</span> m; </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordtype">int</span> quantizationY; </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordtype">int</span> quantizationU; </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordtype">int</span> quantizationV; </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordtype">int</span> real_width, real_height; </div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordtype">void</span> read_headers();</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    cv::Mat decodeBlockDifference();</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>};</div>
-</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    cv::Mat decodeInterFrame(<span class="keyword">const</span> cv::Mat* previous_frame);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordtype">void</span> read_headers();</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">#endif </span><span class="comment">// GTD_VC_BLOCKDECODING_H</span></div>
-<div class="ttc" id="aclassBitStreamRead_html"><div class="ttname"><a href="classBitStreamRead.html">BitStreamRead</a></div><div class="ttdoc">A class for reading bits from a file stream.</div><div class="ttdef"><b>Definition</b> BitStreamRead.h:15</div></div>
-<div class="ttc" id="aclassBlockDecoding_html"><div class="ttname"><a href="classBlockDecoding.html">BlockDecoding</a></div><div class="ttdoc">The BlockDecoding class handles the decoding of video.</div><div class="ttdef"><b>Definition</b> BlockDecoding.h:14</div></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordtype">int</span> decodeValue();</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    Mat decodeFrame();</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    Mat decodeChannel(<span class="keywordtype">int</span> quantization);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> JPEG_LS(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> a, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> b, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> c);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>};</div>
+</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="preprocessor">#endif </span><span class="comment">// GTD_VC_BLOCKDECODING_H</span></div>
+<div class="ttc" id="aclassBlockDecoding_html"><div class="ttname"><a href="classBlockDecoding.html">BlockDecoding</a></div><div class="ttdoc">The BlockDecoding class handles the decoding of video.</div><div class="ttdef"><b>Definition</b> BlockDecoding.h:15</div></div>
 <div class="ttc" id="aclassBlockDecoding_html_a79bf692a3630d7ee010803c068f122a5"><div class="ttname"><a href="classBlockDecoding.html#a79bf692a3630d7ee010803c068f122a5">BlockDecoding::decode</a></div><div class="ttdeci">void decode()</div><div class="ttdoc">Initiates the decoding process.</div><div class="ttdef"><b>Definition</b> BlockDecoding.cpp:12</div></div>
 <div class="ttc" id="aclassDecoder_html"><div class="ttname"><a href="classDecoder.html">Decoder</a></div><div class="ttdoc">Class for decoding ( only intra frame ).</div><div class="ttdef"><b>Definition</b> Decoder.h:16</div></div>
+<div class="ttc" id="aclassY4MWriter_html"><div class="ttname"><a href="classY4MWriter.html">Y4MWriter</a></div><div class="ttdoc">Class for writing video in to Y4M files.</div><div class="ttdef"><b>Definition</b> Y4MWriter.h:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

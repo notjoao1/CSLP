@@ -11,32 +11,43 @@
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Encoding/GolombCode.h"{}}}
 \DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}opencv2/imgproc.hpp"{}}}
 \DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Decoder.h"{}}}
-\DoxyCodeLine{00010\ }
-\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classBlockDecoding}{BlockDecoding}}\ \{}
-\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classBlockDecoding}{BlockDecoding}}(\textcolor{keyword}{const}\ std::string\&\ input\_file,\ \textcolor{keyword}{const}\ std::string\&\ output\_file);}
-\DoxyCodeLine{00022\ }
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classBlockDecoding_a79bf692a3630d7ee010803c068f122a5}{decode}}();}
-\DoxyCodeLine{00027\ }
-\DoxyCodeLine{00028\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00034\ \ \ \ \ cv::Mat\ decodeInterframeChannel(cv::Mat*\ p\_channel);}
-\DoxyCodeLine{00035\ }
-\DoxyCodeLine{00043\ \ \ \ \ cv::Mat\ getBlock(\textcolor{keyword}{const}\ cv::Mat*\ original\_frame,\ \textcolor{keywordtype}{int}\ row,\ \textcolor{keywordtype}{int}\ col)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00044\ }
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ setBlock(\textcolor{keyword}{const}\ cv::Mat*\ original\_frame,\ cv::Mat*\ block,\ \textcolor{keywordtype}{int}\ row,\ \textcolor{keywordtype}{int}\ col)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00053\ }
-\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{classDecoder}{Decoder}}*\ decoder;\ }
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{int}\ width,\ height,\ block\_size,\ search\_area,\ keyframe\_period,\ fps;\ }
-\DoxyCodeLine{00056\ \ \ \ \ \mbox{\hyperlink{classBitStreamRead}{BitStreamRead}}\ stream\_in;\ }
-\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{int}\ m;\ }
-\DoxyCodeLine{00058\ }
-\DoxyCodeLine{00064\ \ \ \ \ cv::Mat\ decodeInterFrame(\textcolor{keyword}{const}\ cv::Mat*\ previous\_frame);}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}Y4MWriter.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classBlockDecoding}{BlockDecoding}}\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{classBlockDecoding}{BlockDecoding}}(\textcolor{keyword}{const}\ std::string\&\ input\_file,\ \textcolor{keyword}{const}\ std::string\&\ output\_file);}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classBlockDecoding_a79bf692a3630d7ee010803c068f122a5}{decode}}();}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{classY4MWriter}{Y4MWriter}}\ output\_vid;}
+\DoxyCodeLine{00029\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00037\ \ \ \ \ cv::Mat\ decodeInterframeChannel(cv::Mat*\ p\_channel,\ \textcolor{keywordtype}{int}\ quantization);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00046\ \ \ \ \ cv::Mat\ getBlock(\textcolor{keyword}{const}\ cv::Mat*\ original\_frame,\ \textcolor{keywordtype}{int}\ row,\ \textcolor{keywordtype}{int}\ col)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ setBlock(\textcolor{keyword}{const}\ cv::Mat*\ original\_frame,\ cv::Mat*\ block,\ \textcolor{keywordtype}{int}\ row,\ \textcolor{keywordtype}{int}\ col)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{classDecoder}{Decoder}}*\ decoder;\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{int}\ width,\ height,\ block\_size,\ search\_area,\ keyframe\_period,\ fps\_num,\ fps\_denum;\ }
+\DoxyCodeLine{00059\ \ \ \ \ BitStreamRead\ stream\_in;\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{int}\ m;\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{int}\ quantizationY;\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{int}\ quantizationU;\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{int}\ quantizationV;\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{int}\ real\_width,\ real\_height;\ }
 \DoxyCodeLine{00065\ }
-\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{void}\ read\_headers();}
-\DoxyCodeLine{00070\ }
-\DoxyCodeLine{00075\ \ \ \ \ cv::Mat\ decodeBlockDifference();}
-\DoxyCodeLine{00076\ \};}
+\DoxyCodeLine{00071\ \ \ \ \ cv::Mat\ decodeInterFrame(\textcolor{keyword}{const}\ cv::Mat*\ previous\_frame);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ read\_headers();}
 \DoxyCodeLine{00077\ }
-\DoxyCodeLine{00078\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ GTD\_VC\_BLOCKDECODING\_H}}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{int}\ decodeValue();}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00088\ \ \ \ \ Mat\ decodeFrame();}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00097\ \ \ \ \ Mat\ decodeChannel(\textcolor{keywordtype}{int}\ quantization);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ JPEG\_LS(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ a,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ b,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ c);}
+\DoxyCodeLine{00107\ \};}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ GTD\_VC\_BLOCKDECODING\_H}}
 
 \end{DoxyCode}

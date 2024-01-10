@@ -87,18 +87,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1f30f586bb0bd73db96358beaa4b5aba" id="r_a1f30f586bb0bd73db96358beaa4b5aba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEncoder.html#a1f30f586bb0bd73db96358beaa4b5aba">encodeFrame</a> (const Mat &amp;f)</td></tr>
 <tr class="memdesc:a1f30f586bb0bd73db96358beaa4b5aba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes a single frame.  <br /></td></tr>
 <tr class="separator:a1f30f586bb0bd73db96358beaa4b5aba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2852b23c5acd11c491510091f3044367" id="r_a2852b23c5acd11c491510091f3044367"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEncoder.html#a2852b23c5acd11c491510091f3044367">encodeChannel</a> (const Mat &amp;c)</td></tr>
-<tr class="memdesc:a2852b23c5acd11c491510091f3044367"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes a single channel of the input frame.  <br /></td></tr>
-<tr class="separator:a2852b23c5acd11c491510091f3044367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad062906498de6d7ae9c055b4fd658d4e" id="r_ad062906498de6d7ae9c055b4fd658d4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEncoder.html#ad062906498de6d7ae9c055b4fd658d4e">encodeChannel</a> (const Mat &amp;c, int quantization)</td></tr>
+<tr class="memdesc:ad062906498de6d7ae9c055b4fd658d4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes a single channel of the input frame.  <br /></td></tr>
+<tr class="separator:ad062906498de6d7ae9c055b4fd658d4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5bb7d5950570c942333849b1195ce62" id="r_ab5bb7d5950570c942333849b1195ce62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEncoder.html#ab5bb7d5950570c942333849b1195ce62">encodeValue</a> (unsigned int v)</td></tr>
 <tr class="memdesc:ab5bb7d5950570c942333849b1195ce62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes a single value using Golomb coding.  <br /></td></tr>
 <tr class="separator:ab5bb7d5950570c942333849b1195ce62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d1c904ce1ce3b2a9418876e59cb3730" id="r_a0d1c904ce1ce3b2a9418876e59cb3730"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEncoder.html#a0d1c904ce1ce3b2a9418876e59cb3730">generate_headers</a> (const Size &amp;frame_size)</td></tr>
-<tr class="memdesc:a0d1c904ce1ce3b2a9418876e59cb3730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates headers.  <br /></td></tr>
-<tr class="separator:a0d1c904ce1ce3b2a9418876e59cb3730"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9b459eda49ef51779c314be4f40b068" id="r_ab9b459eda49ef51779c314be4f40b068"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEncoder.html#ab9b459eda49ef51779c314be4f40b068">Encoder</a> (<a class="el" href="classVideoManipulator.html">VideoManipulator</a> *in, <a class="el" href="classBitStreamWrite.html">BitStreamWrite</a> *out)</td></tr>
-<tr class="memdesc:ab9b459eda49ef51779c314be4f40b068"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <a class="el" href="classEncoder.html" title="Class for encoding video ( only intra frame ).">Encoder</a> class.  <br /></td></tr>
-<tr class="separator:ab9b459eda49ef51779c314be4f40b068"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96cd5b85a8b8b4eedab2660805f8962e" id="r_a96cd5b85a8b8b4eedab2660805f8962e"><td class="memItemLeft" align="right" valign="top"><a id="a96cd5b85a8b8b4eedab2660805f8962e" name="a96cd5b85a8b8b4eedab2660805f8962e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>generate_headers</b> ()</td></tr>
+<tr class="memdesc:a96cd5b85a8b8b4eedab2660805f8962e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates headers based on Y4M input video headers. <br /></td></tr>
+<tr class="separator:a96cd5b85a8b8b4eedab2660805f8962e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d788c77f90f7d06e35f3579d33764dd" id="r_a5d788c77f90f7d06e35f3579d33764dd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEncoder.html#a5d788c77f90f7d06e35f3579d33764dd">Encoder</a> (const string &amp;input_file, const string &amp;output_file, int quantizationY=0, int quantizationU=0, int quantizationV=0)</td></tr>
+<tr class="memdesc:a5d788c77f90f7d06e35f3579d33764dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the <a class="el" href="classEncoder.html" title="Class for encoding video ( only intra frame ).">Encoder</a> class.  <br /></td></tr>
+<tr class="separator:a5d788c77f90f7d06e35f3579d33764dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d05ddef86db0b387d30a663185f6fba" id="r_a1d05ddef86db0b387d30a663185f6fba"><td class="memItemLeft" align="right" valign="top"><a id="a1d05ddef86db0b387d30a663185f6fba" name="a1d05ddef86db0b387d30a663185f6fba"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>encode</b> ()</td></tr>
 <tr class="memdesc:a1d05ddef86db0b387d30a663185f6fba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main encoding function that encodes the entire video. <br /></td></tr>
@@ -114,8 +115,8 @@ Static Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Class for encoding video ( only intra frame ). </p>
 <p>Class for video encoding. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ab9b459eda49ef51779c314be4f40b068" name="ab9b459eda49ef51779c314be4f40b068"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab9b459eda49ef51779c314be4f40b068">&#9670;&#160;</a></span>Encoder()</h2>
+<a id="a5d788c77f90f7d06e35f3579d33764dd" name="a5d788c77f90f7d06e35f3579d33764dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d788c77f90f7d06e35f3579d33764dd">&#9670;&#160;</a></span>Encoder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -123,14 +124,32 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">Encoder::Encoder </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classVideoManipulator.html">VideoManipulator</a> *&#160;</td>
-          <td class="paramname"><em>in</em>, </td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>input_file</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classBitStreamWrite.html">BitStreamWrite</a> *&#160;</td>
-          <td class="paramname"><em>out</em>&#160;</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>output_file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>quantizationY</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>quantizationU</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>quantizationV</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -143,8 +162,11 @@ Static Public Member Functions</h2></td></tr>
 <p>Constructor for the <a class="el" href="classEncoder.html" title="Class for encoding video ( only intra frame ).">Encoder</a> class. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">in</td><td>Pointer to the <a class="el" href="classVideoManipulator.html" title="Class used to play video files.">VideoManipulator</a> instance for input video. </td></tr>
-    <tr><td class="paramname">out</td><td>Pointer to the <a class="el" href="classBitStreamWrite.html" title="A class for writing bits to a file stream.">BitStreamWrite</a> instance for output stream. </td></tr>
+    <tr><td class="paramname">input_file</td><td>The input file name, should be a Y4M file 4:4:4. </td></tr>
+    <tr><td class="paramname">output_file</td><td>The output file name. </td></tr>
+    <tr><td class="paramname">quantizationY</td><td>Level of quantization for the luma channel in lossy encoding. </td></tr>
+    <tr><td class="paramname">quantizationU</td><td>Level of quantization for the luma channel in lossy encoding. </td></tr>
+    <tr><td class="paramname">quantizationV</td><td>Level of quantization for the luma channel in lossy encoding. </td></tr>
   </table>
   </dd>
 </dl>
@@ -152,8 +174,8 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2852b23c5acd11c491510091f3044367" name="a2852b23c5acd11c491510091f3044367"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2852b23c5acd11c491510091f3044367">&#9670;&#160;</a></span>encodeChannel()</h2>
+<a id="ad062906498de6d7ae9c055b4fd658d4e" name="ad062906498de6d7ae9c055b4fd658d4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad062906498de6d7ae9c055b4fd658d4e">&#9670;&#160;</a></span>encodeChannel()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -162,8 +184,18 @@ Static Public Member Functions</h2></td></tr>
           <td class="memname">void Encoder::encodeChannel </td>
           <td>(</td>
           <td class="paramtype">const Mat &amp;&#160;</td>
-          <td class="paramname"><em>c</em></td><td>)</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>quantization</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -224,32 +256,6 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td>The value to be encoded. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a0d1c904ce1ce3b2a9418876e59cb3730" name="a0d1c904ce1ce3b2a9418876e59cb3730"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d1c904ce1ce3b2a9418876e59cb3730">&#9670;&#160;</a></span>generate_headers()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Encoder::generate_headers </td>
-          <td>(</td>
-          <td class="paramtype">const Size &amp;&#160;</td>
-          <td class="paramname"><em>frame_size</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generates headers. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">frame_size</td><td>The size of the frames in the video. </td></tr>
   </table>
   </dd>
 </dl>

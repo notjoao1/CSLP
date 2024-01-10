@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['histogram_0',['histogram',['../classHistogram.html',1,'Histogram'],['../classHistogram.html#a078c733d42e815b49e1e11ffdbf987db',1,'Histogram::Histogram()']]]
+  ['read_5fheaders_0',['read_headers',['../classDecoder.html#a17894cdf89ed82774879504cb16dd1c2',1,'Decoder']]]
 ];

@@ -1,0 +1,41 @@
+\doxysection{Y4\+MReader.\+h}
+\hypertarget{Y4MReader_8h_source}{}\label{Y4MReader_8h_source}\index{src/Y4MReader.h@{src/Y4MReader.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ JPe\_D\ on\ 12/21/2023.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ GTD\_VC\_Y4MREADER\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ GTD\_VC\_Y4MREADER\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}opencv2/opencv.hpp"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classY4MReader}{Y4MReader}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00016\ \ \ \ \ ifstream\ input\_fd;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{int}\ frame\_height;}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{int}\ frame\_width;}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{int}\ fps\_num,\ fps\_denom;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{int}\ number\_of\_frames;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{static}\ vector<string>\ split\_str(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ str,\ \textcolor{keywordtype}{char}\ delim);}
+\DoxyCodeLine{00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classY4MReader}{Y4MReader}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ input\_file);}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{classY4MReader}{\string~Y4MReader}}();}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ parseHeaders(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ input\_file);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{bool}\ nextFrame(cv::Mat\&\ f);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{int}\ get\_frame\_height();}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{int}\ get\_frame\_width();}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ get\_fps\_numerator();}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{int}\ get\_fps\_denominator();}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{int}\ get\_number\_of\_frames();}
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//GTD\_VC\_Y4MREADER\_H}}
+
+\end{DoxyCode}

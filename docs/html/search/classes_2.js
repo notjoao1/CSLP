@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['effect_0',['Effect',['../classEffect.html',1,'']]]
+  ['encoder_0',['Encoder',['../classEncoder.html',1,'']]]
 ];

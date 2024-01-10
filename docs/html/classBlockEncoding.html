@@ -78,17 +78,17 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac7fd90f316a608218c083f69d3b738b4" id="r_ac7fd90f316a608218c083f69d3b738b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBlockEncoding.html#ac7fd90f316a608218c083f69d3b738b4">BlockEncoding</a> (const std::string &amp;input_file, const std::string &amp;output_file, int block_size=16, int search_area=2, int keyframe_period=10)</td></tr>
-<tr class="memdesc:ac7fd90f316a608218c083f69d3b738b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for Enconder.  <br /></td></tr>
-<tr class="separator:ac7fd90f316a608218c083f69d3b738b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fe0b121d8890e54654887d9ff6474c5" id="r_a4fe0b121d8890e54654887d9ff6474c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBlockEncoding.html#a4fe0b121d8890e54654887d9ff6474c5">BlockEncoding</a> (const std::string &amp;input_file, const std::string &amp;output_file, int block_size=16, int search_area=16, int keyframe_period=10, int quantizationY=0, int quantizationU=0, int quantizationV=0)</td></tr>
+<tr class="memdesc:a4fe0b121d8890e54654887d9ff6474c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for Enconder.  <br /></td></tr>
+<tr class="separator:a4fe0b121d8890e54654887d9ff6474c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2c09f96f20beb874ceba1fbbca7fcf6" id="r_af2c09f96f20beb874ceba1fbbca7fcf6"><td class="memItemLeft" align="right" valign="top"><a id="af2c09f96f20beb874ceba1fbbca7fcf6" name="af2c09f96f20beb874ceba1fbbca7fcf6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>encode</b> ()</td></tr>
 <tr class="memdesc:af2c09f96f20beb874ceba1fbbca7fcf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main function to perform video encoding. <br /></td></tr>
 <tr class="separator:af2c09f96f20beb874ceba1fbbca7fcf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac7fd90f316a608218c083f69d3b738b4" name="ac7fd90f316a608218c083f69d3b738b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7fd90f316a608218c083f69d3b738b4">&#9670;&#160;</a></span>BlockEncoding()</h2>
+<a id="a4fe0b121d8890e54654887d9ff6474c5" name="a4fe0b121d8890e54654887d9ff6474c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fe0b121d8890e54654887d9ff6474c5">&#9670;&#160;</a></span>BlockEncoding()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -115,13 +115,31 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>encode</b> ()</td></t
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>search_area</em> = <code>2</code>, </td>
+          <td class="paramname"><em>search_area</em> = <code>16</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>keyframe_period</em> = <code>10</code>&#160;</td>
+          <td class="paramname"><em>keyframe_period</em> = <code>10</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>quantizationY</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>quantizationU</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>quantizationV</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

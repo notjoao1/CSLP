@@ -3,7 +3,7 @@ clear;
 close;
 
 % Specify the file name
-filename = 'data.csv';
+filename = 'resources/data.csv';
 
 % Read the CSV file
 data = readtable(filename);

@@ -94,47 +94,50 @@ $(document).ready(function() { init_codefold(0); });
 <div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classBlockEncoding.html">   15</a></span><span class="keyword">class </span><a class="code hl_class" href="classBlockEncoding.html">BlockEncoding</a> {</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <a class="code hl_class" href="classBlockEncoding.html">BlockEncoding</a>(<span class="keyword">const</span> std::string&amp; input_file, <span class="keyword">const</span> std::string&amp; output_file, <span class="keywordtype">int</span> block_size = 16, <span class="keywordtype">int</span> search_area = 2, <span class="keywordtype">int</span> keyframe_period = 10);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classBlockEncoding.html#af2c09f96f20beb874ceba1fbbca7fcf6">encode</a>();</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordtype">int</span> block_size, search_area, keyframe_period; </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <a class="code hl_class" href="classVideoManipulator.html">VideoManipulator</a> video; </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_class" href="classBitStreamWrite.html">BitStreamWrite</a> stream_out; </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <a class="code hl_class" href="classGolombCode.html">GolombCode</a> golomb; </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">int</span> m; </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordtype">void</span> encodeInterFrame(<span class="keyword">const</span> Mat&amp; f, <span class="keyword">const</span> Mat&amp; p);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordtype">void</span> encodeIntraFrame(<span class="keyword">const</span> Mat&amp; f);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordtype">void</span> encodeValue(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> v);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordtype">void</span> encodeBlockDifference(<span class="keyword">const</span> Mat&amp; block);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordtype">void</span> generate_headers(<span class="keyword">const</span> Size&amp; frame_size);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    Mat getBlock(<span class="keyword">const</span> Mat&amp; original_frame, <span class="keywordtype">int</span> row, <span class="keywordtype">int</span> col) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    std::tuple&lt;Mat, int, int&gt; searchBestBlock(<span class="keyword">const</span> Mat&amp; prev_frame, <span class="keyword">const</span> Mat&amp; curr_block, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_class" href="classBlockEncoding.html">BlockEncoding</a>(<span class="keyword">const</span> std::string&amp; input_file, <span class="keyword">const</span> std::string&amp; output_file, <span class="keywordtype">int</span> block_size = 16, <span class="keywordtype">int</span> search_area = 16, <span class="keywordtype">int</span> keyframe_period = 10, <span class="keywordtype">int</span> quantizationY = 0, <span class="keywordtype">int</span> quantizationU = 0, <span class="keywordtype">int</span> quantizationV = 0);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classBlockEncoding.html#af2c09f96f20beb874ceba1fbbca7fcf6">encode</a>();</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordtype">int</span> block_size, search_area, keyframe_period; </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_class" href="classY4MReader.html">Y4MReader</a> input_video; </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    BitStreamWrite stream_out; </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    GolombCode golomb; </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordtype">int</span> m; </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">int</span> quantizationY; </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordtype">int</span> quantizationU; </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordtype">int</span> quantizationV; </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordtype">void</span> encodeInterFrame(<span class="keyword">const</span> Mat&amp; f, <span class="keyword">const</span> Mat&amp; p);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordtype">void</span> encodeIntraFrame(Mat&amp; f);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordtype">void</span> encodeValue(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> v);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keywordtype">void</span> encodeBlockDifference(<span class="keyword">const</span> Mat&amp; block);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordtype">void</span> generate_headers();</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    Mat getBlock(<span class="keyword">const</span> Mat&amp; original_frame, <span class="keywordtype">int</span> row, <span class="keywordtype">int</span> col) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordtype">void</span> setBlock(<span class="keyword">const</span> cv::Mat* original_frame, cv::Mat* block, <span class="keywordtype">int</span> row, <span class="keywordtype">int</span> col) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> JPEG_LS(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> a, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> b, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> c);</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    Mat pad(<span class="keyword">const</span> Mat&amp; frame) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keywordtype">void</span> encodeInterframeChannel(<span class="keyword">const</span> Mat&amp; c_channel, <span class="keyword">const</span> Mat&amp; p_channel);</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordtype">int</span> calculateMAD(<span class="keyword">const</span> Mat&amp; block1, <span class="keyword">const</span> Mat&amp; block2) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>};</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    std::tuple&lt;Mat, int, int&gt; searchBestBlock(<span class="keyword">const</span> Mat&amp; prev_frame, <span class="keyword">const</span> Mat&amp; curr_block, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> rows, <span class="keywordtype">int</span> cols);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> JPEG_LS(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> a, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> b, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> c);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    Mat pad(<span class="keyword">const</span> Mat&amp; frame) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordtype">void</span> encodeInterframeChannel(<span class="keyword">const</span> Mat&amp; c_channel, <span class="keyword">const</span> Mat&amp; p_channel, <span class="keywordtype">int</span> quantization);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keywordtype">int</span> calculateMAD(<span class="keyword">const</span> Mat&amp; block1, <span class="keyword">const</span> Mat&amp; block2) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>};</div>
 </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">#endif </span><span class="comment">// GTD_VC_BLOCKENCODING_H</span></div>
-<div class="ttc" id="aclassBitStreamWrite_html"><div class="ttname"><a href="classBitStreamWrite.html">BitStreamWrite</a></div><div class="ttdoc">A class for writing bits to a file stream.</div><div class="ttdef"><b>Definition</b> BitStreamWrite.h:16</div></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="preprocessor">#endif </span><span class="comment">// GTD_VC_BLOCKENCODING_H</span></div>
 <div class="ttc" id="aclassBlockEncoding_html"><div class="ttname"><a href="classBlockEncoding.html">BlockEncoding</a></div><div class="ttdef"><b>Definition</b> BlockEncoding.h:15</div></div>
-<div class="ttc" id="aclassBlockEncoding_html_af2c09f96f20beb874ceba1fbbca7fcf6"><div class="ttname"><a href="classBlockEncoding.html#af2c09f96f20beb874ceba1fbbca7fcf6">BlockEncoding::encode</a></div><div class="ttdeci">void encode()</div><div class="ttdoc">Main function to perform video encoding.</div><div class="ttdef"><b>Definition</b> BlockEncoding.cpp:14</div></div>
-<div class="ttc" id="aclassGolombCode_html"><div class="ttname"><a href="classGolombCode.html">GolombCode</a></div><div class="ttdoc">A class for encoding and decoding Golomb codes.</div><div class="ttdef"><b>Definition</b> GolombCode.h:16</div></div>
-<div class="ttc" id="aclassVideoManipulator_html"><div class="ttname"><a href="classVideoManipulator.html">VideoManipulator</a></div><div class="ttdoc">Class used to play video files.</div><div class="ttdef"><b>Definition</b> VideoManipulator.h:19</div></div>
+<div class="ttc" id="aclassBlockEncoding_html_af2c09f96f20beb874ceba1fbbca7fcf6"><div class="ttname"><a href="classBlockEncoding.html#af2c09f96f20beb874ceba1fbbca7fcf6">BlockEncoding::encode</a></div><div class="ttdeci">void encode()</div><div class="ttdoc">Main function to perform video encoding.</div><div class="ttdef"><b>Definition</b> BlockEncoding.cpp:13</div></div>
+<div class="ttc" id="aclassY4MReader_html"><div class="ttname"><a href="classY4MReader.html">Y4MReader</a></div><div class="ttdef"><b>Definition</b> Y4MReader.h:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

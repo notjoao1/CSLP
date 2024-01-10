@@ -9,29 +9,33 @@
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Encoding/GolombCode.h"{}}}
 \DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}opencv2/imgproc.hpp"{}}}
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Representation/VideoManipulator.h"{}}}
-\DoxyCodeLine{00008\ }
-\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classEncoder}{Encoder}}\ \{}
-\DoxyCodeLine{00013\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{classVideoManipulator}{VideoManipulator}}*\ video;\ }
-\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{classBitStreamWrite}{BitStreamWrite}}*\ stream\_out;\ }
-\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{int}\ m;\ }
-\DoxyCodeLine{00018\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEncoder_a1f30f586bb0bd73db96358beaa4b5aba}{encodeFrame}}(\textcolor{keyword}{const}\ Mat\&\ f);}
-\DoxyCodeLine{00024\ }
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEncoder_a2852b23c5acd11c491510091f3044367}{encodeChannel}}(\textcolor{keyword}{const}\ Mat\&\ c);}
-\DoxyCodeLine{00030\ }
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEncoder_ab5bb7d5950570c942333849b1195ce62}{encodeValue}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ v);}
-\DoxyCodeLine{00036\ }
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEncoder_a0d1c904ce1ce3b2a9418876e59cb3730}{generate\_headers}}(\textcolor{keyword}{const}\ Size\&\ frame\_size);}
-\DoxyCodeLine{00042\ }
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{classEncoder_a42123e0fabc84b85fe854fd1c4902ced}{JPEG\_LS}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ a,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ b,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ c);}
-\DoxyCodeLine{00051\ }
-\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{classEncoder}{Encoder}}(\mbox{\hyperlink{classVideoManipulator}{VideoManipulator}}*\ in,\ \mbox{\hyperlink{classBitStreamWrite}{BitStreamWrite}}*\ out);}
-\DoxyCodeLine{00058\ }
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEncoder_a1d05ddef86db0b387d30a663185f6fba}{encode}}();}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}Y4MReader.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classEncoder}{Encoder}}\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{classY4MReader}{Y4MReader}}\ input\_video;}
+\DoxyCodeLine{00016\ \ \ \ \ BitStreamWrite\ stream\_out;\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{int}\ m;\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{int}\ quantizationY;\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{int}\ quantizationU;\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{int}\ quantizationV;\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEncoder_a1f30f586bb0bd73db96358beaa4b5aba}{encodeFrame}}(\textcolor{keyword}{const}\ Mat\&\ f);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEncoder_ad062906498de6d7ae9c055b4fd658d4e}{encodeChannel}}(\textcolor{keyword}{const}\ Mat\&\ c,\ \textcolor{keywordtype}{int}\ quantization);}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEncoder_ab5bb7d5950570c942333849b1195ce62}{encodeValue}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ v);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEncoder_a96cd5b85a8b8b4eedab2660805f8962e}{generate\_headers}}();}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{classEncoder_a42123e0fabc84b85fe854fd1c4902ced}{JPEG\_LS}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ a,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ b,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ c);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{classEncoder}{Encoder}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ input\_file,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ output\_file,\ \textcolor{keywordtype}{int}\ quantizationY\ =\ 0,\ \textcolor{keywordtype}{int}\ quantizationU\ =\ 0,\ \textcolor{keywordtype}{int}\ quantizationV\ =\ 0);}
 \DoxyCodeLine{00063\ }
-\DoxyCodeLine{00064\ \};}
-\DoxyCodeLine{00065\ }
-\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ GTD\_VC\_ENCODER\_H}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classEncoder_a1d05ddef86db0b387d30a663185f6fba}{encode}}();}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ GTD\_VC\_ENCODER\_H}}
 
 \end{DoxyCode}

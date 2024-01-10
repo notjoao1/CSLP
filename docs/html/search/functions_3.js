@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['decode_0',['decode',['../classGolombCode.html#a1b598e166038949947a89744e5ca2810',1,'GolombCode::decode(int m, const std::vector&lt; bool &gt; &amp;stream, int n)'],['../classGolombCode.html#aa0fdc50e94c7a5d77b674a2247e085fd',1,'GolombCode::decode(int m, BitStreamRead &amp;b, int n)']]],
-  ['decode_5fone_1',['decode_one',['../classGolombCode.html#abcd5bbec9e1de0e64a0af25f057b7263',1,'GolombCode::decode_one(int m, std::vector&lt; bool &gt; stream)'],['../classGolombCode.html#a23c20d6d22ae753cdd23e25f879be22a',1,'GolombCode::decode_one(int m, BitStreamRead &amp;stream)']]],
-  ['decodefrom64bits_2',['decodeFrom64bits',['../classGolombCode.html#aee717bd0d887b4a016690ad65fb59c4d',1,'GolombCode']]],
-  ['displayhistograms_3',['displayHistograms',['../classHistogram.html#abd45d18242aea6fe7a2695d2824c2ce7',1,'Histogram']]]
+  ['encode_0',['encode',['../classBlockEncoding.html#af2c09f96f20beb874ceba1fbbca7fcf6',1,'BlockEncoding::encode()'],['../classEncoder.html#a1d05ddef86db0b387d30a663185f6fba',1,'Encoder::encode()']]],
+  ['encodechannel_1',['encodeChannel',['../classEncoder.html#ad062906498de6d7ae9c055b4fd658d4e',1,'Encoder']]],
+  ['encodeframe_2',['encodeFrame',['../classEncoder.html#a1f30f586bb0bd73db96358beaa4b5aba',1,'Encoder']]],
+  ['encoder_3',['Encoder',['../classEncoder.html#a5d788c77f90f7d06e35f3579d33764dd',1,'Encoder']]],
+  ['encodevalue_4',['encodeValue',['../classEncoder.html#ab5bb7d5950570c942333849b1195ce62',1,'Encoder']]]
 ];

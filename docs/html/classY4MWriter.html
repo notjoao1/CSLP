@@ -86,9 +86,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af12727a383b42a48d12444e3a21f8c44" id="r_af12727a383b42a48d12444e3a21f8c44"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classY4MWriter.html#af12727a383b42a48d12444e3a21f8c44">Y4MWriter</a> (const string &amp;out_fname)</td></tr>
 <tr class="memdesc:af12727a383b42a48d12444e3a21f8c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classY4MWriter.html" title="Class for writing video in to Y4M files.">Y4MWriter</a>.  <br /></td></tr>
 <tr class="separator:af12727a383b42a48d12444e3a21f8c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8705502baa4e67555f35d10ee535512d" id="r_a8705502baa4e67555f35d10ee535512d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classY4MWriter.html#a8705502baa4e67555f35d10ee535512d">writeHeader</a> (int width, int height, int fps)</td></tr>
-<tr class="memdesc:a8705502baa4e67555f35d10ee535512d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the Y4M file header with video properties.  <br /></td></tr>
-<tr class="separator:a8705502baa4e67555f35d10ee535512d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fcafb9f73aa539dbd0f242dff58b366" id="r_a1fcafb9f73aa539dbd0f242dff58b366"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classY4MWriter.html#a1fcafb9f73aa539dbd0f242dff58b366">writeHeader</a> (int width, int height, int fps_num, int fps_denom)</td></tr>
+<tr class="memdesc:a1fcafb9f73aa539dbd0f242dff58b366"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the Y4M file header with video properties.  <br /></td></tr>
+<tr class="separator:a1fcafb9f73aa539dbd0f242dff58b366"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78ac84e4f6b1211beb07513e1e83b8c1" id="r_a78ac84e4f6b1211beb07513e1e83b8c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classY4MWriter.html#a78ac84e4f6b1211beb07513e1e83b8c1">writeFrame</a> (const cv::Mat *frame)</td></tr>
 <tr class="memdesc:a78ac84e4f6b1211beb07513e1e83b8c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a single video frame to the Y4M file.  <br /></td></tr>
 <tr class="separator:a78ac84e4f6b1211beb07513e1e83b8c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,8 +161,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>closeFile</b> ()</td>
 
 </div>
 </div>
-<a id="a8705502baa4e67555f35d10ee535512d" name="a8705502baa4e67555f35d10ee535512d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8705502baa4e67555f35d10ee535512d">&#9670;&#160;</a></span>writeHeader()</h2>
+<a id="a1fcafb9f73aa539dbd0f242dff58b366" name="a1fcafb9f73aa539dbd0f242dff58b366"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fcafb9f73aa539dbd0f242dff58b366">&#9670;&#160;</a></span>writeHeader()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,7 +183,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>closeFile</b> ()</td>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>fps</em>&#160;</td>
+          <td class="paramname"><em>fps_num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fps_denom</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -198,7 +204,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>closeFile</b> ()</td>
   <table class="params">
     <tr><td class="paramname">width</td><td>Width of the video frames. </td></tr>
     <tr><td class="paramname">height</td><td>Height of the video frames. </td></tr>
-    <tr><td class="paramname">fps</td><td>Frames per second of the video. </td></tr>
+    <tr><td class="paramname">fps_num</td><td>Frames per second numerator. Example: F50:1 -&gt; numerator is 50 and denominator is 1. </td></tr>
+    <tr><td class="paramname">fps_denom</td><td>Frames per seecond denominator. </td></tr>
   </table>
   </dd>
 </dl>

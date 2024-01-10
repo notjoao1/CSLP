@@ -14,7 +14,7 @@ Class for writing video in to Y4M files.
 \item 
 \mbox{\hyperlink{classY4MWriter_af12727a383b42a48d12444e3a21f8c44}{Y4\+MWriter}} (const string \&out\+\_\+fname)
 \begin{DoxyCompactList}\small\item\em Constructor for \doxylink{classY4MWriter}{Y4\+MWriter}. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classY4MWriter_a8705502baa4e67555f35d10ee535512d}{write\+Header}} (int width, int height, int fps)
+void \mbox{\hyperlink{classY4MWriter_a1fcafb9f73aa539dbd0f242dff58b366}{write\+Header}} (int width, int height, int fps\+\_\+num, int fps\+\_\+denom)
 \begin{DoxyCompactList}\small\item\em Write the Y4M file header with video properties. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classY4MWriter_a78ac84e4f6b1211beb07513e1e83b8c1}{write\+Frame}} (const cv\+::\+Mat \texorpdfstring{$\ast$}{*}frame)
 \begin{DoxyCompactList}\small\item\em Write a single video frame to the Y4M file. \end{DoxyCompactList}\item 
@@ -60,11 +60,11 @@ Write a single video frame to the Y4M file.
 {\em frame} & Pointer to the video frame (cv\+::\+Mat). \\
 \hline
 \end{DoxyParams}
-\Hypertarget{classY4MWriter_a8705502baa4e67555f35d10ee535512d}\label{classY4MWriter_a8705502baa4e67555f35d10ee535512d} 
+\Hypertarget{classY4MWriter_a1fcafb9f73aa539dbd0f242dff58b366}\label{classY4MWriter_a1fcafb9f73aa539dbd0f242dff58b366} 
 \index{Y4MWriter@{Y4MWriter}!writeHeader@{writeHeader}}
 \index{writeHeader@{writeHeader}!Y4MWriter@{Y4MWriter}}
 \doxysubsubsection{\texorpdfstring{writeHeader()}{writeHeader()}}
-{\footnotesize\ttfamily void Y4\+MWriter\+::write\+Header (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{fps }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void Y4\+MWriter\+::write\+Header (\begin{DoxyParamCaption}\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{fps\+\_\+num,  }\item[{int}]{fps\+\_\+denom }\end{DoxyParamCaption})}
 
 
 
@@ -76,7 +76,9 @@ Write the Y4M file header with video properties.
 \hline
 {\em height} & Height of the video frames. \\
 \hline
-{\em fps} & Frames per second of the video. \\
+{\em fps\+\_\+num} & Frames per second numerator. Example\+: F50\+:1 -\/\texorpdfstring{$>$}{>} numerator is 50 and denominator is 1. \\
+\hline
+{\em fps\+\_\+denom} & Frames per seecond denominator. \\
 \hline
 \end{DoxyParams}
 

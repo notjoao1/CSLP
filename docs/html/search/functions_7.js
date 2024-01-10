@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['histogram_0',['Histogram',['../classHistogram.html#a078c733d42e815b49e1e11ffdbf987db',1,'Histogram']]]
+  ['writeframe_0',['writeFrame',['../classY4MWriter.html#a78ac84e4f6b1211beb07513e1e83b8c1',1,'Y4MWriter']]],
+  ['writeheader_1',['writeHeader',['../classY4MWriter.html#a1fcafb9f73aa539dbd0f242dff58b366',1,'Y4MWriter']]]
 ];
