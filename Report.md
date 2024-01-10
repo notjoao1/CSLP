@@ -1,6 +1,41 @@
 # Report
 
-## Results 
+# Features 
+
+ - Predictive Encoding
+ - Motion-Based Block-Encoding (Four Step Search + Motion-Detection)
+ - Hybrid Encoding (Intra + Inter Frame with Predictive/Motion-Block Encoding)
+ - Golomb Encoding of Residuals (with m-parameter estimation)
+ - Lossy Encoding (Quantization-based)
+
+*Note: All features were developed aiming the YUV 4:4:4 video format.*
+
+# Methodology
+
+We developed a command-line Codec that supports the features mentioned above. We also created a python-wrapper around the Codec (scripts/tester.py) that allows us to test multiple configurations, in a automated manner, according to the following parameters:
+  - Block size
+  - Search Area
+  - Keyframe (Interval between Intra frames)
+  - Quantization (per Channel)
+
+Using the python tester, we runned *1472* configurations with relevant combinations of the parameters mencioned above, deep-testing the capabilities of our Codec, which allowed us to collect important data with relation to *Compression Ratio (CR)*, *Execution Time (Time)* and *Peak signal-to-noise ratio (PSNR)*.
+
+*!Disclaimer: One configuration corresponds to one encoding/statistic cycle of one video with a specific set of parameters: encoding -> decoding -> statistics (Time, CR, PSNR, ...). *
+
+## Statistics
+
+*Number of configurations:* 1472
+*Execution Time:* 19h24m (Single-Thread -> One configuration at a time)
+*Computer Specs:*
+
+![imagem](https://github.com/notjoao1/GTD-VC/assets/97362005/e98d2dbe-768c-4926-8e15-ff0a0ad5ca56)
+
+*Command:*
+
+![imagem](https://github.com/notjoao1/GTD-VC/assets/97362005/6518d79a-fc35-408b-a09a-703f58706a7a)
+*!Disclaimer: We later executed 32 more configurations with search area of 8, giving the total of 1472 configurations. *
+
+# Results
 
 ### Ducks Take off 720p50 Motion compensated
 
