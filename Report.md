@@ -57,13 +57,13 @@ As the plot suggests, we've determined that an optimal value for the block size 
 Based on the plots produced, we've observed that the search area has little impact on both the compression ratio and PSNR, not only in lossy, but also and non-lossy modes. With that in mind, we've choosen the value of 16 for the search area mainly based on *Execution Time (Time)*, but also taking into consideration *CR* and *PSNR*, being this the optimal value between these parameters.
 
 ![3_PSNR_SA_WCOMP](https://github.com/notjoao1/GTD-VC/assets/97046574/5ef9b1a7-4f22-4882-a6de-69c9560ecc90)
+*Note:* the missing data on the PSNR by search area graph is due to the fact that we didn't ran configurations with search area = 8 and 0 < quantization < 4.
 
 ![4_CR_SA_NOCOMP](https://github.com/notjoao1/GTD-VC/assets/97046574/c8931bb7-0240-40eb-a35f-a8620193daac)
 
 ![5_CR_SA_WCOMP](https://github.com/notjoao1/GTD-VC/assets/97046574/561851ed-28f3-49f0-bcf4-ae178520e128)
 
 
-*Note:* the missing data on the PSNR by search area graph is due to the fact that we didn't ran configurations with search area = 8 and 0 < quantization < 4.
 
 ### Key Frame Period
 
