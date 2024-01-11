@@ -1,5 +1,5 @@
-#include "src/BlockEncoding.h"
-#include "src/BlockDecoding.h"
+#include "BlockEncoding.h"
+#include "BlockDecoding.h"
 #include <iostream>
 #include <string>
 #include <algorithm> // for std::find
