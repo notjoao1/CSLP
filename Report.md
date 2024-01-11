@@ -127,5 +127,14 @@ The following plots, compare the execution time and PSNR of the different block-
 ![imagem](https://github.com/notjoao1/GTD-VC/assets/97362005/766f3d25-efa3-4c66-a053-24b1055b266d)
 
 These graphics were obtained from the following [source](https://www.mathworks.com/matlabcentral/fileexchange/8761-block-matching-algorithms-for-motion-estimation).
-## 
+
+
+## Perf 
+
+To further optimize our code, we've initially ran it with the perf Tool.
+We've obtained the following measurements, running our code with *-O0* flag:
+
+![imagem](https://github.com/notjoao1/GTD-VC/assets/97362005/2bf56384-26d9-42f6-b606-414cc6125d2d)
+
+After taking this into account
 
