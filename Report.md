@@ -87,43 +87,45 @@ A lossless video has an infinite PSNR value.
 ![9_PSNR_CR](https://github.com/notjoao1/GTD-VC/assets/97046574/8d28f5fa-f9ec-4d88-927e-8947c6532d3a)
 *Note:* The value on the left (at point (0, 65)) might seem weird. That's because the PSNR is 'inf' when lossless, but in order to represent that value in the plot, we made it 65, to fit the image
 
-![10_PSNR_QUANTAVG](https://github.com/notjoao1/GTD-VC/assets/97046574/d2b821d7-4e29-458a-9946-dfe0a7c4e1f3)
+### PSNR / Quantization
 
-(Quantization Avg. takes the average quantization of the 3 channels. Quantization was represented in number of bits that we lost to quantization - meaning that when a channel has quantization = 1, we are using 7 bits to represent its colors, instead of 8)
+Quantization Avg. takes the average quantization of the 3 channels. Quantization was represented in number of bits that we lost to quantization - meaning that when a channel has quantization = 1, we are using 7 bits to represent its colors, instead of 8.
 As we can see, the higher the quantization, the smaller the PSNR value (video has more noise). This is expected in lossy encoding.
 
+![10_PSNR_QUANTAVG](https://github.com/notjoao1/GTD-VC/assets/97046574/d2b821d7-4e29-458a-9946-dfe0a7c4e1f3)
+
+
+
+### Execution Time
 
 ![11_TIME_CR](https://github.com/notjoao1/GTD-VC/assets/97046574/ee5e66d6-2c50-40ea-8e02-0682288dabc6)
 
 This plot shows that, the more compressed a video is, the faster it is to write to the disk. The greatest bottleneck of our program is the I/O speed - especially write speed. The more compressed a video is, the less we have to write and the faster the execution is.
-### Ducks Take off 720p50 Motion compensated
-
-| block_size / search_area / keyframe_period | Time (s)  | Space (mB) |
-|--------------------------------------------|-----------|------------|
-| 4 , 16 , 64                                |   142     |    826     |
-| 8 , 16 , 64                                |   62      |    710     |
-| 16 , 16 , 64                               |   36      |    676     |
-| 8 , 8 , 64                                 |   73      |    705     |
-
-### Ducks Take off 720p50 only JPEG-LS
-
-ENCODER:
-    time: 42.27s
-    size: 963MB
-
-DECODER:
-    time: 43.80s
-
-
-
-
-
-
-
-
-
-
-
 
 
 ![12_TIME_SA](https://github.com/notjoao1/GTD-VC/assets/97046574/5d0ab05a-cf5d-4d18-81d8-c7dc9575f5c6)
+As we can see, reducing the search area has an effect on the execution time when a search area is small enough. After a certain threshold, it has no impact on execution time. A lower search area (8) has a small effect on the execution time compared to a slightly bigger search area (16) - about 2 seconds.
+Overall, the search area has a small effect on the execution time
+
+
+# Optimization
+
+
+To ensure the optimization of our Codec, we've taken the following measures:
+
+## Best-Block Search Optimization
+
+We've used *Four-Step Search (FSS)* as a block-matching algorithm employed in motion estimation for video compression. Initially, the reference block is divided into smaller blocks, and a search window is established. The algorithm starts at the center of the window, evaluating the similarity between the reference block and corresponding blocks in the target image. The search window then moves to the position with the best match, reducing in size for a more focused search. This process iterates until a termination criterion is met, efficiently narrowing down the search space and providing a balance between computational simplicity and motion estimation accuracy.
+
+### Choice
+
+*Why have we choosen this search method?*
+The following plots, compare the execution time and PSNR of the different block-matching algorithms. As we can see, Four Step Search provides both great performance and PSNR, while maintining an acceptable complexity level. Although ARPS provides better perfomance and similar PSNR, we didn´t go with it because it's implementation was significantly more complex than FSS.
+
+![imagem](https://github.com/notjoao1/GTD-VC/assets/97362005/ee20d2d8-6fe1-4c94-8313-7edec1dbf855)
+
+![imagem](https://github.com/notjoao1/GTD-VC/assets/97362005/766f3d25-efa3-4c66-a053-24b1055b266d)
+
+These graphics were obtained from the following [source](https://www.mathworks.com/matlabcentral/fileexchange/8761-block-matching-algorithms-for-motion-estimation).
+## 
+
