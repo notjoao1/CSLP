@@ -79,6 +79,14 @@ As we can see in the following 3 plots, independently off the quantization level
 ![8_PSNR_KP_WCOMP](https://github.com/notjoao1/GTD-VC/assets/97046574/beb11414-d046-42c1-a1c8-9f0a935638f6)
 
 
+### PSNR / CR
+
+As we can see bellow, the smaller the PSNR (more noise), the greater the compression ratio. This is because the more compressed the video is, the more lossy it is, and consequently the more noise it has.
+A lossless video has an infinite PSNR value.
+
+![9_PSNR_CR](https://github.com/notjoao1/GTD-VC/assets/97046574/8d28f5fa-f9ec-4d88-927e-8947c6532d3a)
+*Note:* The value on the left (at point (0, 65)) might seem weird. That's because the PSNR is 'inf' when lossless, but in order to represent that value in the plot, we made it 65, to fit the image
+
 
 
 ### Ducks Take off 720p50 Motion compensated
