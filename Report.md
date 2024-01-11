@@ -33,7 +33,8 @@ Using the python tester, we runned *1472* configurations with relevant combinati
 *Command:*
 
 ![imagem](https://github.com/notjoao1/GTD-VC/assets/97362005/6518d79a-fc35-408b-a09a-703f58706a7a)
-*!Disclaimer: We later executed 32 more configurations with search area of 8, giving the total of 1472 configurations. *
+
+*Disclaimer: We later executed 32 more configurations with search area of 8, giving the total of 1472 configurations (originally we had 1440).*
 
 # Results
 
@@ -57,6 +58,7 @@ As the plot suggests, we've determined that an optimal value for the block size 
 Based on the plots produced, we've observed that the search area has little impact on both the compression ratio and PSNR, not only in lossy, but also and non-lossy modes. With that in mind, we've choosen the value of 16 for the search area mainly based on *Execution Time (Time)*, but also taking into consideration *CR* and *PSNR*, being this the optimal value between these parameters.
 
 ![3_PSNR_SA_WCOMP](https://github.com/notjoao1/GTD-VC/assets/97046574/5ef9b1a7-4f22-4882-a6de-69c9560ecc90)
+
 *Note:* the missing data on the PSNR by search area graph is due to the fact that we didn't ran configurations with search area = 8 and 0 < quantization < 4.
 
 ![4_CR_SA_NOCOMP](https://github.com/notjoao1/GTD-VC/assets/97046574/c8931bb7-0240-40eb-a35f-a8620193daac)
@@ -85,6 +87,7 @@ As we can see bellow, the smaller the PSNR (more noise), the greater the compres
 A lossless video has an infinite PSNR value.
 
 ![9_PSNR_CR](https://github.com/notjoao1/GTD-VC/assets/97046574/8d28f5fa-f9ec-4d88-927e-8947c6532d3a)
+
 *Note:* The value on the left (at point (0, 65)) might seem weird. That's because the PSNR is 'inf' when lossless, but in order to represent that value in the plot, we made it 65, to fit the image
 
 ### PSNR / Quantization
@@ -104,6 +107,7 @@ This plot shows that, the more compressed a video is, the faster it is to write 
 
 
 ![12_TIME_SA](https://github.com/notjoao1/GTD-VC/assets/97046574/5d0ab05a-cf5d-4d18-81d8-c7dc9575f5c6)
+
 As we can see, reducing the search area has an effect on the execution time when a search area is small enough. After a certain threshold, it has no impact on execution time. A lower search area (8) has a small effect on the execution time compared to a slightly bigger search area (16) - about 2 seconds.
 Overall, the search area has a small effect on the execution time
 
