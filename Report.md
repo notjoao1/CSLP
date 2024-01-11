@@ -137,7 +137,27 @@ We've obtained the following measurements, running our code with *-O0* flag:
 ![imagem](https://github.com/notjoao1/GTD-VC/assets/97362005/2bf56384-26d9-42f6-b606-414cc6125d2d)
 
 After taking this into account, we've further optimized our BitStream classes (*Read* and *Writter*).
-We made the BitStreamWrite and BitStreamRead classes directly use the fstream file buffer.
+We made the `BitStreamWrite` and `BitStreamRead` classes directly use the `fstream` file buffer, instead of our previous implementation, which buffered writes in our own vector in memory - this was good but performance was bottle necked by the internal `fstream` file buffer size.
+
+Our previous implementation:
+
+[src/BitStream/BitStreamWrite.h (old version)](https://github.com/notjoao1/GTD-VC/blob/98e296d0188b851feaccd1f296df0ea8059e17cd/src/BitStream/BitStreamWrite.h)
+```cpp
+std::vector<unsigned long long> big_buffer; /**< Vector to store a large buffer of bits. */
+const long big_buffer_max_size = 65536; /**< Maximum size of the big buffer. */
+```
+
+We changed it to use the internal file buffer and completely refactored the memory vector for buffering:
+
+[src/BitStream/BitStreamWrite.h (new version)](src/BitStream/BitStreamWrite.h)
+
+```cpp
+BitStreamWrite(const std::string& filename) {
+   char buffer[big_buffer_max_size];
+   this->file.open(filename, std::ios::binary | std::ios::out);
+   this->file.rdbuf()->pubsetbuf(buffer, big_buffer_max_size);
+}
+```
 
 Running perf once again, we've obtained the following results:
 
