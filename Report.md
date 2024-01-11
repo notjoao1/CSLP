@@ -87,8 +87,15 @@ A lossless video has an infinite PSNR value.
 ![9_PSNR_CR](https://github.com/notjoao1/GTD-VC/assets/97046574/8d28f5fa-f9ec-4d88-927e-8947c6532d3a)
 *Note:* The value on the left (at point (0, 65)) might seem weird. That's because the PSNR is 'inf' when lossless, but in order to represent that value in the plot, we made it 65, to fit the image
 
+![10_PSNR_QUANTAVG](https://github.com/notjoao1/GTD-VC/assets/97046574/d2b821d7-4e29-458a-9946-dfe0a7c4e1f3)
+
+(Quantization Avg. takes the average quantization of the 3 channels. Quantization was represented in number of bits that we lost to quantization - meaning that when a channel has quantization = 1, we are using 7 bits to represent its colors, instead of 8)
+As we can see, the higher the quantization, the smaller the PSNR value (video has more noise). This is expected in lossy encoding.
 
 
+![11_TIME_CR](https://github.com/notjoao1/GTD-VC/assets/97046574/ee5e66d6-2c50-40ea-8e02-0682288dabc6)
+
+This plot shows that, the more compressed a video is, the faster it is to write to the disk. The greatest bottleneck of our program is the I/O speed - especially write speed. The more compressed a video is, the less we have to write and the faster the execution is.
 ### Ducks Take off 720p50 Motion compensated
 
 | block_size / search_area / keyframe_period | Time (s)  | Space (mB) |
@@ -115,11 +122,8 @@ DECODER:
 
 
 
-![9_PSNR_CR](https://github.com/notjoao1/GTD-VC/assets/97046574/8d28f5fa-f9ec-4d88-927e-8947c6532d3a)
 
-![10_PSNR_QUANTAVG](https://github.com/notjoao1/GTD-VC/assets/97046574/d2b821d7-4e29-458a-9946-dfe0a7c4e1f3)
 
-![11_TIME_CR](https://github.com/notjoao1/GTD-VC/assets/97046574/ee5e66d6-2c50-40ea-8e02-0682288dabc6)
 
 
 ![12_TIME_SA](https://github.com/notjoao1/GTD-VC/assets/97046574/5d0ab05a-cf5d-4d18-81d8-c7dc9575f5c6)
