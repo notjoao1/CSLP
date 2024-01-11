@@ -137,12 +137,17 @@ We've obtained the following measurements, running our code with *-O0* flag:
 ![imagem](https://github.com/notjoao1/GTD-VC/assets/97362005/2bf56384-26d9-42f6-b606-414cc6125d2d)
 
 After taking this into account, we've further optimized our BitStream classes (*Read* and *Writter*).
-We made the BitStreamWrite class directly use the ostream file buffer.
+We made the BitStreamWrite and BitStreamRead classes directly use the fstream file buffer.
 
 Running perf once again, we've obtained the following results:
 
 ![imagem](https://github.com/notjoao1/GTD-VC/assets/97362005/fe7965c2-4601-491a-b728-02fe3fb1412f)
 
+We got inspiration from this [article](https://stackoverflow.com/questions/5166263/how-to-get-iostream-to-perform-better).
 
 
-## Conclusion
+# Conclusion
+
+This project helped us further understand the importance of context when choosing environment parameters. Some use cases require extremely low *execution times* with need for lossy-compression to further improve performance, while others require high storage quality, in sacrifice of *compression*, for exemple, in personnal storage.
+
+The analysis we've taken in this report allows the setup of our Codec according to these different set of requirements, making our Codec usefull to a wider set of users.
